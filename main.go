@@ -44,31 +44,40 @@ type ec2Instance struct {
 	Name        string
 	State       string
 	Environment string
+	VCPU        int
+	MemoryGB    float32
 }
 
 type ec2Environment struct {
-	Name      string
-	Instances []ec2Instance
-	CPUs      int
-	MemoryMb  int
-	State     string
+	Name          string
+	Instances     []ec2Instance
+	TotalvCPU     int
+	TotalMemoryGB float32
+	State         string
 }
 
 type ec2EnvironmentSummary struct {
 	Name             string
 	RunningInstances int
 	TotalInstances   int
+	TotalvCPU        int
+	TotalMemoryGB    float32
 	State            string
 }
 
 // for global cached table
 type envList []ec2Environment
 
-// determineEnvStates
-func determineEnvStates() {
+// updateEnvDetails
+// determines details like: State, TotalvCPU, TotalMemoryGB
+func updateEnvDetails() {
 	for i, env := range cachedTable {
 		cachedTable[i].State = ENV_RUNNING
 		for _, instance := range env.Instances {
+			// update cpu and memory counts
+			cachedTable[i].TotalvCPU += instance.VCPU
+			cachedTable[i].TotalMemoryGB += instance.MemoryGB
+			// determine env state
 			if instance.State != "running" && instance.State != "stopped" {
 				cachedTable[i].State = ENV_CHANGING
 				break
@@ -157,6 +166,7 @@ func refreshTable() (err error) {
 	for _, reservation := range resp.Reservations {
 		for _, instance := range reservation.Instances {
 			instanceObj := ec2Instance{Id: *instance.InstanceId, State: string(instance.State.Name), Type: string(instance.InstanceType)}
+			// populate info from tags
 			for _, tag := range instance.Tags {
 				if *tag.Key == environmentTagKey && *tag.Value != "" {
 					instanceObj.Environment = *tag.Value
@@ -165,13 +175,17 @@ func refreshTable() (err error) {
 					instanceObj.Name = *tag.Value
 				}
 			}
-
+			// determine instance cpu and memory
+			if details, found := getInstanceTypeDetails(instanceObj.Type); found {
+				instanceObj.MemoryGB = details.MemoryGB
+				instanceObj.VCPU = details.VCPU
+			}
 			if validateEnvName(instanceObj.Environment) {
 				addInstance(&instanceObj)
 			}
 		}
 	}
-	determineEnvStates()
+	updateEnvDetails()
 	log.Debugf("valid enviornments in cache: %d", len(cachedTable))
 	return
 }
@@ -253,6 +267,8 @@ func getEnvSummary() (envSummary []ec2EnvironmentSummary) {
 			Name:             env.Name,
 			State:            env.State,
 			RunningInstances: running,
+			TotalvCPU:        env.TotalvCPU,
+			TotalMemoryGB:    env.TotalMemoryGB,
 			TotalInstances:   len(env.Instances),
 		})
 	}
@@ -279,6 +295,11 @@ func StartPoller() {
 }
 
 func main() {
+	// load instancetype details
+	if err := loadAwsInstanceDetailsJson(); err != nil {
+		log.Fatalf("could not load instance type details: %v", err)
+	}
+
 	// init config and logging
 	ConfigInit("")
 
