@@ -1,0 +1,80 @@
+{{ define "main" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/x-icon" href="/static/favicon-power-off.ico">
+
+    <title>AWS Power Toggle</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/custom.css">
+</head>
+
+<body>
+<nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+    <a class="navbar-brand" href="/" >
+        <i class="fas fa-power-off"></i>
+        AWS Power-Toggle
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-between" id="navbar">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="#">{{ .Region }}</a>
+        </div>
+        <div class="navbar-nav">
+            <li class="nav-item">
+                <a class="btn btn-info" href="https://github.com/gbolo/aws-power-toggle" target="_blank" role="button"><i class="fab fa-github"></i> Source code</a>
+            </li>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">{{ .Region }}</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-info w-100 btn-lg" type="button" id="refreshButton">
+                <strong><i class="fas fa-sync"></i> Refresh</strong>
+            </button>
+        </div>
+    </div> <!-- /row -->
+
+    <!-- ajax response data gets written in this row -->
+    <div class="row" id="envRow">
+        <!-- to be populated by javascript -->
+    </div>
+
+</div> <!-- /container -->
+
+<!-- custom js for AWS Power Toggle -->
+<script src="/static/aws-power-toggle.js"></script>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</body>
+</html>
+{{ end }}

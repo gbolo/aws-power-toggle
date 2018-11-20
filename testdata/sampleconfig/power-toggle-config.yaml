@@ -1,0 +1,79 @@
+---
+
+# http server settings -------------------------------------------------------------------------------------------------
+server:
+
+  # location of static files directory
+  # used to serve static files such as css, js, exc.
+  static_files_dir: ./www/static
+
+  # local interface to bind to
+  bind_address: 0.0.0.0
+
+  # port to listen on
+  bind_port: 8080
+
+  # enable access log on stdout
+  access_log: false
+
+  # TLS options
+  tls:
+
+    # enables TLS
+    enabled: false
+
+    # path to pem encoded x509 certificate chain
+    # should include the following x509 certs: server > intermediate CA 1 > ... > intermediate CA X
+    cert_chain: /path/to/server-cert-chain.pem
+
+    # path to pem encoded pkcs1/8 private key
+    private_key: /path/to/server-key.pem
+
+# aws settings ---------------------------------------------------------------------------------------------------------
+aws:
+
+  # TODO: add api keys to config
+  # for now use env vars:
+  #   AWS_ACCESS_KEY_ID
+  #   AWS_SECRET_ACCESS_KEY
+
+  # the internal in minutes which we poll aws api
+  polling_interval: 5
+
+  # which region to use
+  region: ca-central-1
+
+  # ONLY instances with this tag will be considered
+  # tag key is case sensitive
+  required_tag_key: power-toggle-enabled
+
+  # the value for the required tag
+  # tag value is case sensitive
+  required_tag_value: true
+
+  # the tag that is used to determine environment name
+  # NOTE that instances are grouped by the value of this tag
+  # If this tag is missing, the instance will NOT be considered
+  # tag key is case sensitive
+  environment_tag_key: Environment
+
+  # !! SAFETY option !!
+  # prevents shutting down of too many instances
+  max_instances_to_shutdown: 16
+
+  # optional list of instance types to ignore
+  ignore_instance_types:
+    - c5d.large
+    - c5d.xlarge
+    - c5d.2xlarge
+    - c5d.4xlarge
+    - c5d.9xlarge
+    - c5d.18xlarge
+
+  # !! SAFETY option !!
+  # optional list of environment names to ignore
+  ignore_environments:
+    - prod
+
+# misc settings --------------------------------------------------------------------------------------------------------
+log_level: DEBUG
