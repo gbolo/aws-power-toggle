@@ -19,6 +19,9 @@ const (
 	ENV_DOWN = "stopped"
 	// means that AT LEAST ONE instance for an env is NOT in a "running" state or "stopped" state
 	ENV_CHANGING = "changing-state"
+
+	// enables mocking of API calls to aws for development purposes
+	MOCK_ENABLED = false
 )
 
 var (
@@ -143,6 +146,11 @@ func addInstance(instance *ec2Instance) {
 
 // polls aws for updates to cachedTable
 func refreshTable() (err error) {
+	// use the mock function if enabled
+	if MOCK_ENABLED {
+		return mockRefreshTable()
+	}
+
 	params := &ec2.DescribeInstancesInput{
 		Filters: []ec2.Filter{
 			{
@@ -186,7 +194,7 @@ func refreshTable() (err error) {
 		}
 	}
 	updateEnvDetails()
-	log.Debugf("valid enviornments in cache: %d", len(cachedTable))
+	log.Debugf("valid environment(s) in cache: %d", len(cachedTable))
 	return
 }
 
@@ -204,6 +212,11 @@ func getInstanceIds(envName string) (instanceIds []string) {
 
 // shuts down an env
 func shutdownEnv(envName string) (response []byte, err error) {
+	// use the mock function if enabled
+	if MOCK_ENABLED {
+		return mockShutdownEnv(envName)
+	}
+
 	instanceIds := getInstanceIds(envName)
 	if len(instanceIds) > maxInstancesToShutdown {
 		err = fmt.Errorf("SAFETY: env [%s] has too many associated instances to shutdown %d", envName, len(instanceIds))
@@ -225,12 +238,18 @@ func shutdownEnv(envName string) (response []byte, err error) {
 		}
 	} else {
 		err = fmt.Errorf("env [%s] has no associated instances", envName)
+		log.Errorf("env [%s] has no associated instances", envName)
 	}
 	return
 }
 
 // starts up an env
 func startupEnv(envName string) (response []byte, err error) {
+	// use the mock function if enabled
+	if MOCK_ENABLED {
+		return mockStartupEnv(envName)
+	}
+
 	instanceIds := getInstanceIds(envName)
 	if len(instanceIds) > 0 {
 		input := &ec2.StartInstancesInput{
