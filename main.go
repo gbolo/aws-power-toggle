@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+
 	"github.com/aws/aws-sdk-go-v2/aws/external"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 )
@@ -11,8 +13,12 @@ func main() {
 		log.Fatalf("could not load instance type details: %v", err)
 	}
 
+	// parse flags
+	cfgFile := flag.String("config", "", "path to config file")
+	flag.Parse()
+
 	// init config and logging
-	ConfigInit("")
+	ConfigInit(*cfgFile)
 
 	// start http server
 	go StartServer()
