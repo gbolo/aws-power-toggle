@@ -23,3 +23,21 @@ curl -s -X POST 127.0.0.1:8080/api/env/refresh | jq .
 ### Start up and environment (example kube)
 curl -s -X POST 127.0.0.1:8080/api/env/startup/kube | jq .
 ```
+
+## Enabled AWS API mocking (web dev mode)
+It may be useful to mock the aws API when doing development work against the API (like for web ui development).
+To enable this feature:
+```
+# modify main.go
+MOCK_ENABLED = true
+
+# set fake AWS API keys
+export AWS_ACCESS_KEY_ID=MOCK
+export AWS_SECRET_ACCESS_KEY=MOCK
+
+# start the app
+./testdata/scripts/dev-start.sh
+```
+
+if you would like to add/remove/change any of the fake inventory, then modify this file:
+`testdata/mock_env_cachedTable.json`
