@@ -34,7 +34,7 @@ header {
     flex-direction: row;
     margin: auto 0;
     @media screen and (max-width: 630px) {
-      align-self: center;
+      margin: auto;
     }
 
     .divider {

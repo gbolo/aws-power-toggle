@@ -2,13 +2,9 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net/http"
-	"strings"
-	"text/template"
 
 	"github.com/gorilla/mux"
-	"github.com/spf13/viper"
 )
 
 // returns version information
@@ -145,69 +141,4 @@ func writeJsonResponse(w http.ResponseWriter, err error, response []byte) {
 			fmt.Fprintf(w, "{\"error\":\"%v\"}\n", err)
 		}
 	}
-}
-
-// handler for main UI page
-func handlerMain(w http.ResponseWriter, req *http.Request) {
-	// write the templated HTML
-	w.WriteHeader(http.StatusOK)
-	writeTemplatedHtml(w, "main")
-
-}
-
-// write dashboard HTML from templates
-func writeTemplatedHtml(w http.ResponseWriter, templateName string) {
-
-	// read in all templates
-	templateFiles, err := findAllTemplates()
-
-	if err != nil {
-		w.WriteHeader(http.StatusServiceUnavailable)
-		fmt.Fprintf(w, "Error reading template(s). See logs")
-		log.Errorf("error geting template files: %s", err)
-		return
-	}
-
-	// parse and add function to templates
-	templates, err := template.New(templateName).
-		Funcs(template.FuncMap{"StringsJoin": strings.Join}).
-		ParseFiles(templateFiles...)
-
-	if err == nil {
-		templateData := map[string]string{
-			"Region": viper.GetString("aws.region"),
-		}
-		execErr := templates.ExecuteTemplate(w, templateName, templateData)
-		if execErr != nil {
-			w.WriteHeader(http.StatusServiceUnavailable)
-			fmt.Fprintf(w, "Error executing template(s). See logs")
-			log.Errorf("template execute error: %s", execErr)
-			return
-		}
-
-	} else {
-		w.WriteHeader(http.StatusServiceUnavailable)
-		fmt.Fprintf(w, "Error parsing template(s). See logs")
-		log.Errorf("template parse error: %s", err)
-		return
-	}
-
-	return
-}
-
-// return list of all template filenames
-func findAllTemplates() (templateFiles []string, err error) {
-
-	files, err := ioutil.ReadDir("./www/templates")
-	if err != nil {
-		return
-	}
-	for _, file := range files {
-		filename := file.Name()
-		if strings.HasSuffix(filename, ".gohtml") {
-			templateFiles = append(templateFiles, "./www/templates/"+filename)
-		}
-	}
-
-	return
 }
