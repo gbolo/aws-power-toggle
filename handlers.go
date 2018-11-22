@@ -45,6 +45,9 @@ func handlerEnvAll(w http.ResponseWriter, req *http.Request) {
 // handler for single environment
 func handlerEnvSingle(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	if MOCK_ENABLED {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+	}
 
 	// refresh the data
 	if err := refreshTable(); err != nil {
