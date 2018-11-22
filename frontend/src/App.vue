@@ -37,7 +37,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  // background-image: linear-gradient(0deg, #647dee 0%, #7f53ac 100%);
   background: #f5f4f9;
   height: 100vh;
   margin: 0 auto;

@@ -1,4 +1,4 @@
-# frontend
+# AWS Power-Toggle frontend
 
 ## Project setup
 ```
