@@ -17,6 +17,10 @@ all: fmt dep $(BIN) ; $(info $(M) building executable…) @ ## Build program bin
 		-ldflags '-X main.Version=$(VERSION) -X main.BuildDate=$(DATE) -X main.CommitSHA=$(COMMIT_SHA)' \
 		-o $(BIN)/$(PACKAGE)
 
+.PHONY: docker
+docker: clean ; $(info $(M) building docker image…)	@ ## Build docker imaage
+	$Q docker build -t gbolo/$(PACKAGE):$(VERSION) .
+
 # Tools
 
 $(BIN):
