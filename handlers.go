@@ -12,6 +12,12 @@ import (
 	"github.com/spf13/viper"
 )
 
+// returns version information
+func handlerVersion(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	fmt.Fprint(w, getVersionResponse())
+}
+
 // returns all envs
 func handlerEnv(w http.ResponseWriter, req *http.Request) {
 

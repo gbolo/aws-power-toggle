@@ -21,6 +21,12 @@ var routes = Routes{
 
 	// API endpoints
 	Route{
+		"Version",
+		"GET",
+		"/api/version",
+		handlerVersion,
+	},
+	Route{
 		"Environments",
 		"GET",
 		"/api/env",

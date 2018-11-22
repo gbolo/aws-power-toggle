@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"os"
 
 	"github.com/aws/aws-sdk-go-v2/aws/external"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
@@ -15,7 +16,14 @@ func main() {
 
 	// parse flags
 	cfgFile := flag.String("config", "", "path to config file")
+	outputVersion := flag.Bool("version", false, "prints version then exits")
 	flag.Parse()
+
+	// print version and exit if flag is present
+	if *outputVersion {
+		printVersion()
+		os.Exit(0)
+	}
 
 	// init config and logging
 	ConfigInit(*cfgFile)
