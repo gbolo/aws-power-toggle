@@ -2,6 +2,7 @@
   <div id="app">
     <Header />
     <EnvironmentList v-bind:environments="environments"/>
+    <p v-if="error" class="error-message">{{ error }}</p>
   </div>
 </template>
 
@@ -19,13 +20,17 @@ export default {
   data() {
     return {
       environments: [],
+      isLoading: false,
+      error: '',
     };
   },
   created() {
     EnviromentsApi.getEnvironments()
       .then((data) => {
         this.environments = data;
-      });
+      })
+      .catch((e) => { this.error = e.error; })
+      .finally(() => { this.isLoading = false; });
   },
 };
 </script>
@@ -42,5 +47,12 @@ export default {
   margin: 0 auto;
   width: 85%;
   max-width: 1000px;
+
+  .error-message {
+    color: #ef0078;
+    max-width: 250px;
+    text-align: center;
+    margin: 16px auto 0;
+  }
 }
 </style>

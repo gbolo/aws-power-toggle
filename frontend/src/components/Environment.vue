@@ -59,7 +59,7 @@ export default {
           console.log(response);
         })
         .catch((e) => {
-          this.error = e.response.data.error;
+          this.error = e.error;
         })
         .finally(() => {
           this.isLoading = false;
@@ -71,7 +71,7 @@ export default {
           console.log(response);
         })
         .catch((e) => {
-          this.error = e.response.data.error;
+          this.error = e.error;
         })
         .finally(() => {
           this.isLoading = false;
