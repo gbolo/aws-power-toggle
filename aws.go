@@ -123,8 +123,11 @@ func validateEnvName(envName string) (ok bool) {
 
 // adds and instance to cachedTable
 func addInstance(instance *ec2Instance) {
-	if !checkInstanceType(instance.Type) {
-		log.Debugf("instance is being ignored: %s\n", instance.Name)
+	// check if we should ignore instance based on:
+	//  - configured ignored instance types
+	//  - instance state is "terminated"
+	if !checkInstanceType(instance.Type) || instance.State == "terminated" {
+		log.Debugf("instance is being ignored: name='%s' [%s](%s)\n", instance.Name, instance.Type, instance.State)
 		return
 	}
 	envExists := false
