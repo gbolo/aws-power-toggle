@@ -8,6 +8,11 @@ export default {
   props: {
     text: String,
   },
+  filters: {
+    capitalize(value) {
+      return value ? value.toString().charAt(0).toUpperCase() + value.slice(1) : '';
+    },
+  },
   computed: {
     bgClass() {
       if (!this.text) {
@@ -20,6 +25,8 @@ export default {
           return 'status__off';
         case 'changing':
           return 'status__changing';
+        case 'mixed':
+          return 'status__mixed';
         default:
       }
       return 'status__default';
@@ -49,6 +56,11 @@ export default {
 .status__changing {
   color: #e54304;
   background: #ffddb0;
+}
+
+.status__mixed {
+  color: #4a26fd;
+  background: #eee6ff;
 }
 
 .status__default {

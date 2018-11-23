@@ -1,6 +1,4 @@
-import {
-  shallowMount,
-} from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import Environment from '@/components/Environment.vue';
 
 describe('Environment.vue', () => {
@@ -8,11 +6,7 @@ describe('Environment.vue', () => {
     const env = {
       Name: 'Environment Name',
     };
-    const wrapper = shallowMount(Environment, {
-      propsData: {
-        env,
-      },
-    });
+    const wrapper = shallowMount(Environment, { propsData: { env } });
     expect(wrapper.text()).toMatch(env.Name);
   });
 });
