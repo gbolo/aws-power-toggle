@@ -1,11 +1,7 @@
 <template>
-    <div class="environment-list__container">
-        <Environment
-          v-for="environment in environments"
-          v-bind:env="environment"
-          :key="environment.Name"
-        />
-    </div>
+  <div class="environment-list__container">
+    <Environment v-for="env in filteredEnvs" v-bind:env="env" :key="env.Name"/>
+  </div>
 </template>
 
 <script>
@@ -18,8 +14,24 @@ export default {
   },
   props: {
     environments: Array,
+    filters: Array,
+  },
+  computed: {
+    filteredEnvs() {
+      return this.environments.filter(
+        env => this.filters.some(
+          (f) => {
+            if (typeof (f.value) === 'string') {
+              return (env[f.field] || '').toLowerCase() === f.value.toLowerCase();
+            }
+            return env[f.field] === f.value;
+          },
+        ),
+      );
+    },
   },
 };
+
 </script>
 
 <style scoped lang="scss">

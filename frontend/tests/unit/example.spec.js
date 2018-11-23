@@ -1,12 +1,18 @@
-import { shallowMount } from '@vue/test-utils';
-import Instance from '@/components/Instance.vue';
+import {
+  shallowMount,
+} from '@vue/test-utils';
+import Environment from '@/components/Environment.vue';
 
-describe('Instance.vue', () => {
-  it('renders props.name when passed', () => {
-    const name = 'Instance Name';
-    const wrapper = shallowMount(Instance, {
-      propsData: { name },
+describe('Environment.vue', () => {
+  it('renders the name of the environment passed', () => {
+    const env = {
+      Name: 'Environment Name',
+    };
+    const wrapper = shallowMount(Environment, {
+      propsData: {
+        env,
+      },
     });
-    expect(wrapper.text()).toMatch(msg);
+    expect(wrapper.text()).toMatch(env.Name);
   });
 });

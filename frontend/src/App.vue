@@ -1,25 +1,31 @@
 <template>
   <div id="app">
-    <Header />
-    <EnvironmentList v-bind:environments="environments"/>
+    <Header v-bind:version="version"/>
+    <FilterList @updatedFilters="applyFilters"/>
+    <EnvironmentList v-bind:environments="environments" v-bind:filters="filters"/>
     <p v-if="error" class="error-message">{{ error }}</p>
   </div>
 </template>
 
 <script>
 import EnviromentsApi from '@/services/api/Environments';
+import MetadataApi from '@/services/api/Metadata';
 import Header from '@/components/Header.vue';
 import EnvironmentList from '@/components/EnvironmentList.vue';
+import FilterList from '@/components/FilterList.vue';
 
 export default {
   name: 'app',
   components: {
     EnvironmentList,
+    FilterList,
     Header,
   },
   data() {
     return {
+      version: '',
       environments: [],
+      filters: [],
       isLoading: false,
       error: '',
     };
@@ -29,8 +35,18 @@ export default {
       .then((data) => {
         this.environments = data;
       })
-      .catch((e) => { this.error = e.error; })
+      .catch((e) => { this.error = e.response.data.error; })
       .finally(() => { this.isLoading = false; });
+
+    MetadataApi.getVersion()
+      .then((data) => {
+        this.version = data.version;
+      });
+  },
+  methods: {
+    applyFilters(f) {
+      this.filters = f;
+    },
   },
 };
 </script>
@@ -47,6 +63,10 @@ export default {
   margin: 0 auto;
   width: 85%;
   max-width: 1000px;
+
+  @media screen and (max-width: 450px) {
+    width: 100%;
+  }
 
   .error-message {
     color: #ef0078;

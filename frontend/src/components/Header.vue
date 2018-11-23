@@ -6,7 +6,7 @@
       <span>AWS Power-Toggle</span>
     </div>
     <nav>
-      <span class="version-container">v0.1.0</span>
+      <span class="version-container">{{versionLabel}}</span>
       <a target="_blank" href="https://github.com/gbolo/aws-power-toggle">GitHub</a>
     </nav>
   </header>
@@ -15,6 +15,17 @@
 <script>
 export default {
   name: 'Header',
+  props: {
+    version: String,
+  },
+  computed: {
+    versionLabel() {
+      if (!this.version) {
+        return '';
+      }
+      return (/^\d/.test(this.version) ? `v${this.version}` : this.version);
+    },
+  },
 };
 </script>
 

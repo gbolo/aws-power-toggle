@@ -1,27 +1,27 @@
 <template>
-  <div class='environment'>
-    <div class='environment__header'>
-      <span class='environment__name'>{{ env.Name }}</span>
-      <StatusBadge v-bind:isRunning='isRunning' v-bind:text='env.State'/>
+  <div class="environment">
+    <div class="environment__header">
+      <span class="environment__name">{{ env.Name }}</span>
+      <StatusBadge v-bind:text="env.State"/>
     </div>
-    <div class='environment__content'>
+    <div class="environment__content">
       <p>Instances Running: {{env.RunningInstances}}/{{env.TotalInstances}}</p>
       <button
-        v-if='!isRunning &&
-        !isLoading'
-        class='button start'
-        @click='start(env.Name)'
+        v-if="!isRunning &&
+        !isLoading"
+        class="button start"
+        @click="start(env.Name)"
       >Start</button>
       <button
-        v-if='isRunning && !isLoading'
-        class='button stop'
-        @click='stop(env.Name)'
+        v-if="isRunning && !isLoading"
+        class="button stop"
+        @click="stop(env.Name)"
       >Stop</button>
-      <button v-if='isLoading' class='button disabled'>...</button>
+      <button v-if="isLoading" class="button disabled">...</button>
     </div>
-    <div v-if='error' class='environment__error-container'>
-      <p class='error-message'>{{ error }}</p>
-      <p class='clear-error-message' @click='clearError'>Clear Error</p>
+    <div v-if="error" class="environment__error-container">
+      <p class="error-message">{{ error }}</p>
+      <p class="clear-error-message" @click="clearError">Clear Error</p>
     </div>
   </div>
 </template>
@@ -59,7 +59,7 @@ export default {
           console.log(response);
         })
         .catch((e) => {
-          this.error = e.error;
+          this.error = e.response.data.error;
         })
         .finally(() => {
           this.isLoading = false;
@@ -71,7 +71,7 @@ export default {
           console.log(response);
         })
         .catch((e) => {
-          this.error = e.error;
+          this.error = e.response.data.error;
         })
         .finally(() => {
           this.isLoading = false;
