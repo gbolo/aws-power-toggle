@@ -31,7 +31,7 @@ docker run -d --name "aws-power-toggle" \
  -p 8080:8080 \
  -e "AWS_ACCESS_KEY_ID=<your_key_id>" \
  -e "AWS_SECRET_ACCESS_KEY=<your_secret_key>" \
- gbolo/aws-power-toggle:latest
+ gbolo/aws-power-toggle:1.1
 ```
 
 Then open your browser to: [http://127.0.0.1:8080](http://127.0.0.1:8080)

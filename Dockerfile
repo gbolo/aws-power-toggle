@@ -33,4 +33,5 @@ COPY  --from=builder /tmp/build/ /opt/aws-pt/
 USER  65534
 
 # Inherit gbolo/baseos entrypoint and pass it this argument
-CMD  ["/opt/aws-pt/aws-power-toggle", "-config", "/opt/aws-pt/power-toggle-config.yaml"]
+WORKDIR /opt/aws-pt/
+CMD     ["/opt/aws-pt/aws-power-toggle", "-config", "/opt/aws-pt/power-toggle-config.yaml"]

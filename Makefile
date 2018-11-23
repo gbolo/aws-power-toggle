@@ -1,6 +1,6 @@
 PACKAGE     = aws-power-toggle
 DATE       ?= $(shell date +%FT%T%z)
-VERSION     = 1.0-poc
+VERSION     = 1.1
 COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
 BIN         = $(CURDIR)/bin
 
