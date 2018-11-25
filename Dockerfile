@@ -14,7 +14,9 @@ RUN   set -xe; \
       cd ${SRC_DIR}; \
       mkdir -p /tmp/build && \
       make all && \
-      cp -rp www testdata/sampleconfig/power-toggle-config.yaml bin/aws-power-toggle /tmp/build/
+      cd frontend; npm install && npm run build && cd ..; \
+      cp -rp frontend/dist /tmp/build/frontend; \
+      cp -rp testdata/sampleconfig/power-toggle-config.yaml bin/aws-power-toggle /tmp/build/
 
 
 #
@@ -22,6 +24,9 @@ RUN   set -xe; \
 #
 
 FROM  gbolo/baseos:alpine
+
+# prepare env vars
+ENV   POWER_TOGGLE_SERVER_STATIC_FILES_DIR /opt/aws-pt/frontend
 
 # prepare homedir
 RUN   mkdir -p /opt/aws-pt
@@ -33,5 +38,4 @@ COPY  --from=builder /tmp/build/ /opt/aws-pt/
 USER  65534
 
 # Inherit gbolo/baseos entrypoint and pass it this argument
-WORKDIR /opt/aws-pt/
 CMD     ["/opt/aws-pt/aws-power-toggle", "-config", "/opt/aws-pt/power-toggle-config.yaml"]

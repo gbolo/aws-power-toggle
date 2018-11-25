@@ -84,6 +84,7 @@ func printConfigSummary() {
 		"server.bind_address",
 		"server.bind_port",
 		"server.tls.enabled",
+		"server.access_log",
 		"aws.region",
 		"aws.polling_interval",
 		"aws.required_tag_key",
