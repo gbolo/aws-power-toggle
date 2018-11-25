@@ -4,7 +4,7 @@ web UI and API for quickly starting and stopping AWS environments
 <img src="https://raw.githubusercontent.com/gbolo/aws-power-toggle/master/testdata/screenshots/v1-0-poc_mobile.png" width="432" />
 
 ## Getting Started
-aws-power-toggle groups your instances by environments (via instance tag [described below](#Required Tags)), then allows you power toggle
+aws-power-toggle groups your instances by environments (via instance tag [described below](#Required-Tags)), then allows you power toggle
 them with a single action. This can be very useful when you have to deal with a ton of developers who have multiple environments
 and need to use them sporadically. While you could leave them on all the time, it may result in your boss(es) freaking out about the bill :)
 Just hand this web UI and/or API to the devs and let them decide when to start/stop the environment(s).
@@ -58,22 +58,34 @@ make all
 curl -v 127.0.0.1:8080/api/env/summary
 ```
 
-### API Examples
-install `jq` to make your life easier
+### API Documentation
+For further details on an API endpoint (including example responses), click on the endpoint's name.
 
-```
-### List environments and their state
-curl -s -X GET 127.0.0.1:8080/api/env | jq -r '.[] | "\(.Name): \(.State)"'
+* [EnvAllSummary](docs/api/env_all_summary.md): `GET /api/v1/env/summary` retrieves a summary of all known environments
 
-### Shutdown an environment (example kube)
-curl -s -X POST 127.0.0.1:8080/api/env/powerdown/kube | jq .
+* [EnvSummary](docs/api/env_summary.md): `GET /api/v1/env/{env-id}/summary` retrieves a summary of a single environment
 
-### Refresh environment cache
-curl -s -X POST 127.0.0.1:8080/api/env/refresh | jq .
+* [EnvAllDetails](docs/api/env_all_details.md): `GET /api/v1/env/details` retrieves full details of all known environments (including list of instances)
 
-### Start up and environment (example kube)
-curl -s -X POST 127.0.0.1:8080/api/env/startup/kube | jq .
-```
+* [EnvDetails](docs/api/env_details.md): `GET /api/v1/env/{env-id}/details` retrieves full details of a single environment (including list of instances)
+
+* [StopEnv](docs/api/env_stop.md): `POST /api/v1/env/{env-id}/stop` triggers a shutdown of an environment
+
+* [StartEnv](docs/api/env_start.md): `POST /api/v1/env/{env-id}/start` triggers a startup of an environment
+
+* [StopInstance](docs/api/instance_stop.md): `POST /api/v1/instance/{instance-id}/stop` triggers a shutdown of a single instance
+
+* [StartInstance](docs/api/instance_start.md): `POST /api/v1/instance/{instance-id}/start` triggers a startup of a single instance
+
+* [Refresh](docs/api/refresh.md): `POST /api/v1/refresh` forces backend to refresh it's cache
+
+* [Version](docs/api/version.md): `GET /api/v1/version` returns backend version information
+
+
+#### TODO:
+Need to finish these...
+
+* [Config](docs/api/config.md): `GET /api/v1/config` returns relevant backend configuration
 
 ### Enabling AWS API mocking (web dev mode)
 It may be useful to mock the aws API when doing development work against the API (like for web ui development).

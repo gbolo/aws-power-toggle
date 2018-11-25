@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/liip/sheriff"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -14,10 +15,12 @@ const (
 	// defines environment states
 	// means that ALL instances for an env are in "running" state
 	ENV_RUNNING = "running"
-	// means that AT LEAST ONE instance for an env is NOT in a "running" state
+	// means that ALL instances for an env are in "stopped" state
 	ENV_DOWN = "stopped"
+	// means that instances for an env are in EITHER "stopped" or "running" state
+	ENV_MIXED = "mixed"
 	// means that AT LEAST ONE instance for an env is NOT in a "running" state or "stopped" state
-	ENV_CHANGING = "changing-state"
+	ENV_CHANGING = "changing"
 
 	// enables mocking of API calls to aws for development purposes
 	MOCK_ENABLED = false
@@ -40,52 +43,99 @@ var (
 	envNameIgnore []string
 )
 
-type ec2Instance struct {
-	Id          string
-	Type        string
-	Name        string
-	State       string
-	Environment string
-	VCPU        int
-	MemoryGB    float32
+type virtualMachine struct {
+	// Id unique to this application
+	Id string `json:"id" groups:"summary,details"`
+
+	// these values are straight from aws api
+	InstanceId   string `json:"instance_id" groups:"summary,details"`
+	InstanceType string `json:"instance_type" groups:"summary,details"`
+	Name         string `json:"name" groups:"summary,details"`
+	State        string `json:"state" groups:"summary,details"`
+	Environment  string `json:"environment" groups:"summary,details"`
+
+	// these values are mapped from another source for aws
+	VCPU     int     `json:"vcpu" groups:"summary,details"`
+	MemoryGB float32 `json:"memory_gb" groups:"summary,details"`
 }
 
-type ec2Environment struct {
-	Name          string
-	Instances     []ec2Instance
-	TotalvCPU     int
-	TotalMemoryGB float32
-	State         string
-}
+type environment struct {
+	// Id unique to this application
+	Id        string           `json:"id" groups:"summary,details"`
+	Provider  string           `json:"provider" groups:"summary,details"`
+	Region    string           `json:"region" groups:"summary,details"`
+	Name      string           `json:"name" groups:"summary,details"`
+	Instances []virtualMachine `json:"instances" groups:"details"`
 
-type ec2EnvironmentSummary struct {
-	Name             string
-	RunningInstances int
-	TotalInstances   int
-	TotalvCPU        int
-	TotalMemoryGB    float32
-	State            string
+	// these values are calculated based on list of Instances
+	RunningInstances int     `json:"running_instances" groups:"summary,details"`
+	StoppedInstances int     `json:"stopped_instances" groups:"summary,details"`
+	TotalInstances   int     `json:"total_instances" groups:"summary,details"`
+	TotalVCPU        int     `json:"total_vcpu" groups:"summary,details"`
+	TotalMemoryGB    float32 `json:"total_memory_gb" groups:"summary,details"`
+	State            string  `json:"state" groups:"summary,details"`
 }
 
 // for global cached table
-type envList []ec2Environment
+type envList []environment
 
 // updateEnvDetails
-// determines details like: State, TotalvCPU, TotalMemoryGB
+// determines details like: State, TotalVCPU, TotalMemoryGB
 func updateEnvDetails() {
 	for i, env := range cachedTable {
-		cachedTable[i].State = ENV_RUNNING
-		for _, instance := range env.Instances {
+		// these are not fully used yet (currently only for api response)
+		// in future we may support other providers and multiple regions
+		cachedTable[i].Provider = "aws"
+		cachedTable[i].Region = awsRegion
+
+		// compute a unique identifier for this environment
+		cachedTable[i].Id = ComputeId(
+			cachedTable[i].Provider,
+			cachedTable[i].Region,
+			env.Name,
+		)
+
+		// vm total count
+		cachedTable[i].TotalInstances = len(env.Instances)
+		// reset counts
+		cachedTable[i].RunningInstances = 0
+		cachedTable[i].StoppedInstances = 0
+		cachedTable[i].TotalVCPU = 0
+		cachedTable[i].TotalMemoryGB = 0
+
+		// determine counts
+		for c, instance := range env.Instances {
+			// compute a unique identifier for this instance
+			//   InstanceId is already unique, but this will make ids consistent
+			//   in case we add other cloud providers
+			cachedTable[i].Instances[c].Id = ComputeId(
+				cachedTable[i].Provider,
+				cachedTable[i].Region,
+				instance.InstanceId,
+			)
+
 			// update cpu and memory counts
-			cachedTable[i].TotalvCPU += instance.VCPU
+			cachedTable[i].TotalVCPU += instance.VCPU
 			cachedTable[i].TotalMemoryGB += instance.MemoryGB
-			// determine env state
-			if instance.State != "running" && instance.State != "stopped" {
-				cachedTable[i].State = ENV_CHANGING
-				break
-			} else if instance.State == "stopped" {
-				cachedTable[i].State = ENV_DOWN
+			// update vm states
+			switch instance.State {
+			case "running":
+				cachedTable[i].RunningInstances++
+			case "stopped":
+				cachedTable[i].StoppedInstances++
 			}
+		}
+
+		// determine environment state
+		switch {
+		case cachedTable[i].TotalInstances == cachedTable[i].RunningInstances:
+			cachedTable[i].State = ENV_RUNNING
+		case cachedTable[i].TotalInstances == cachedTable[i].StoppedInstances:
+			cachedTable[i].State = ENV_DOWN
+		case cachedTable[i].TotalInstances == (cachedTable[i].RunningInstances + cachedTable[i].StoppedInstances):
+			cachedTable[i].State = ENV_MIXED
+		default:
+			cachedTable[i].State = ENV_CHANGING
 		}
 	}
 }
@@ -122,12 +172,12 @@ func validateEnvName(envName string) (ok bool) {
 }
 
 // adds and instance to cachedTable
-func addInstance(instance *ec2Instance) {
+func addInstance(instance *virtualMachine) {
 	// check if we should ignore instance based on:
 	//  - configured ignored instance types
 	//  - instance state is "terminated"
-	if !checkInstanceType(instance.Type) || instance.State == "terminated" {
-		log.Debugf("instance is being ignored: name='%s' [%s](%s)\n", instance.Name, instance.Type, instance.State)
+	if !checkInstanceType(instance.InstanceType) || instance.State == "terminated" {
+		log.Debugf("instance is being ignored: name='%s' [%s](%s)\n", instance.Name, instance.InstanceType, instance.State)
 		return
 	}
 	envExists := false
@@ -138,9 +188,9 @@ func addInstance(instance *ec2Instance) {
 		}
 	}
 	if !envExists {
-		ec2env := ec2Environment{
+		ec2env := environment{
 			Name:      instance.Environment,
-			Instances: []ec2Instance{*instance},
+			Instances: []virtualMachine{*instance},
 		}
 		cachedTable = append(cachedTable, ec2env)
 	}
@@ -175,7 +225,7 @@ func refreshTable() (err error) {
 
 	for _, reservation := range resp.Reservations {
 		for _, instance := range reservation.Instances {
-			instanceObj := ec2Instance{Id: *instance.InstanceId, State: string(instance.State.Name), Type: string(instance.InstanceType)}
+			instanceObj := virtualMachine{InstanceId: *instance.InstanceId, State: string(instance.State.Name), InstanceType: string(instance.InstanceType)}
 			// populate info from tags
 			for _, tag := range instance.Tags {
 				if *tag.Key == environmentTagKey && *tag.Value != "" {
@@ -186,7 +236,7 @@ func refreshTable() (err error) {
 				}
 			}
 			// determine instance cpu and memory
-			if details, found := getInstanceTypeDetails(instanceObj.Type); found {
+			if details, found := getInstanceTypeDetails(instanceObj.InstanceType); found {
 				instanceObj.MemoryGB = details.MemoryGB
 				instanceObj.VCPU = details.VCPU
 			}
@@ -200,98 +250,164 @@ func refreshTable() (err error) {
 	return
 }
 
-// get instance ids for an environment
-func getInstanceIds(envName string) (instanceIds []string) {
+// get instance ids for an environment with a specific state
+// this is used for power up/down commands against aws API
+func getInstanceIds(envId, state string) (instanceIds []string) {
 	for _, env := range cachedTable {
-		if env.Name == envName {
+		if env.Id == envId {
 			for _, instance := range env.Instances {
-				instanceIds = append(instanceIds, instance.Id)
+				if instance.State == state {
+					instanceIds = append(instanceIds, instance.InstanceId)
+				}
 			}
 		}
 	}
 	return
 }
 
-// shuts down an env
-func shutdownEnv(envName string) (response []byte, err error) {
-	// use the mock function if enabled
-	if MOCK_ENABLED {
-		return mockShutdownEnv(envName)
+// toggleInstances can start or stop a list of instances
+func toggleInstances(instanceIds []string, desiredState string) (response []byte, err error) {
+	if len(instanceIds) < 1 {
+		err = fmt.Errorf("no instanceIds have been provided")
+		return
 	}
 
-	instanceIds := getInstanceIds(envName)
-	if len(instanceIds) > maxInstancesToShutdown {
-		err = fmt.Errorf("SAFETY: env [%s] has too many associated instances to shutdown %d", envName, len(instanceIds))
-		log.Debugf("SAFETY: instances: %v", instanceIds)
-	} else if len(instanceIds) > 0 {
-		input := &ec2.StopInstancesInput{
-			InstanceIds: instanceIds,
-			DryRun:      aws.Bool(false),
-		}
-
-		req := awsClient.StopInstancesRequest(input)
-		resp, reqErr := req.Send()
-		response, _ = json.MarshalIndent(resp, "", "  ")
-		if reqErr != nil {
-			log.Errorf("aws api error [%s]: %v", envName, reqErr)
-			err = reqErr
-		} else {
-			log.Infof("successfully stopped env %s", envName)
-		}
-	} else {
-		err = fmt.Errorf("env [%s] has no associated instances", envName)
-		log.Errorf("env [%s] has no associated instances", envName)
-	}
-	return
-}
-
-// starts up an env
-func startupEnv(envName string) (response []byte, err error) {
-	// use the mock function if enabled
-	if MOCK_ENABLED {
-		return mockStartupEnv(envName)
-	}
-
-	instanceIds := getInstanceIds(envName)
-	if len(instanceIds) > 0 {
+	// supported states are: start, stop
+	switch desiredState {
+	case "start":
 		input := &ec2.StartInstancesInput{
 			InstanceIds: instanceIds,
 			DryRun:      aws.Bool(false),
 		}
 
 		req := awsClient.StartInstancesRequest(input)
-		resp, reqErr := req.Send()
-		response, _ = json.MarshalIndent(resp, "", "  ")
-		if reqErr != nil {
-			log.Errorf("aws api error [%s]: %v", envName, reqErr)
-			err = reqErr
+		awsResponse, reqErr := req.Send()
+		response, _ = json.MarshalIndent(awsResponse, "", "  ")
+		err = reqErr
+		return
+
+	case "stop":
+		input := &ec2.StopInstancesInput{
+			InstanceIds: instanceIds,
+			DryRun:      aws.Bool(false),
+		}
+
+		req := awsClient.StopInstancesRequest(input)
+		awsResponse, reqErr := req.Send()
+		response, _ = json.MarshalIndent(awsResponse, "", "  ")
+		err = reqErr
+		return
+
+	default:
+		err = fmt.Errorf("unsupported desiredState soecified")
+		return
+	}
+}
+
+// shuts down an env
+func shutdownEnv(envId string) (response []byte, err error) {
+	// use the mock function if enabled
+	if MOCK_ENABLED {
+		return mockShutdownEnv(envId)
+	}
+
+	instanceIds := getInstanceIds(envId, "running")
+	if len(instanceIds) > maxInstancesToShutdown {
+		err = fmt.Errorf("SAFETY: env [%s] has too many associated instances to shutdown %d", envId, len(instanceIds))
+		log.Debugf("SAFETY: instances: %v", instanceIds)
+	} else if len(instanceIds) > 0 {
+		response, err = toggleInstances(instanceIds, "stop")
+		if err != nil {
+			log.Errorf("error trying to stop env %s: %v", envId, err)
 		} else {
-			log.Infof("successfully started env %s", envName)
+			log.Infof("successfully stopped env %s", envId)
 		}
 	} else {
-		err = fmt.Errorf("env [%s] has no associated instances", envName)
-		log.Errorf("env [%s] has no associated instances", envName)
+		err = fmt.Errorf("env [%s] has no associated instances", envId)
+		log.Errorf("env [%s] has no associated instances", envId)
 	}
 	return
 }
 
-// returns an env Summary
-func getEnvSummary() (envSummary []ec2EnvironmentSummary) {
+// starts up an env
+func startupEnv(envId string) (response []byte, err error) {
+	// use the mock function if enabled
+	if MOCK_ENABLED {
+		return mockStartupEnv(envId)
+	}
+
+	instanceIds := getInstanceIds(envId, "stopped")
+	if len(instanceIds) > 0 {
+		response, err = toggleInstances(instanceIds, "start")
+		if err != nil {
+			log.Errorf("error trying to start env %s: %v", envId, err)
+		} else {
+			log.Infof("successfully started env %s", envId)
+		}
+	} else {
+		err = fmt.Errorf("env [%s] has no associated instances", envId)
+		log.Errorf("env [%s] has no associated instances", envId)
+	}
+	return
+}
+
+// starts up an instance based on internal id (not aws instance id)
+func toggleInstance(id, desiredState string) (response []byte, err error) {
+	// use the mock function if enabled
+	if MOCK_ENABLED {
+		return mockToggleInstance(id, desiredState)
+	}
+
+	// validate desiredState
+	if desiredState != "start" && desiredState != "stop" {
+		err = fmt.Errorf("invalid desired state: %s", desiredState)
+		return
+	}
+	// get the AWS instance id
+	awsInstanceId := getAWSInstanceId(id)
+	if awsInstanceId != "" {
+		response, err = toggleInstances([]string{awsInstanceId}, desiredState)
+		if err != nil {
+			log.Errorf("error trying to %s instance %s: %v", desiredState, id, err)
+		} else {
+			log.Infof("successfully toggled instance state (%s): %s", desiredState, id)
+		}
+	} else {
+		err = fmt.Errorf("no mapping found between internal id (%s) and aws instance id", id)
+	}
+	return
+}
+
+// returns a single environment by id
+func getEnvironmentById(envId string) (environment, bool) {
 	for _, env := range cachedTable {
-		running := 0
+		if env.Id == envId {
+			return env, true
+		}
+	}
+	return environment{}, false
+}
+
+// given an aws-power-toggle id, it will return the actual aws instance id
+func getAWSInstanceId(id string) (awsInstanceId string) {
+	for _, env := range cachedTable {
 		for _, instance := range env.Instances {
-			if instance.State == "running" {
-				running++
+			if instance.Id == id {
+				awsInstanceId = instance.InstanceId
+				break
 			}
 		}
-		envSummary = append(envSummary, ec2EnvironmentSummary{
-			Name:             env.Name,
-			State:            env.State,
-			RunningInstances: running,
-			TotalvCPU:        env.TotalvCPU,
-			TotalMemoryGB:    env.TotalMemoryGB,
-			TotalInstances:   len(env.Instances),
-		})
+	}
+	return
+}
+
+func getMarshalledRespone(data interface{}, groups ...string) (response []byte, err error) {
+	// filter out the specified group(s)
+	if sMarshal, sErr := sheriff.Marshal(&sheriff.Options{Groups: groups}, data); sErr != nil {
+		log.Errorf("error parsing json (sheriff): %v", sErr)
+		err = sErr
+	} else {
+		response, err = json.Marshal(sMarshal)
 	}
 	return
 }

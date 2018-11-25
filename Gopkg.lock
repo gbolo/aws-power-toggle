@@ -64,6 +64,14 @@
   version = "v1.6.2"
 
 [[projects]]
+  digest = "1:8c7fb7f81c06add10a17362abc1ae569ff9765a26c061c6b6e67c909f4f414db"
+  name = "github.com/hashicorp/go-version"
+  packages = ["."]
+  pruneopts = ""
+  revision = "b5a281d3160aa11950a6182bd9a9dc2cb1e02d50"
+  version = "v1.0.0"
+
+[[projects]]
   digest = "1:d14365c51dd1d34d5c79833ec91413bfbb166be978724f15701e17080dc06dec"
   name = "github.com/hashicorp/hcl"
   packages = [
@@ -88,6 +96,14 @@
   packages = ["."]
   pruneopts = ""
   revision = "0b12d6b5"
+
+[[projects]]
+  digest = "1:b18132857606d5d08096e23ef1a46488ee1ac25dc7d276ca5db1cc204bb898d5"
+  name = "github.com/liip/sheriff"
+  packages = ["."]
+  pruneopts = ""
+  revision = "0ae0e1f38ffdeff014c9c7af0a1d3cc04f639b5e"
+  version = "0.3.0"
 
 [[projects]]
   digest = "1:961dc3b1d11f969370533390fdf203813162980c858e1dabe827b60940c909a5"
@@ -166,11 +182,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:2e1aadff5bda52e267975408bf6b5e90135fc643829c9e4e964ff82c3826a1dd"
+  digest = "1:303c0ee48d6229a2423950f41b3ccb5a2067dc4c7b65f8863cfbd962bef05a85"
   name = "golang.org/x/sys"
   packages = ["unix"]
   pruneopts = ""
-  revision = "0cf1ed9e522b7dbb416f080a5c8003de9b702bf4"
+  revision = "62eef0e2fa9b2c385f7b2778e763486da6880d37"
 
 [[projects]]
   digest = "1:5acd3512b047305d49e8763eef7ba423901e85d5dd2fd1e71778a0ea8de10bd4"
@@ -204,6 +220,7 @@
     "github.com/aws/aws-sdk-go-v2/service/ec2",
     "github.com/gorilla/handlers",
     "github.com/gorilla/mux",
+    "github.com/liip/sheriff",
     "github.com/op/go-logging",
     "github.com/spf13/viper",
   ]
