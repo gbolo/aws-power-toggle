@@ -1,4 +1,4 @@
-package main
+package backend
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ var (
 	BuildDate = "unknown"
 )
 
-func printVersion() {
+func PrintVersion() {
 	fmt.Printf(`aws-power-toggle:
   version     : %s
   build date  : %s

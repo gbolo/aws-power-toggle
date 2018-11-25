@@ -2,7 +2,7 @@
 
 // enforce go 1.8+ just so we can support X25519 curve :)
 
-package main
+package backend
 
 import (
 	"crypto/tls"

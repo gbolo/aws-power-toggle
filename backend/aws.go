@@ -1,4 +1,4 @@
-package main
+package backend
 
 import (
 	"encoding/json"
@@ -401,6 +401,7 @@ func getAWSInstanceId(id string) (awsInstanceId string) {
 	return
 }
 
+// getMarshalledRespone will filter out fields from the struct based on predefined groups
 func getMarshalledRespone(data interface{}, groups ...string) (response []byte, err error) {
 	// filter out the specified group(s)
 	if sMarshal, sErr := sheriff.Marshal(&sheriff.Options{Groups: groups}, data); sErr != nil {
@@ -412,7 +413,7 @@ func getMarshalledRespone(data interface{}, groups ...string) (response []byte, 
 	return
 }
 
-// starts the poller
+// StartPoller is an infinite loop which periodically polls AWS to refresh the cache
 func StartPoller() {
 	// build the initial cache
 	refreshTable()
