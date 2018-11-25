@@ -1,11 +1,22 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
 )
+
+const (
+	ApiVersion     = "1"
+	endpointFormat = "/api/v%s/%s"
+)
+
+// getEndpoint returns a properly formatted API endpoint
+func getEndpoint(suffix string) string {
+	return fmt.Sprintf(endpointFormat, ApiVersion, suffix)
+}
 
 type Route struct {
 	Name        string
@@ -16,47 +27,46 @@ type Route struct {
 
 type Routes []Route
 
-// all defined api routes
+// all defined server endpoints
 var routes = Routes{
 
 	// API endpoints
 	Route{
 		"Version",
 		"GET",
-		"/api/version",
+		getEndpoint("version"),
 		handlerVersion,
-	},
-	Route{
-		"Environments",
-		"GET",
-		"/api/env",
-		handlerEnv,
-	},
-	Route{
-		"Environments",
-		"GET",
-		"/api/env/summary",
-		handlerEnvSummary,
 	},
 	Route{
 		"Refresh",
 		"POST",
-		"/api/env/refresh",
-		handlerEnvRefresh,
+		getEndpoint("refresh"),
+		handlerRefresh,
 	},
 	Route{
-		"StartUp",
-		"POST",
-		"/api/env/startup/{env}",
-		handlerEnvStartup,
+		"EnvAll",
+		"GET",
+		getEndpoint("env/{group:summary|details}"),
+		handlerEnvAll,
 	},
 	Route{
-		"PowerDown",
-		"POST",
-		"/api/env/powerdown/{env}",
-		handlerEnvPowerdown,
+		"EnvSingle",
+		"GET",
+		getEndpoint("env/{env-id}/{group:summary|details}"),
+		handlerEnvSingle,
 	},
-
+	Route{
+		"EnvPowerToggle",
+		"POST",
+		getEndpoint("env/{env-id}/{state:start|stop}"),
+		handlerEnvPowerToggle,
+	},
+	Route{
+		"InstancePowerToggle",
+		"POST",
+		getEndpoint("instance/{instance-id}/{state:start|stop}"),
+		handlerInstancePowerToggle,
+	},
 	// UI endpoints
 	Route{
 		"Main",

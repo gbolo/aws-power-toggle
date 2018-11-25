@@ -12,7 +12,7 @@ $(document).on('click','.start-button',function(){
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: '/api/env/startup/' + $(this).data('env'),
+        url: '/api/v1/env/' + $(this).data('env') + '/start',
 
         beforeSend: function(){
             button.innerHTML = '<i class="fas fa-hourglass-start"></i> <strong>sending</strong>';
@@ -35,7 +35,7 @@ $(document).on('click','.stop-button',function(){
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: '/api/env/powerdown/' + $(this).data('env'),
+        url: '/api/v1/env/' + $(this).data('env') + '/stop',
 
         beforeSend: function(){
             button.innerHTML = '<i class="fas fa-hourglass-start"></i> <strong>sending</strong>';
@@ -64,7 +64,7 @@ function drawEnvs(envDataAjax) {
     // loop through all envs
     for(var i = 0; i < envDataAjax.length; i++) {
         var env = envDataAjax[i];
-        var running = env.RunningInstances + '/' + env.TotalInstances
+        var running = env.running_instances + '/' + env.total_instances
 
         iconStart = document.createElement('i');
         iconStart.classList.add("fa", "fa-play");
@@ -79,6 +79,9 @@ function drawEnvs(envDataAjax) {
         labelChanging = document.createElement('span');
         labelChanging.classList.add("badge", "badge-warning");
         labelChanging.innerText = "changing";
+        labelMixed = document.createElement('span');
+        labelMixed.classList.add("badge", "badge-warning");
+        labelMixed.innerText = "mixed";
 
         buttonStart = document.createElement('button');
         buttonStart.classList.add("btn", "btn-info", "start-button");
@@ -86,7 +89,7 @@ function drawEnvs(envDataAjax) {
         buttonStartText.innerText = " START";
         buttonStart.appendChild(iconStart);
         buttonStart.appendChild(buttonStartText);
-        buttonStart.dataset.env = env.Name;
+        buttonStart.dataset.env = env.id;
 
         buttonStop = document.createElement('button');
         buttonStop.classList.add("btn", "btn-secondary", "stop-button");
@@ -94,7 +97,7 @@ function drawEnvs(envDataAjax) {
         buttonStopText.innerText = " STOP";
         buttonStop.appendChild(iconStop);
         buttonStop.appendChild(buttonStopText);
-        buttonStop.dataset.env = env.Name;
+        buttonStop.dataset.env = env.id;
 
         divCardBody = document.createElement('div');
         divCardBody.classList.add("card-body");
@@ -104,13 +107,15 @@ function drawEnvs(envDataAjax) {
 
         divCardHeader = document.createElement('h5');
         divCardHeader.classList.add("card-header");
-        divCardHeader.textContent = env.Name;
-        if (env.State == "running") {
+        divCardHeader.textContent = env.name;
+        if (env.state == "running") {
             divCardHeader.appendChild(labelRunning);
-        } else if (env.State == "stopped") {
+        } else if (env.state == "stopped") {
             divCardHeader.appendChild(labelStopped);
-        } else if (env.State == "changing-state") {
+        } else if (env.state == "changing") {
             divCardHeader.appendChild(labelChanging);
+        } else {
+            divCardHeader.appendChild(labelMixed);
         }
 
         divCard = document.createElement('div');
@@ -137,7 +142,7 @@ async function writeEnvs() {
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: '/api/env/summary',
+        url: '/api/v1/env/summary',
 
         success: function(envDataResponse) {
             // clean loading screen

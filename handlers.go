@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -18,75 +17,108 @@ func handlerVersion(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprint(w, getVersionResponse())
 }
 
-// returns all envs
-func handlerEnv(w http.ResponseWriter, req *http.Request) {
-
-	jData, err := json.Marshal(cachedTable)
-	if err != nil {
-		log.Errorf("error parsing json: %v", err)
-	}
+// handler for all environments
+func handlerEnvAll(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(jData)
-}
-
-// returns summary of all envs
-func handlerEnvSummary(w http.ResponseWriter, req *http.Request) {
 
 	// refresh the data
 	if err := refreshTable(); err != nil {
 		log.Errorf("refresh error: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, "{\"error\":\"%v\"}\n", err)
 		return
 	}
 
-	// return result
-	jData, err := json.Marshal(getEnvSummary())
+	// get vars from request to determine if environment id was specified
+	vars := mux.Vars(req)
+	group := vars["group"]
+
+	// prepare result and return it
+	if response, err := getMarshalledRespone(cachedTable, group); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "{\"error\":\"%v\"}\n", err)
+	} else {
+		w.Write(response)
+	}
+}
+
+// handler for single environment
+func handlerEnvSingle(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	// refresh the data
+	if err := refreshTable(); err != nil {
+		log.Errorf("refresh error: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "{\"error\":\"%v\"}\n", err)
+		return
+	}
+
+	// get vars from request to determine if environment id was specified
+	vars := mux.Vars(req)
+	envId := vars["env-id"]
+	group := vars["group"]
+
+	// filter this environment id
+	envData, found := getEnvironmentById(envId)
+	if !found {
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, "{\"error\":\"environment not found\"}\n")
+		return
+	}
+	response, err := getMarshalledRespone(envData, group)
+
+	// return filtered result
 	if err != nil {
-		log.Errorf("error parsing json: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "{\"error\":\"%v\"}\n", err)
+	} else {
+		w.Write(response)
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(jData)
 }
 
-// handler to powerdown an env
-func handlerEnvPowerdown(w http.ResponseWriter, req *http.Request) {
-
+// handler for power toggling an environment
+func handlerEnvPowerToggle(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	// get vars from request to determine environment
 	vars := mux.Vars(req)
-	envName := vars["env"]
+	envId := vars["env-id"]
+	state := vars["state"]
 
-	if envName != "" {
-		res, err := shutdownEnv(envName)
-		writeJsonResponse(w, err, res)
-	} else {
+	switch state {
+	case "start":
+		response, err := startupEnv(envId)
+		writeJsonResponse(w, err, response)
+	case "stop":
+		response, err := shutdownEnv(envId)
+		writeJsonResponse(w, err, response)
+	default:
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "{\"error\":\"empty environment name\"}\n")
+		fmt.Fprintf(w, "{\"error\":\"invalid request\"}\n")
 	}
 }
 
-// handler to start up an env
-func handlerEnvStartup(w http.ResponseWriter, req *http.Request) {
-
+// handler for power toggling an instance
+func handlerInstancePowerToggle(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	// get vars from request to determine environment
 	vars := mux.Vars(req)
-	envName := vars["env"]
-	log.Infof("starting env: %s", envName)
+	id := vars["instance-id"]
+	state := vars["state"]
 
-	if envName != "" {
-		res, err := startupEnv(envName)
-		writeJsonResponse(w, err, res)
+	if state == "start" || state == "stop" {
+		response, err := toggleInstance(id, state)
+		writeJsonResponse(w, err, response)
 	} else {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "{\"error\":\"empty environment name\"}\n")
+		fmt.Fprintf(w, "{\"error\":\"invalid request\"}\n")
 	}
 }
 
-// handler to refresh envs
-func handlerEnvRefresh(w http.ResponseWriter, req *http.Request) {
+// handler to refresh cache
+func handlerRefresh(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	if err := refreshTable(); err != nil {
 		log.Errorf("refresh error: %v", err)
@@ -97,6 +129,7 @@ func handlerEnvRefresh(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+// wrapper for json responses with error support
 func writeJsonResponse(w http.ResponseWriter, err error, response []byte) {
 	if err == nil {
 		w.WriteHeader(http.StatusOK)
@@ -111,6 +144,7 @@ func writeJsonResponse(w http.ResponseWriter, err error, response []byte) {
 	}
 }
 
+// handler for main UI page
 func handlerMain(w http.ResponseWriter, req *http.Request) {
 	// write the templated HTML
 	w.WriteHeader(http.StatusOK)

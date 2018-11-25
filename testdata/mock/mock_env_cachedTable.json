@@ -1,0 +1,2323 @@
+[
+  {
+    "id": "56ae78d4805f",
+    "instances": [
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-0a5c68f08c53f5a81",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org3peer4",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-0ab609a3c8fb70025",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org3peer3",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-00061d4c8875b263d",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv1-org2peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-0d1fee52c9633fac6",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org3peer1",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-04a4c3c42912783bf",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv1-org3peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-00b7f2acde2b257f4",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv1-kafka1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-0f5dd015ec55df23d",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org2peer3",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-01e281e66008412c5",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv1-org4peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-023d466a8c9802aed",
+        "instance_type": "t2.2xlarge",
+        "memory_gb": 32,
+        "name": "mockenv1-admin",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-0a7e0901d8a388830",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org2peer1",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-00e9d9726ae79b57c",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org4peer5",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-067d9e1b712c97808",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv1-orderer1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-0607964069781218d",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org3peer5",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-0b9dff025ebe98954",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org2peer4",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-0db1f3649cc30252a",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org1peer1",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-006cbdad6c27666b5",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org1peer5",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-0b635062614f41902",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org1peer4",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-0ce165e54c97354af",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv1-org1peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-092bf46daa1ba864d",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv1-orderer2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-007fe1dee4659994d",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv1-zoo2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-02a865c984a00457b",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org4peer3",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-0fcd4b9773bd76d98",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv1-kafka2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-0537759a63512bbb7",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org4peer1",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-081c2a979f70ef34e",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org4peer4",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-03e949f0b8df6b8fa",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org1peer3",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-06ec7f5c26d0a21ac",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv1-zoo1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv1",
+        "instance_id": "i-04b0e0df81ddbf819",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv1-org2peer5",
+        "state": "stopped",
+        "vcpu": 4
+      }
+    ],
+    "name": "mockenv1",
+    "provider": "aws",
+    "region": "ca-central-1",
+    "running_instances": 0,
+    "state": "stopped",
+    "stopped_instances": 27,
+    "total_instances": 27,
+    "total_memory_gb": 238,
+    "total_vcpu": 112
+  },
+  {
+    "id": "75e4e1a93a3b",
+    "instances": [
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0655e4242278bf53c",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org3admin",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0beb81b9b12b095bd",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org5app2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-047abbc75e0df27c0",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-org6ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-011b515645ad4dc00",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-kafka2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-090b1a428ec4bf9eb",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-org4ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0e7abdd4b4081803d",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org6admin",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0a89bd1a56bd3fd9f",
+        "instance_type": "c5.large",
+        "memory_gb": 4,
+        "name": "mockenv2-org3peer2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-097f9c01c92880f4a",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org4admin",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-058935adf9d3e022d",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org5app1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0e3e419c9c5c5b033",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-orderer2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0a345f92722456c2d",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-org4ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0963676849262ad9b",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org2app1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0a36afd331e1c8707",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org4app1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0473f26821165011b",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-admin",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0275344d2e6448169",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-zoo2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0fedcaac13e21f830",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org2app2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-045641ef1ced05a75",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-org5ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-03cf891551793bb19",
+        "instance_type": "c5.large",
+        "memory_gb": 4,
+        "name": "mockenv2-org4peer2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0daaed23ff0e0863c",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-zoo1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-020bd33c68e581b66",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-orderer1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-03300f1580f195ae2",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-org1ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0203967889caf3e6e",
+        "instance_type": "c5.large",
+        "memory_gb": 4,
+        "name": "mockenv2-org6peer2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0ec603a71d27d4f0f",
+        "instance_type": "c5.large",
+        "memory_gb": 4,
+        "name": "mockenv2-org5peer1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0416dd9eceedf6c15",
+        "instance_type": "c5.large",
+        "memory_gb": 4,
+        "name": "mockenv2-org6peer1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0e0a36c172e5b77d4",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org4app2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-035852a154db41563",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-zoo3",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-01b1e49f8934e18ea",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-kafka1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-020627cfcce463843",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org2admin",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-061d3922415a19815",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org5admin",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-034562753e3a38e68",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-org6ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0f5b5445292b07afc",
+        "instance_type": "c5.large",
+        "memory_gb": 4,
+        "name": "mockenv2-org2peer2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0cf3a247c4fabf863",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-kafka3",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-065a19d641e34e950",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-org2ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0015edfc2a8cccc6d",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-org5ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0a94c398e3526a635",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-kafka4",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0d253caf816c362fb",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org1admin",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-09529203675e50ba4",
+        "instance_type": "c5.large",
+        "memory_gb": 4,
+        "name": "mockenv2-org1peer1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0b24846f4a1d19177",
+        "instance_type": "c5.large",
+        "memory_gb": 4,
+        "name": "mockenv2-org3peer1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0adf79a2e32e0bca8",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-org1ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-096a5f9780c78dcfb",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org3app2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0b8b0192c8e989471",
+        "instance_type": "c5.large",
+        "memory_gb": 4,
+        "name": "mockenv2-org4peer1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-07d051737f3ac0937",
+        "instance_type": "c5.large",
+        "memory_gb": 4,
+        "name": "mockenv2-org1peer2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0adee2dbd9228b2cb",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-org3ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0175ff2b9410c5d4e",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org6app1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-06113a14aa50fc45b",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-org3ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0e14f1405355c4da9",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv2-org2ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-042d6e25f9758773b",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org6app2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0a1a722c320915c3d",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org1app2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0f7faa94638ccef20",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-orderer3",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0b23ddf592991b8ee",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org3app1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0ccc10ef212856dd3",
+        "instance_type": "c5.large",
+        "memory_gb": 4,
+        "name": "mockenv2-org2peer1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-0e528e724ceef797b",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv2-org1app1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv2",
+        "instance_id": "i-009f5086307f4e57c",
+        "instance_type": "c5.large",
+        "memory_gb": 4,
+        "name": "mockenv2-org5peer2",
+        "state": "stopped",
+        "vcpu": 2
+      }
+    ],
+    "name": "mockenv2",
+    "provider": "aws",
+    "region": "ca-central-1",
+    "running_instances": 0,
+    "state": "stopped",
+    "stopped_instances": 53,
+    "total_instances": 53,
+    "total_memory_gb": 117,
+    "total_vcpu": 65
+  },
+  {
+    "id": "3e8ddd1274b4",
+    "instances": [
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-04a0c55913889362d",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv3-org2app1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0b5eb71f782dc761a",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org3couchdb1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-04d62321c72da87d8",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv3-org4app1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0e992c1a81a293ff6",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org3peer3",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-041ec7c305cbb61db",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-org3ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0cbca67848c5c8db8",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv3-org1app2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-077bcb143f38cbcfe",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv3-org2admin",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-04d04ff500e6521af",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org3peer4",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0ed6ffc835322e749",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org3peer1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0f8ab29b72c5a05a5",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org6couchdb1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0b7077e7a39e2eec7",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv3-org3app2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-03bfff149eab04a22",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org5peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-086100c7d2aa948c3",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org1couchdb1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0b3b9ba0054811960",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org4peer3",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0205dd65fafa04b52",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org2peer1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-00cb37df46a3a1b9c",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org6couchdb3",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-04c26fe5fa5a461f6",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-org1ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0f457f643e5600eed",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv3-org2app2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0dce8b6aef982df76",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv3-org4admin",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0d7e29155113217d0",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org3peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0ee9e80cfc74a0898",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-org2ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0f390537f4bb2c526",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv3-org5app2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0f235911b547bfe34",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org1couchdb3",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0401cae45aeca3f7a",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-org1ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0545fcc68d9aec05d",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org5peer4",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0f854d7467340384a",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org5couchdb2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-09947283d689501ed",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv3-org5admin",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0a91741855fd8d21b",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv3-kafka2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0ee85ded758bbb133",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv3-org5app1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0d1203b346e6f3a8b",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-org6ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0899f1bdba6104271",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv3-org1admin",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-04e6cd6c653b9703f",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org4couchdb2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-00717355a5b09d92d",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org1peer4",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-08bab54792edb3108",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org1peer1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0e5b44c3c8d46d40a",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-org4ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0528bfb7a1373cb75",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-admin",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0ee88bbe88e410e73",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-org3ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-00cf5cc42d686b39c",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org1peer3",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-018c532ea8ab6b5ef",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org1couchdb2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0cb53cad9d5c130a4",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv3-kafka3",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0dc93c407b06e3829",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv3-zoo1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-078797fa4054f26f8",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org4peer4",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-02db01c3e4f8af91c",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-org4ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-03701407b8e15e994",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv3-kafka1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0879eea460a169142",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org5peer1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-07a9303107eced81a",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org6peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-09cc94659bb0d55d1",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-org5ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0b200d1501d25b189",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-orderer2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-006e41966ec273d5c",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv3-org6admin",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-07fa42e247e7e4db1",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-orderer1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-02b321c4b35f6bc7b",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-org2ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-07249f14c67c1f620",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org4peer1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0356839e916342f5f",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org2couchdb3",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0b582a96eea58a0a8",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org4peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0161984571e97ed45",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org5peer3",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-08fbe3e5549c08451",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org2peer4",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-089c5c96127b0edc4",
+        "instance_type": "c5.xlarge",
+        "memory_gb": 8,
+        "name": "mockenv3-org3admin",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0a0b3a0b84f8594d1",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org4couchdb1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0c21480388f04fffa",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org6couchdb2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-020313c05c70c7661",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org5couchdb3",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0d7ea2bd3066f9d24",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv3-zoo2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0434f16f019623890",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org2peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-09e3660555eebe3d7",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv3-org6app1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-089f46ea175744c99",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org2couchdb1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-05bc3fba82b4c798b",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-org6ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0525d9ec317111755",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv3-org4app2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-09dac5f53e4d100da",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv3-kafka4",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0338c2fa2043749b3",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org1peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0ca6aff28e4f09ea2",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-org5ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-030aff848e70dd91d",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org2couchdb2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0ff59189bf3e18e97",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org6peer4",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-058b482b1646467da",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org2peer3",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-05c79685437b8a258",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org5couchdb1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-053fda95ac228f8c5",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv3-orderer3",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0c42520bdd6a7a534",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org3couchdb3",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-00a1c56505c9b2ee4",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org6peer1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-07d1c73ff4c942a3c",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv3-org6app2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-00782b79caaa38ab5",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org6peer3",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-086c974df6e4a532f",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv3-zoo3",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-017549e8a39609389",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org3couchdb2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-08b898af6356e76ac",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv3-org3app1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-00f3211b37f283517",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv3-org1app1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv3",
+        "instance_id": "i-0ea0560a364ec6e1b",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv3-org4couchdb3",
+        "state": "stopped",
+        "vcpu": 8
+      }
+    ],
+    "name": "mockenv3",
+    "provider": "aws",
+    "region": "ca-central-1",
+    "running_instances": 0,
+    "state": "stopped",
+    "stopped_instances": 83,
+    "total_instances": 83,
+    "total_memory_gb": 798,
+    "total_vcpu": 407
+  },
+  {
+    "id": "36436c027202",
+    "instances": [
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-071c75646d226dc73",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv4-org4app1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-01d86244293b4d12c",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv4-kafka3",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0c6ed3dc150f3e568",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-org4ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-02943039d40e0fbfd",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv4-org5app1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0d368037e5b6709db",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv4-org6app2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-07bf50a4c01ed1313",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv4-org3peer1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-01c55ddb1637e2f07",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-org2ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-09e2c3809819b2570",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv4-org2app2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-00d36b6dc2f22faad",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-org6ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-05284abd159ef0390",
+        "instance_type": "t3.medium",
+        "memory_gb": 4,
+        "name": "mockenv4-org4admin",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-01839ccd34342d68c",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv4-org5app2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-02eb42e1e948cfe55",
+        "instance_type": "t3.medium",
+        "memory_gb": 4,
+        "name": "mockenv4-org5admin",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-076937378cb7f9d39",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv4-org1peer1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-00752d1a65895a363",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv4-zoo2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-002098f454b94a739",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv4-org6peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0ad04d9e1427db1f9",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv4-org5peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-025a223d40dea49fa",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv4-org3app1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0bb5e20947cd0e861",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-org1ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-030ad523576890bdb",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-admin",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-01d50deae235d4715",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-org3ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-043ddbc8cfbb8041f",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv4-kafka1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-05f8d0d8bb63b1a6b",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-org1ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0a30d4808fccbdcb8",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv4-org1app2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0e71ee77d15693b4b",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv4-zoo1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-03a14738e9f555da9",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv4-zoo3",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0351e24fd1298b777",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-org4ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0d87b7d24b4b966c2",
+        "instance_type": "t3.medium",
+        "memory_gb": 4,
+        "name": "mockenv4-org1admin",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0f12d013aeffeb095",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv4-org6app1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0343cc018585ecddf",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv4-org1app1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-058f9365e36ff1dab",
+        "instance_type": "t3.medium",
+        "memory_gb": 4,
+        "name": "mockenv4-org2admin",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-04ab76023830d8087",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv4-kafka2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0f95a04fab9d9c2e4",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv4-org3app2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0ba3d969566a38577",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv4-org3peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-039d594905b6da0ff",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-org3ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0a81b04963eea5416",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv4-org6peer1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-05dba6198a6f8af29",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-orderer2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0a3f075db62dc422c",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-org6ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-08b622bd87725f7fe",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv4-org1peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0eee987e3c043c618",
+        "instance_type": "t3.medium",
+        "memory_gb": 4,
+        "name": "mockenv4-org3admin",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0535d0aab0edb9990",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-org5ca1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-07bf6fe55d4a3f552",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv4-org4peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-016d42a175975ffa4",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv4-org4app2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0d24f4a1432038057",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv4-org4peer1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0192e936f569da9e2",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv4-org2peer2",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-007e3984a32f6d19b",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv4-org2peer1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0f1785ae32fd8f301",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv4-kafka4",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-00743cb11c40f7121",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv4-org2app1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-08acff738b6eefbb3",
+        "instance_type": "c5.2xlarge",
+        "memory_gb": 16,
+        "name": "mockenv4-org5peer1",
+        "state": "stopped",
+        "vcpu": 8
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0bc7b098b29c79754",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-org5ca2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0f3d2ad78d2a08c37",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-orderer1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-0ddd509fd7f0d7998",
+        "instance_type": "t3.medium",
+        "memory_gb": 4,
+        "name": "mockenv4-org6admin",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-026a0cdf8433d74f3",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-orderer3",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv4",
+        "instance_id": "i-09e1c63fdeb70a0ea",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv4-org2ca1",
+        "state": "stopped",
+        "vcpu": 1
+      }
+    ],
+    "name": "mockenv4",
+    "provider": "aws",
+    "region": "ca-central-1",
+    "running_instances": 0,
+    "state": "stopped",
+    "stopped_instances": 53,
+    "total_instances": 53,
+    "total_memory_gb": 270,
+    "total_vcpu": 155
+  },
+  {
+    "id": "7f0a86ba97d1",
+    "instances": [
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-044a7742565cd9040",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv5-org1peer2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-08b4337605830c376",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv5-org4peer1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-074ffb151220acb37",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv5-org4peer2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-09c3ae7f709d026f9",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv5-kafka2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-05e41007a825cf74f",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv5-org1peer1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-0fdc8b231f1335e88",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv5-org2peer2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-03fd31a538a26cd4c",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv5-org3peer1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-0335492d5b88f5ba0",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv5-orderer1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-09c51ed034d69d6f0",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv5-zoo1",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-08041d386acfd0b2f",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv5-org3peer2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-055df7f5477314394",
+        "instance_type": "t2.small",
+        "memory_gb": 2,
+        "name": "mockenv5-zoo2",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-07e831d45c42fd193",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv5-kafka1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-0b075aeb37bc972a1",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv5-admin",
+        "state": "stopped",
+        "vcpu": 1
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-05d597db2a6ba54e6",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv5-org2peer1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv5",
+        "instance_id": "i-07a108898968f0007",
+        "instance_type": "t2.micro",
+        "memory_gb": 1,
+        "name": "mockenv5-orderer2",
+        "state": "stopped",
+        "vcpu": 1
+      }
+    ],
+    "name": "mockenv5",
+    "provider": "aws",
+    "region": "ca-central-1",
+    "running_instances": 0,
+    "state": "stopped",
+    "stopped_instances": 15,
+    "total_instances": 15,
+    "total_memory_gb": 47,
+    "total_vcpu": 25
+  },
+  {
+    "id": "931decfe6fd5",
+    "instances": [
+      {
+        "environment": "mockenv6",
+        "instance_id": "i-0008ad1bfd83a52eb",
+        "instance_type": "t3.xlarge",
+        "memory_gb": 16,
+        "name": "mockenv6-k8node2",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv6",
+        "instance_id": "i-04b69b4ec92d548df",
+        "instance_type": "t3.medium",
+        "memory_gb": 4,
+        "name": "mockenv6-k8master1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv6",
+        "instance_id": "i-0dedc66553eaecfc3",
+        "instance_type": "t3.medium",
+        "memory_gb": 4,
+        "name": "mockenv6-k8master2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv6",
+        "instance_id": "i-0778ddf78ec72bffd",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv6-etcd3",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv6",
+        "instance_id": "i-03b3782294e848647",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv6-etcd1",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv6",
+        "instance_id": "i-0872ea25c0766d383",
+        "instance_type": "t3.xlarge",
+        "memory_gb": 16,
+        "name": "mockenv6-k8node5",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv6",
+        "instance_id": "i-0e9fcaf646ce779ab",
+        "instance_type": "t3.xlarge",
+        "memory_gb": 16,
+        "name": "mockenv6-k8node3",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv6",
+        "instance_id": "i-0eba74077ac760573",
+        "instance_type": "t3.small",
+        "memory_gb": 2,
+        "name": "mockenv6-etcd2",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv6",
+        "instance_id": "i-0d67730effbee8b3b",
+        "instance_type": "t3.xlarge",
+        "memory_gb": 16,
+        "name": "mockenv6-k8node1",
+        "state": "stopped",
+        "vcpu": 4
+      },
+      {
+        "environment": "mockenv6",
+        "instance_id": "i-009517923633b51f4",
+        "instance_type": "t3.xlarge",
+        "memory_gb": 16,
+        "name": "mockenv6-k8node4",
+        "state": "stopped",
+        "vcpu": 4
+      }
+    ],
+    "name": "mockenv6",
+    "provider": "aws",
+    "region": "ca-central-1",
+    "running_instances": 0,
+    "state": "stopped",
+    "stopped_instances": 10,
+    "total_instances": 10,
+    "total_memory_gb": 94,
+    "total_vcpu": 30
+  },
+  {
+    "id": "72e0ca1fc903",
+    "instances": [
+      {
+        "environment": "mockenv7",
+        "instance_id": "i-01901f7ff1afc2365",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv7-org1-app",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv7",
+        "instance_id": "i-03f161f3b27709891",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv7-org5-app",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv7",
+        "instance_id": "i-0b1d0fcde41d75806",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv7-org2-app",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv7",
+        "instance_id": "i-0517e563d41f75d18",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv7-org4-app",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv7",
+        "instance_id": "i-0c4f22923d9f58d0a",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv7-org3-app",
+        "state": "stopped",
+        "vcpu": 2
+      },
+      {
+        "environment": "mockenv7",
+        "instance_id": "i-048b24df4aa79e266",
+        "instance_type": "t2.medium",
+        "memory_gb": 4,
+        "name": "mockenv7-org6-app",
+        "state": "stopped",
+        "vcpu": 2
+      }
+    ],
+    "name": "mockenv7",
+    "provider": "aws",
+    "region": "ca-central-1",
+    "running_instances": 0,
+    "state": "stopped",
+    "stopped_instances": 6,
+    "total_instances": 6,
+    "total_memory_gb": 24,
+    "total_vcpu": 12
+  }
+]
