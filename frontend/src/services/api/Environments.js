@@ -1,13 +1,25 @@
 import axios from 'axios';
 
 export default {
-  getEnvironments() {
-    return axios.get('/api/env/summary').then(response => response.data);
+  getAllEnvironmentsDetails() {
+    return axios.get('/api/v1/env/details').then(response => response.data);
   },
-  startEnvironment(envName) {
-    return axios.post(`/api/env/startup/${envName}`).then(response => response.data);
+  getAllEnvironmentsSummary() {
+    return axios.get('/api/v1/env/summary').then(response => response.data);
   },
-  stopEnvironment(envName) {
-    return axios.post(`/api/env/powerdown/${envName}`).then(response => response.data);
+
+  getEnvironmentDetails(id) {
+    return axios.get(`/api/v1/env/${id}/details`).then(response => response.data);
   },
+  getEnvironmentSummary(id) {
+    return axios.get(`/api/v1/env/${id}/summary`).then(response => response.data);
+  },
+
+  startEnvironment(id) {
+    return axios.post(`/api/v1/env/${id}/start`).then(response => response.data);
+  },
+  stopEnvironment(id) {
+    return axios.post(`/api/v1/env/${id}/stop`).then(response => response.data);
+  },
+
 };

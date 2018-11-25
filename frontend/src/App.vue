@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Header v-bind:version="version"/>
-    <EnvironmentList v-bind:environments="environments"/>
+    <Header v-bind:version="version" />
+    <EnvironmentList v-bind:environments="environments" />
     <p v-if="error" class="error-message">{{ error }}</p>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
     };
   },
   created() {
-    EnviromentsApi.getEnvironments()
+    EnviromentsApi.getAllEnvironmentsDetails()
       .then((data) => {
         this.environments = data;
       })

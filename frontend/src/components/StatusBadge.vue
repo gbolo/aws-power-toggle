@@ -41,6 +41,7 @@ export default {
   color: white;
   padding: 4px 8px;
   border-radius: 8px;
+  margin: auto 0;
 }
 
 .status__on {
