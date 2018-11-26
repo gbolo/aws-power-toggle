@@ -8,7 +8,35 @@ import (
 	"github.com/spf13/viper"
 )
 
-func ConfigInit(cfgFile string) {
+// ConfigInit instantiates and validates the configuration options
+// optionally it can print out a configuration summary
+func ConfigInit(cfgFile string, printConfig bool) {
+
+	// init viper
+	initViper(cfgFile)
+
+	// Print config if required
+	if printConfig {
+		printConfigSummary()
+	}
+
+	// Sanity checks
+	sanityChecks()
+
+	// assign variable values to config values
+	awsRegion = viper.GetString("aws.region")
+	envNameIgnore = viper.GetStringSlice("aws.ignore_environments")
+	instanceTypeIgnore = viper.GetStringSlice("aws.ignore_instance_types")
+	maxInstancesToShutdown = viper.GetInt("aws.max_instances_to_shutdown")
+	requiredTagKey = viper.GetString("aws.required_tag_key")
+	requiredTagValue = viper.GetString("aws.required_tag_value")
+	environmentTagKey = viper.GetString("aws.environment_tag_key")
+
+	return
+}
+
+// setup viper
+func initViper(cfgFile string) {
 
 	// Set some defaults
 	viper.SetDefault("log_level", "DEBUG")
@@ -55,24 +83,6 @@ func ConfigInit(cfgFile string) {
 	} else {
 		log.Warningf("no config file found: using environment variables and hard-coded defaults: %v", err)
 	}
-
-	// Print config in debug
-	printConfigSummary()
-
-	// Sanity checks
-	sanityChecks()
-
-	// assign variable values to config values
-	awsRegion = viper.GetString("aws.region")
-	envNameIgnore = viper.GetStringSlice("aws.ignore_environments")
-	instanceTypeIgnore = viper.GetStringSlice("aws.ignore_instance_types")
-	maxInstancesToShutdown = viper.GetInt("aws.max_instances_to_shutdown")
-	requiredTagKey = viper.GetString("aws.required_tag_key")
-	requiredTagValue = viper.GetString("aws.required_tag_value")
-	environmentTagKey = viper.GetString("aws.environment_tag_key")
-
-	return
-
 }
 
 // prints the config options
