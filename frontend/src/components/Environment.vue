@@ -2,23 +2,43 @@
   <div class="env">
 
     <div class="env__header">
-      <span class="env__name">{{ env.Name }}</span>
-      <StatusBadge v-bind:text="env.State" />
+      <span class="env__name">{{ env.name }}</span>
+      <StatusBadge v-bind:text="env.state" />
     </div>
 
-    <div class="env__content">
-      <p>Instances Running: {{env.RunningInstances}}/{{env.TotalInstances}}</p>
-      <button v-if="!isRunning &&
-        !isLoading" class="button start" @click="start(env.Name)">
-        <font-awesome-icon icon="play" />
-      </button>
-      <button v-if="isRunning && !isLoading" class="button stop" @click="stop(env.Name)">
-        <font-awesome-icon icon="stop" />
-      </button>
-      <button v-if="isLoading" class="button disabled">
-        <font-awesome-icon icon="spinner" />
-      </button>
+    <div class="env__details-container">
+      <div class="env__details">
+        <font-awesome-icon class="icon" v-bind:icon="getProviderIcon" />
+        <span>{{env.region}}</span>
+      </div>
+      <div class="env__details">
+        <font-awesome-icon class="icon" icon="memory" />
+        <span>{{env.total_memory_gb}} GB</span>
+      </div>
+      <div class="env__details">
+        <font-awesome-icon class="icon" icon="microchip" />
+        <span>{{env.total_vcpu}} cores</span>
+      </div>
+      <div class="env__details">
+        <font-awesome-icon class="icon" icon="server" />
+        <span>{{env.running_instances}}/{{env.total_instances}}</span>
+      </div>
+
+      <font-awesome-icon @click="toggleInstanceList" class="chevron" icon="angle-double-down" />
+
+      <InstanceList v-if="showInstances" v-bind:instances="env.instances" />
     </div>
+
+    <button v-if="!isRunning &&
+        !isLoading" class="button start" @click="start(env.id)">
+      <font-awesome-icon icon="play" />
+    </button>
+    <button v-if="isRunning && !isLoading" class="button stop" @click="stop(env.id)">
+      <font-awesome-icon icon="stop" />
+    </button>
+    <button v-if="isLoading" class="button disabled">
+      <font-awesome-icon icon="spinner" />
+    </button>
 
     <div v-if="error" class="env__error-container">
       <p class="error-message">{{ error }}</p>
@@ -31,16 +51,19 @@
 <script>
 import EnvironmentsApi from '@/services/api/Environments';
 import StatusBadge from '@/components/StatusBadge.vue';
+import InstanceList from '@/components/InstanceList.vue';
 
 export default {
   name: 'Environment',
   components: {
     StatusBadge,
+    InstanceList,
   },
   data() {
     return {
       isLoading: false,
       error: '',
+      showInstances: false,
     };
   },
   props: {
@@ -48,16 +71,16 @@ export default {
   },
   computed: {
     isRunning() {
-      return this.env.RunningInstances > 0;
+      return this.env.running_instances > 0;
     },
     getProviderIcon() {
       if (!this.env.provider) {
-        return ['fab', 'aws'];
+        '';
       }
 
       switch(this.env.provider.toLowerCase()) {
         case 'aws':
-          return 'aws';
+          return ['fab', 'aws'];
           default:
       }
       return '';
@@ -67,10 +90,17 @@ export default {
     clearError() {
       this.error = '';
     },
-    start(envName) {
-      EnvironmentsApi.startEnvironment(envName)
+    toggleInstanceList() {
+      this.showInstances = !this.showInstances;
+    },
+    start(id) {
+      EnvironmentsApi.startEnvironment(id)
         .then((response) => {
-          console.log(response);
+          EnvironmentsApi.getEnvironmentDetails(id).then((response) => {
+            this.env = response;
+          }).catch((e) => {
+            this.error = e.response.data.error;
+          });
         })
         .catch((e) => {
           this.error = e.response.data.error;
@@ -79,10 +109,14 @@ export default {
           this.isLoading = false;
         });
     },
-    stop(envName) {
-      EnvironmentsApi.stopEnvironment(envName)
+    stop(id) {
+      EnvironmentsApi.stopEnvironment(id)
         .then((response) => {
-          console.log(response);
+          EnvironmentsApi.getEnvironmentDetails(id).then((response) => {
+            this.env = response;
+          }).catch((e) => {
+            this.error = e.response.data.error;
+          });
         })
         .catch((e) => {
           this.error = e.response.data.error;
@@ -111,46 +145,62 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
     .env__name {
       margin: auto 0;
       font-weight: bold;
     }
   }
+
+  .chevron {
+    cursor: pointer;
+  }
 }
 
-.env__content {
-  .button {
-    cursor: pointer;
-    font-size: 1em;
-    padding: 8px 32px;
-    border-radius: 24px;
-    color: white;
-    border: none;
-    outline-style: none;
-    transition: all 0.4s cubic-bezier(0.2, 0.2, 0.2, 1.2);
-  }
+.env__details-container {
+  padding: 16px 0;
 
-  .start {
-    background: #09af00;
+  .env__details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 4px 0;
 
-    &:hover {
-      background: #008b00;
+    .icon {
+      width: 20px;
     }
   }
+}
 
-  .stop {
-    background: #ee0290;
+.button {
+  cursor: pointer;
+  font-size: 1em;
+  padding: 8px 32px;
+  border-radius: 24px;
+  color: white;
+  border: none;
+  outline-style: none;
+  transition: all 0.4s cubic-bezier(0.2, 0.2, 0.2, 1.2);
+}
 
-    &:hover {
-      background: #dd0074;
-    }
+.start {
+  background: #09af00;
+
+  &:hover {
+    background: #008b00;
   }
+}
 
-  .disabled {
-    background: #ddd;
-    cursor: wait;
+.stop {
+  background: #ee0290;
+
+  &:hover {
+    background: #dd0074;
   }
+}
+
+.disabled {
+  background: #ddd;
+  cursor: wait;
 }
 
 .env__error-container {

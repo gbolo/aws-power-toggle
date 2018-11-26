@@ -42,6 +42,7 @@ export default {
   padding: 4px 8px;
   border-radius: 8px;
   margin: auto 0;
+  transition: all 0.4s cubic-bezier(0.2, 0.2, 0.2, 1.2);
 }
 
 .status__on {

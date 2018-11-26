@@ -2,14 +2,11 @@
   <div>
     <ul class="environment-list__filter-list">
       <li v-for="(fa, index) in itemFilters" :key="index">
-        <a
-          v-bind:class="[fa.selected ? 'selected' : '']"
-          @click="toggleSelected(index)"
-        >{{fa.value}}</a>
+        <a v-bind:class="[fa.selected ? 'selected' : '']" @click="toggleSelected(index)">{{fa.value}}</a>
       </li>
     </ul>
     <div class="environment-list__container">
-      <Environment v-for="env in filteredEnvs" v-bind:env="env" :key="env.Name"/>
+      <Environment v-for="env in filteredEnvs" v-bind:env="env" :key="env.Name" />
     </div>
   </div>
 </template>
@@ -28,10 +25,10 @@ export default {
   data() {
     return {
       itemFilters: [
-        { field: 'State', value: 'Running', selected: true },
-        { field: 'State', value: 'Stopped', selected: true },
-        { field: 'State', value: 'Changing', selected: true },
-        { field: 'State', value: 'Mixed', selected: true },
+        { field: 'state', value: 'Running', selected: true },
+        { field: 'state', value: 'Stopped', selected: true },
+        { field: 'state', value: 'Changing', selected: true },
+        { field: 'state', value: 'Mixed', selected: true },
       ],
     };
   },

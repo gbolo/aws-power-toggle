@@ -5,6 +5,10 @@ import {
   faPlay,
   faStop,
   faSpinner,
+  faMemory,
+  faMicrochip,
+  faServer,
+  faAngleDoubleDown,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon,
@@ -13,7 +17,16 @@ import {
   faAws,
 } from '@fortawesome/free-brands-svg-icons';
 
-library.add(faPlay, faStop, faSpinner, faAws);
+library.add(
+  faPlay,
+  faStop,
+  faSpinner,
+  faAws,
+  faMemory,
+  faMicrochip,
+  faServer,
+  faAngleDoubleDown,
+);
 
 const faComponentName = 'font-awesome-icon';
 
