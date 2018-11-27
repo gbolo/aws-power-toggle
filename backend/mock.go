@@ -11,7 +11,7 @@ import (
 func mockRefreshTable() (err error) {
 	// we only need to load initial test data when cachedTable is empty
 	if len(cachedTable) == 0 {
-		cachedTableJsonFile, err := os.Open("testdata/mock/mock_env_cachedTable.json")
+		cachedTableJsonFile, err := os.Open("../testdata/mock/mock_env_cachedTable.json")
 		if err != nil {
 			log.Fatalf("mock API is enabled, but can't load test data: %s", err)
 		}

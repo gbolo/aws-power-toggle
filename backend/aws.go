@@ -21,9 +21,6 @@ const (
 	ENV_MIXED = "mixed"
 	// means that AT LEAST ONE instance for an env is NOT in a "running" state or "stopped" state
 	ENV_CHANGING = "changing"
-
-	// enables mocking of API calls to aws for development purposes
-	MOCK_ENABLED = false
 )
 
 var (
@@ -41,6 +38,9 @@ var (
 	instanceTypeIgnore []string
 	// ignore these environment names
 	envNameIgnore []string
+
+	// enables mocking of API calls to aws for development purposes
+	MOCK_ENABLED = true
 )
 
 type virtualMachine struct {
