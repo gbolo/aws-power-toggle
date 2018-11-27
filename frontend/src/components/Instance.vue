@@ -2,7 +2,7 @@
   <div class="instance">
     <div class="container">
       <span>{{instance.name}}</span>
-      <ToggleSwitch v-bind:isChecked="isOn" />
+      <ToggleSwitch v-bind:isChecked="isOn" @click.native="toggleInstance(instance.id)" />
     </div>
     <div class="container">
       <span>{{instance.instance_type}}</span>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import InstancesApi from '@/services/api/Instances';
 import ToggleSwitch from '@/components/ToggleSwitch';
 
 export default {
@@ -27,6 +28,15 @@ export default {
   computed: {
     isOn() {
       return this.instance.state.toLowerCase() === 'running';
+    }
+  },
+  methods: {
+    toggleInstance(id) {
+      if (this.isOn) {
+        InstancesApi.stopInstance(id);
+      } else {
+        InstancesApi.startInstance(id);
+      }
     }
   }
 };

@@ -1,6 +1,6 @@
 <template>
   <label class="switch">
-    <input type="checkbox" v-bind:checked="isChecked">
+    <input type="checkbox" v-model="checked" @click.stop>
     <span class="slider round"></span>
   </label>
 </template>
@@ -10,12 +10,16 @@ export default {
   name: 'ToggleSwitch',
   props: {
     isChecked: Boolean,
-  }
+  },
+  data() {
+    return {
+      checked: this.isChecked,
+    };
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-/* The switch - the box around the slider */
+<style scoped lang="scss">
 .switch {
   position: relative;
   display: inline-block;
@@ -23,14 +27,12 @@ export default {
   height: 16px;
 }
 
-/* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -67,7 +69,6 @@ input:checked + .slider:before {
   transform: translateX(12px);
 }
 
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }

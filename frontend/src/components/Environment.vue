@@ -31,10 +31,10 @@
 
     <button v-if="!isRunning &&
         !isLoading" class="button start" @click="start(env.id)">
-      <font-awesome-icon icon="play" />
+      Start
     </button>
     <button v-if="isRunning && !isLoading" class="button stop" @click="stop(env.id)">
-      <font-awesome-icon icon="stop" />
+      Stop
     </button>
     <button v-if="isLoading" class="button disabled">
       <font-awesome-icon icon="spinner" />
@@ -138,6 +138,7 @@ export default {
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
   padding: 16px;
   margin: 16px;
+  align-self: flex-start;
 
   .env__header {
     padding-bottom: 16px;
