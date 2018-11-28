@@ -6,28 +6,39 @@
       <StatusBadge v-bind:text="env.state" />
     </div>
 
-    <div class="env__details-container">
-      <div class="env__details">
-        <font-awesome-icon class="icon" v-bind:icon="getProviderIcon" />
-        <span>{{env.region}}</span>
-      </div>
-      <div class="env__details">
-        <font-awesome-icon class="icon" icon="memory" />
-        <span>{{env.total_memory_gb}} GB</span>
-      </div>
-      <div class="env__details">
-        <font-awesome-icon class="icon" icon="microchip" />
-        <span>{{env.total_vcpu}} cores</span>
-      </div>
-      <div class="env__details">
-        <font-awesome-icon class="icon" icon="server" />
-        <span>{{env.running_instances}}/{{env.total_instances}}</span>
-      </div>
+    <table class="env__details-table">
+      <tr>
+        <td>
+          <div class="env__details">
+            <font-awesome-icon class="icon" v-bind:icon="getProviderIcon" />
+            <span>{{env.region}}</span>
+          </div>
+        </td>
+        <td>
+          <div class="env__details">
+            <font-awesome-icon class="icon" icon="server" />
+            <span>{{env.running_instances}}/{{env.total_instances}}</span>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="env__details">
+            <font-awesome-icon class="icon" icon="microchip" />
+            <span>{{env.total_vcpu}} cores</span>
+          </div>
+        </td>
+        <td>
+          <div class="env__details">
+            <font-awesome-icon class="icon" icon="memory" />
+            <span>{{env.total_memory_gb}} GB</span>
+          </div>
+        </td>
+      </tr>
+    </table>
 
-      <font-awesome-icon @click="toggleInstanceList" class="chevron" icon="angle-double-down" />
-
-      <InstanceList v-if="showInstances" v-bind:instances="env.instances" />
-    </div>
+    <font-awesome-icon @click="toggleInstanceList" v-bind:class="['chevron', this.showInstances ? 'rotate-m180': '']" icon="angle-double-down" />
+    <InstanceList v-if="showInstances" v-bind:instances="env.instances" />
 
     <button v-if="!isRunning &&
         !isLoading" class="button start" @click="start(env.id)">
@@ -154,21 +165,24 @@ export default {
 
   .chevron {
     cursor: pointer;
+    display: block;
+    margin: 16px auto;
+    transition: all 0.4s cubic-bezier(0.2, 0.2, 0.2, 1.2);
+  }
+  .rotate-m180 {
+    transform: rotate(-180deg);
   }
 }
 
-.env__details-container {
-  padding: 16px 0;
+.env__details {
+  line-height: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 4px 0;
 
-  .env__details {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 4px 0;
-
-    .icon {
-      width: 20px;
-    }
+  .icon {
+    margin: auto 0;
   }
 }
 
@@ -222,6 +236,25 @@ export default {
     &:hover {
       border-bottom: 1px solid #2d2d2d;
     }
+  }
+}
+.env__details-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 50%;
+  }
+  tr:first-child td {
+    border-top: 0;
+  }
+  tr td:first-child {
+    border-left: 0;
+  }
+  tr td:last-child {
+    border-right: 0;
   }
 }
 </style>

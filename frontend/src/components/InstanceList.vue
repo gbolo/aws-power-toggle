@@ -24,6 +24,9 @@ export default {
 .instance-list {
   list-style: none;
   padding: 0 8px;
-  margin: 0 auto;
+  margin: 0 auto 16px auto;
+  & li:first-child {
+    border-top: 1px solid #ddd;
+  }
 }
 </style>
