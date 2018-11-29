@@ -178,7 +178,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 4px 0;
+  margin: auto 0;
+  align-items: center;
 
   .icon {
     margin: auto 0;

@@ -5,7 +5,7 @@
       <ToggleSwitch v-bind:isChecked="isOn" @click.native="toggleInstance(instance.id)" />
     </div>
     <div class="container">
-      <span>{{instance.instance_type}}</span>
+      <span class="instance__type">{{instance.instance_type}}</span>
       <span>
         <clr-icon shape="cpu" size="24"></clr-icon> {{instance.vcpu}}
         <clr-icon shape="memory" size="24"></clr-icon> {{instance.memory_gb}}
@@ -51,6 +51,10 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    .instance__type {
+      color: #a4a4a4;
+    }
   }
 }
 </style>
