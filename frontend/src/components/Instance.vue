@@ -7,8 +7,8 @@
     <div class="container">
       <span>{{instance.instance_type}}</span>
       <span>
-        <font-awesome-icon class="icon" icon="microchip" /> {{instance.vcpu}}
-        <font-awesome-icon class="icon" icon="memory" /> {{instance.memory_gb}}
+        <clr-icon shape="cpu" size="24"></clr-icon> {{instance.vcpu}}
+        <clr-icon shape="memory" size="24"></clr-icon> {{instance.memory_gb}}
       </span>
     </div>
   </div>

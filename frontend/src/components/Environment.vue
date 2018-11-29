@@ -10,13 +10,13 @@
       <tr>
         <td>
           <div class="env__details">
-            <font-awesome-icon class="icon" v-bind:icon="getProviderIcon" />
+            <clr-icon shape="cloud" size="24"></clr-icon>
             <span>{{env.region}}</span>
           </div>
         </td>
         <td>
           <div class="env__details">
-            <font-awesome-icon class="icon" icon="server" />
+            <clr-icon shape="cluster" size="24"></clr-icon>
             <span>{{env.running_instances}}/{{env.total_instances}}</span>
           </div>
         </td>
@@ -24,21 +24,21 @@
       <tr>
         <td>
           <div class="env__details">
-            <font-awesome-icon class="icon" icon="microchip" />
+            <clr-icon shape="cpu" size="24"></clr-icon>
             <span>{{env.total_vcpu}} cores</span>
           </div>
         </td>
         <td>
           <div class="env__details">
-            <font-awesome-icon class="icon" icon="memory" />
+            <clr-icon shape="memory" size="24"></clr-icon>
             <span>{{env.total_memory_gb}} GB</span>
           </div>
         </td>
       </tr>
     </table>
 
-    <font-awesome-icon @click="toggleInstanceList" v-bind:class="['chevron', this.showInstances ? 'rotate-m180': '']" icon="angle-double-down" />
-    <InstanceList v-if="showInstances" v-bind:instances="env.instances" />
+    <clr-icon shape="angle-double" size="20" dir="down" @click="toggleInstanceList" v-bind:class="['chevron', this.showInstances ? 'rotate-m180': '']" icon="angle-double-down" />
+    <InstanceList v-bind:show="showInstances" v-bind:instances="env.instances" />
 
     <button v-if="!isRunning &&
         !isLoading" class="button start" @click="start(env.id)">
@@ -48,7 +48,7 @@
       Stop
     </button>
     <button v-if="isLoading" class="button disabled">
-      <font-awesome-icon icon="spinner" />
+      ...
     </button>
 
     <div v-if="error" class="env__error-container">
@@ -86,7 +86,7 @@ export default {
     },
     getProviderIcon() {
       if (!this.env.provider) {
-        '';
+        return '';
       }
 
       switch(this.env.provider.toLowerCase()) {
@@ -175,7 +175,6 @@ export default {
 }
 
 .env__details {
-  line-height: 1em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
