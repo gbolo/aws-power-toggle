@@ -4,3 +4,9 @@ curl -s -XPOST 127.0.0.1:8080/api/v1/env/72e0ca1fc903/stop | jq .
   "error": "env [72e0ca1fc903] has no associated instances"
 }
 
+
+
+- add test cases for TLS
+- refactor mock data json, change to variable instead of external file
+- api calls that return 500 dont have to
+
