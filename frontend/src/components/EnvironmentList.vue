@@ -1,12 +1,22 @@
 <template>
   <div>
     <ul class="environment-list__filter-list">
-      <li v-for="(fa, index) in itemFilters" :key="index">
-        <a v-bind:class="[fa.selected ? 'selected' : '']" @click="toggleSelected(index)">{{fa.value}}</a>
+      <li
+        v-for="(fa, index) in itemFilters"
+        :key="index"
+      >
+        <a
+          v-bind:class="[fa.selected ? 'selected' : '']"
+          @click="toggleFilter(index)"
+        >{{fa.value}}</a>
       </li>
     </ul>
     <div class="environment-list__container">
-      <Environment v-for="env in filteredEnvs" v-bind:env="env" :key="env.Name" />
+      <Environment
+        v-for="env in filteredEnvs"
+        v-bind:env="env"
+        :key="env.Name"
+      />
     </div>
   </div>
 </template>
@@ -34,28 +44,25 @@ export default {
   },
   computed: {
     enabledFilters() {
-      return this.itemFilters.filter(f => f.selected);
+      return this.itemFilters.filter((f) => f.selected);
     },
     filteredEnvs() {
-      return this.environments.filter(
-        env => this.enabledFilters.some(
-          (f) => {
-            if (typeof (f.value) === 'string') {
-              return (env[f.field] || '').toLowerCase() === f.value.toLowerCase();
-            }
-            return env[f.field] === f.value;
-          },
-        ),
+      return this.environments.filter((env) =>
+        this.enabledFilters.some((f) => {
+          if (typeof f.value === 'string') {
+            return (env[f.field] || '').toLowerCase() === f.value.toLowerCase();
+          }
+          return env[f.field] === f.value;
+        })
       );
     },
   },
   methods: {
-    toggleSelected(index) {
+    toggleFilter(index) {
       this.itemFilters[index].selected = !this.itemFilters[index].selected;
     },
   },
 };
-
 </script>
 
 <style scoped lang="scss">
@@ -78,7 +85,7 @@ export default {
 
     a {
       font-size: 13px;
-      line-height: 27px;
+      line-height: inherit;
       color: rgb(102, 102, 102);
       cursor: pointer;
       display: inline-block;

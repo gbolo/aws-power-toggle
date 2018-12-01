@@ -2,21 +2,29 @@
   <div class="instance">
     <div class="container">
       <span>{{instance.name}}</span>
-      <ToggleSwitch v-bind:isChecked="isOn" @click.native="toggleInstance(instance.id)" />
+      <ToggleSwitch
+        v-bind:isChecked="isOn"
+        @click.native="toggleInstance(instance.id)"
+      />
     </div>
     <div class="container">
       <span class="instance__type">{{instance.instance_type}}</span>
       <span>
-        <clr-icon shape="cpu" size="24"></clr-icon> {{instance.vcpu}}
-        <clr-icon shape="memory" size="24"></clr-icon> {{instance.memory_gb}}
+        <clr-icon
+          shape="cpu"
+          size="24"
+        ></clr-icon> {{instance.vcpu}}
+        <clr-icon
+          shape="memory"
+          size="24"
+        ></clr-icon> {{instance.memory_gb}}
       </span>
     </div>
   </div>
 </template>
 
 <script>
-import InstancesApi from '@/services/api/Instances';
-import ToggleSwitch from '@/components/ToggleSwitch';
+import ToggleSwitch from '@/components/ToggleSwitch.vue';
 
 export default {
   name: 'Instance',
@@ -26,24 +34,28 @@ export default {
   props: {
     instance: Object,
   },
-  computed: {
-    isOn() {
-      return this.instance.state.toLowerCase() === 'running';
-    }
+  data() {
+    return {
+      isOn: this.instance.state.toLowerCase() === 'running',
+    };
   },
   methods: {
     toggleInstance(id) {
       if (this.isOn) {
-        InstancesApi.stopInstance(id);
+        this.$store.dispatch('stopInstance', id);
       } else {
-        InstancesApi.startInstance(id);
+        this.$store.dispatch('startInstance', id);
       }
-    }
-  }
+      this.isOn = !this.isOn;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.hide {
+  display: none;
+}
 .instance {
   padding: 8px 0;
   border-bottom: 1px solid #ddd;

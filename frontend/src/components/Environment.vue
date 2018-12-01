@@ -10,13 +10,19 @@
       <tr>
         <td>
           <div class="env__details">
-            <clr-icon shape="cloud" size="24"></clr-icon>
+            <clr-icon
+              shape="cloud"
+              size="24"
+            ></clr-icon>
             <span>{{env.region}}</span>
           </div>
         </td>
         <td>
           <div class="env__details">
-            <clr-icon shape="cluster" size="24"></clr-icon>
+            <clr-icon
+              shape="cluster"
+              size="24"
+            ></clr-icon>
             <span>{{env.running_instances}}/{{env.total_instances}}</span>
           </div>
         </td>
@@ -24,43 +30,56 @@
       <tr>
         <td>
           <div class="env__details">
-            <clr-icon shape="cpu" size="24"></clr-icon>
+            <clr-icon
+              shape="cpu"
+              size="24"
+            ></clr-icon>
             <span>{{env.total_vcpu}} cores</span>
           </div>
         </td>
         <td>
           <div class="env__details">
-            <clr-icon shape="memory" size="24"></clr-icon>
+            <clr-icon
+              shape="memory"
+              size="24"
+            ></clr-icon>
             <span>{{env.total_memory_gb}} GB</span>
           </div>
         </td>
       </tr>
     </table>
 
-    <clr-icon shape="angle-double" size="20" dir="down" @click="toggleInstanceList" v-bind:class="['chevron', this.showInstances ? 'rotate-m180': '']" icon="angle-double-down" />
-    <InstanceList v-bind:show="showInstances" v-bind:instances="env.instances" />
+    <clr-icon
+      shape="angle-double"
+      size="20"
+      dir="down"
+      @click="toggleInstanceList"
+      v-bind:class="['chevron', this.showInstanceList ? 'rotate-m180': '']"
+      icon="angle-double-down"
+    />
+    <InstanceList
+      v-bind:show="showInstanceList"
+      v-bind:instances="env.instances"
+    />
 
-    <button v-if="!isRunning &&
-        !isLoading" class="button start" @click="start(env.id)">
+    <button
+      v-if="!isRunning"
+      class="button start"
+      @click="start(env.id)"
+    >
       Start
     </button>
-    <button v-if="isRunning && !isLoading" class="button stop" @click="stop(env.id)">
+    <button
+      v-if="isRunning"
+      class="button stop"
+      @click="stop(env.id)"
+    >
       Stop
     </button>
-    <button v-if="isLoading" class="button disabled">
-      ...
-    </button>
-
-    <div v-if="error" class="env__error-container">
-      <p class="error-message">{{ error }}</p>
-      <p class="clear-error-message" @click="clearError">Clear Error</p>
-    </div>
-
   </div>
 </template>
 
 <script>
-import EnvironmentsApi from '@/services/api/Environments';
 import StatusBadge from '@/components/StatusBadge.vue';
 import InstanceList from '@/components/InstanceList.vue';
 
@@ -72,9 +91,8 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
-      error: '',
-      showInstances: false,
+      showInstanceList: false,
+      showInstanceListItems: false,
     };
   },
   props: {
@@ -84,61 +102,19 @@ export default {
     isRunning() {
       return this.env.running_instances > 0;
     },
-    getProviderIcon() {
-      if (!this.env.provider) {
-        return '';
-      }
-
-      switch(this.env.provider.toLowerCase()) {
-        case 'aws':
-          return ['fab', 'aws'];
-          default:
-      }
-      return '';
-    }
   },
   methods: {
-    clearError() {
-      this.error = '';
-    },
     toggleInstanceList() {
-      this.showInstances = !this.showInstances;
+      this.showInstanceList = !this.showInstanceList;
     },
     start(id) {
-      EnvironmentsApi.startEnvironment(id)
-        .then((response) => {
-          EnvironmentsApi.getEnvironmentDetails(id).then((response) => {
-            this.env = response;
-          }).catch((e) => {
-            this.error = e.response.data.error;
-          });
-        })
-        .catch((e) => {
-          this.error = e.response.data.error;
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
+      this.$store.dispatch('startEnvironment', id);
     },
     stop(id) {
-      EnvironmentsApi.stopEnvironment(id)
-        .then((response) => {
-          EnvironmentsApi.getEnvironmentDetails(id).then((response) => {
-            this.env = response;
-          }).catch((e) => {
-            this.error = e.response.data.error;
-          });
-        })
-        .catch((e) => {
-          this.error = e.response.data.error;
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
+      this.$store.dispatch('stopEnvironment', id);
     },
   },
 };
-
 </script>
 
 <style scoped lang="scss">
@@ -218,26 +194,6 @@ export default {
   cursor: wait;
 }
 
-.env__error-container {
-  .error-message {
-    color: #ef0078;
-    max-width: 250px;
-    text-align: center;
-    margin: 16px auto 0;
-  }
-  .clear-error-message {
-    max-width: 250px;
-    color: #2d2d2d;
-    cursor: pointer;
-    border-bottom: 1px solid #ddd;
-    display: inline-block;
-    margin: 8px auto 0;
-
-    &:hover {
-      border-bottom: 1px solid #2d2d2d;
-    }
-  }
-}
 .env__details-table {
   width: 100%;
   border-collapse: collapse;

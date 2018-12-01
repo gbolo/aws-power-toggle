@@ -1,9 +1,17 @@
 <template>
-  <ul v-bind:class="['instance-list', show ? 'visible' : 'hidden']">
-    <li v-for="(instance, index) in instances" :key="index">
-      <Instance v-bind:instance="instance" />
-    </li>
-  </ul>
+  <transition name="expand">
+    <ul
+      v-if="show"
+      class="instance-list"
+    >
+      <li
+        v-for="(instance, index) in instances"
+        :key="index"
+      >
+        <Instance v-bind:instance="instance" />
+      </li>
+    </ul>
+  </transition>
 </template>
 
 <script>
@@ -23,29 +31,38 @@ export default {
 
 <style lang="scss" scoped>
 .instance-list {
+  max-height: 445px;
   overflow: auto;
-  max-height: 0;
   list-style: none;
-  transition: max-height 0.75s;
   padding: 0 8px;
-  margin: 0;
 
   li {
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.75s;
   }
 
   & li:first-child {
     border-top: 1px solid #ddd;
   }
+}
 
-  &.visible {
-    margin: 0 auto 16px auto;
-    max-height: 445px;
-    overflow: auto;
-    li {
-      opacity: 1;
-    }
-  }
+.expand-enter {
+  max-height: 0;
+  margin: 0;
+}
+.expand-enter-to {
+  max-height: 445px;
+  transition: max-height 0.75s;
+  margin: 0 auto 16px auto;
+}
+
+.expand-leave {
+  max-height: 445px;
+  margin: 0 auto 16px auto;
+}
+.expand-leave-to {
+  max-height: 0;
+  transition: max-height 0.75s;
+  margin: 0;
 }
 </style>
