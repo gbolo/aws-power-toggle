@@ -1,4 +1,6 @@
-# aws-power-toggle
+aws-power-toggle [![Build Status](https://travis-ci.org/gbolo/aws-power-toggle.svg?branch=master)](https://travis-ci.org/gbolo/aws-power-toggle)
+================
+
 web UI and API for quickly starting and stopping AWS environments
 
 <img src="https://raw.githubusercontent.com/gbolo/aws-power-toggle/master/testdata/screenshots/v1-0-poc_mobile.png" width="432" />
@@ -114,4 +116,4 @@ make all
 ```
 
 if you would like to add/remove/change any of the fake inventory, then modify this file:
-`testdata/mock/mock_env_cachedTable.json`
+`testdata/mock_env_cachedTable.json`
