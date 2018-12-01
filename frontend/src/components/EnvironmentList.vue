@@ -44,17 +44,15 @@ export default {
   },
   computed: {
     enabledFilters() {
-      return this.itemFilters.filter((f) => f.selected);
+      return this.itemFilters.filter(f => f.selected);
     },
     filteredEnvs() {
-      return this.environments.filter((env) =>
-        this.enabledFilters.some((f) => {
-          if (typeof f.value === 'string') {
-            return (env[f.field] || '').toLowerCase() === f.value.toLowerCase();
-          }
-          return env[f.field] === f.value;
-        })
-      );
+      return this.environments.filter(env => this.enabledFilters.some((f) => {
+        if (typeof f.value === 'string') {
+          return (env[f.field] || '').toLowerCase() === f.value.toLowerCase();
+        }
+        return env[f.field] === f.value;
+      }));
     },
   },
   methods: {
