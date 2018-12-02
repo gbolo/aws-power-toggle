@@ -60,6 +60,16 @@ make all
 curl -v 127.0.0.1:8080/api/env/summary
 ```
 
+**TODO add the frontend stuff to Makefile**
+```bash
+cd frontend
+npm install
+npm run build
+cd ..
+./testdata/scripts/dev-start.sh
+```
+
+
 ### API Documentation
 For further details on an API endpoint (including example responses), click on the endpoint's name.
 

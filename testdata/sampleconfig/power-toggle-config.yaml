@@ -1,11 +1,8 @@
----
-
 # http server settings -------------------------------------------------------------------------------------------------
 server:
-
   # location of static files directory
   # used to serve static files such as css, js, exc.
-  static_files_dir: ./www/static
+  static_files_dir: ./frontend/dist
 
   # local interface to bind to
   bind_address: 0.0.0.0
@@ -18,7 +15,6 @@ server:
 
   # TLS options
   tls:
-
     # enables TLS
     enabled: false
 
@@ -31,7 +27,6 @@ server:
 
 # aws settings ---------------------------------------------------------------------------------------------------------
 aws:
-
   # TODO: add api keys to config
   # for now use env vars:
   #   AWS_ACCESS_KEY_ID

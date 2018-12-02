@@ -67,13 +67,6 @@ var routes = Routes{
 		getEndpoint("instance/{instance-id}/{state:start|stop}"),
 		handlerInstancePowerToggle,
 	},
-	// UI endpoints
-	Route{
-		"Main",
-		"GET",
-		"/",
-		handlerMain,
-	},
 }
 
 func newRouter() *mux.Router {
@@ -92,16 +85,16 @@ func newRouter() *mux.Router {
 			Handler(handler)
 	}
 
-	// add route to mux to handle static files
+	// add route to mux to handle UI static files
 	staticPath := viper.GetString("server.static_files_dir")
 	if staticPath == "" {
-		staticPath = "./static"
+		staticPath = "./frondent/dist"
 	}
 
 	router.
 		Methods("GET").
-		PathPrefix("/static/").
-		Handler(http.StripPrefix("/static/", http.FileServer(http.Dir(staticPath))))
+		PathPrefix("/").
+		Handler(http.StripPrefix("/", http.FileServer(http.Dir(staticPath))))
 
 	return router
 }
