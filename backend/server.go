@@ -16,6 +16,42 @@ import (
 	"github.com/spf13/viper"
 )
 
+var (
+	// set timeouts to avoid Slowloris attacks.
+	httpWriteTimeout = time.Second * 15
+	httpReadTimeout  = time.Second * 15
+	// the maximum amount of time to wait for the
+	// next request when keep-alives are enabled
+	httpIdleTimeout = time.Second * 60
+
+	// PCI compliance as of Jun 30, 2018: anything under TLS 1.1 must be disabled
+	// we bump this up to TLS 1.2 so we can support best possible ciphers
+	tlsMinVersion = uint16(tls.VersionTLS12)
+	// allowed ciphers when in hardened mode
+	// disable CBC suites (Lucky13 attack) this means TLS 1.1 can't work (no GCM)
+	// only use perfect forward secrecy ciphers
+	tlsCiphers = []uint16{
+		tls.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
+		tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+		tls.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+		tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+		// these ciphers require go 1.8+
+		tls.TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,
+		tls.TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,
+	}
+	// EC curve preference when in hardened mode
+	// curve reference: http://safecurves.cr.yp.to/
+	tlsCurvePreferences = []tls.CurveID{
+		// this curve is a non-NIST curve with no NSA influence. Prefer this over all others!
+		// this curve required go 1.8+
+		tls.X25519,
+		// These curves are provided by NIST; prefer in descending order
+		tls.CurveP521,
+		tls.CurveP384,
+		tls.CurveP256,
+	}
+)
+
 func StartServer() (err error) {
 
 	// create routes
@@ -60,13 +96,10 @@ func configureHttpServer(mux *mux.Router) (httpServer *http.Server) {
 
 	httpServer = &http.Server{
 		Addr: address,
-		// set timeouts to avoid Slowloris attacks.
-		WriteTimeout: time.Second * 15,
-		ReadTimeout:  time.Second * 15,
 
-		// the maximum amount of time to wait for the
-		// next request when keep-alives are enabled
-		IdleTimeout: time.Second * 60,
+		WriteTimeout: httpWriteTimeout,
+		ReadTimeout:  httpReadTimeout,
+		IdleTimeout:  httpIdleTimeout,
 	}
 
 	// explicitly enable keep-alives
@@ -98,33 +131,13 @@ func configureTLS() (tlsConfig tls.Config, err error) {
 		return
 	}
 
-	// configure tls settings
+	// configure hardened TLS settings
 	tlsConfig.Certificates = []tls.Certificate{cert}
-	tlsConfig.MinVersion = tls.VersionTLS12
+	tlsConfig.MinVersion = tlsMinVersion
 	tlsConfig.InsecureSkipVerify = false
 	tlsConfig.PreferServerCipherSuites = true
-
-	// https://www.iana.org/assignments/tls-parameters/tls-parameters.xml#tls-parameters-8
-	// http://safecurves.cr.yp.to/
-	tlsConfig.CurvePreferences = []tls.CurveID{
-		// this curve is a non-NIST curve with no NSA influence. Prefer this over all others!
-		tls.X25519,
-		// The following curves are provided by NIST
-		// secp521r1
-		tls.CurveP521,
-		// secp384r1
-		tls.CurveP384,
-		// secp256r1
-		tls.CurveP256,
-	}
-
-	// allowed ciphers. Disable CBC suites (Lucky13)
-	tlsConfig.CipherSuites = []uint16{
-		tls.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
-		tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-		tls.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-		tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-	}
+	tlsConfig.CurvePreferences = tlsCurvePreferences
+	tlsConfig.CipherSuites = tlsCiphers
 
 	return
 }
