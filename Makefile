@@ -5,6 +5,7 @@ COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
 PKGS        = $(or $(PKG),$(shell $(GO) list ./...))
 TESTPKGS    = $(shell $(GO) list -f '{{ if or .TestGoFiles .XTestGoFiles }}{{ .ImportPath }}{{ end }}' $(PKGS))
 BIN         = $(CURDIR)/bin
+FRONTEND    = $(CURDIR)/frontend
 
 GO      = go
 TIMEOUT = 15
@@ -14,7 +15,7 @@ Q = $(if $(filter 1,$V),,@)
 M = $(shell printf "\033[34;1m▶\033[0m")
 
 .PHONY: all
-all: fmt dep $(BIN) ; $(info $(M) building executable...) @ ## Build program binary
+all: fmt dep $(BIN) frontend ; $(info $(M) building executable...) @ ## Build program binary
 	$Q $(GO) build \
 		-ldflags '-X main.Version=$(VERSION) -X main.BuildDate=$(DATE) -X main.CommitSHA=$(COMMIT_SHA)' \
 		-o $(BIN)/$(PACKAGE)
@@ -22,6 +23,10 @@ all: fmt dep $(BIN) ; $(info $(M) building executable...) @ ## Build program bin
 .PHONY: docker
 docker: clean ; $(info $(M) building docker image...)	@ ## Build docker imaage
 	$Q docker build -t gbolo/$(PACKAGE):$(VERSION) .
+
+.PHONY: frontend
+frontend: ; $(info $(M) building web frontend ui...)	@ ## Build frontend
+	$Q npm install --prefix $(FRONTEND) && npm run build --prefix $(FRONTEND)
 
 # Tools
 
@@ -52,7 +57,7 @@ test: ; $(info $(M) running go test...) @ ## Run go test
 
 .PHONY: clean
 clean: ; $(info $(M) cleaning...)	@ ## Cleanup everything
-	@rm -rf $(BIN)
+	@rm -rf $(BIN) $(CURDIR)/vendor $(FRONTEND)/dist $(FRONTEND)/node_modules
 
 .PHONY: help
 help:

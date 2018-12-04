@@ -12,9 +12,8 @@ COPY . ${GOPATH}/src/github.com/gbolo/go-util/aws-power-toggle
 RUN   set -xe; \
       SRC_DIR=${GOPATH}/src/github.com/gbolo/go-util/aws-power-toggle; \
       cd ${SRC_DIR}; \
-      mkdir -p /tmp/build && \
+      mkdir -p /tmp/build && npm -v; \
       make all && \
-      cd frontend; npm install && npm run build && cd ..; \
       cp -rp frontend/dist /tmp/build/frontend; \
       cp -rp testdata/sampleconfig/power-toggle-config.yaml bin/aws-power-toggle /tmp/build/
 

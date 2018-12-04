@@ -3,7 +3,7 @@ aws-power-toggle [![Build Status](https://travis-ci.org/gbolo/aws-power-toggle.s
 
 web UI and API for quickly starting and stopping AWS environments
 
-<img src="https://raw.githubusercontent.com/gbolo/aws-power-toggle/master/testdata/screenshots/v1-0-poc_mobile.png" width="432" />
+<img src="https://raw.githubusercontent.com/gbolo/aws-power-toggle/master/testdata/screenshots/v3-0_mobile.png" width="432" />
 
 ## Getting Started
 aws-power-toggle groups your instances by environments (via instance tag [described below](#Required-Tags)), then allows you power toggle
@@ -33,13 +33,20 @@ docker run -d --name "aws-power-toggle" \
  -p 8080:8080 \
  -e "AWS_ACCESS_KEY_ID=<your_key_id>" \
  -e "AWS_SECRET_ACCESS_KEY=<your_secret_key>" \
- gbolo/aws-power-toggle:2.0
+ gbolo/aws-power-toggle:3.0
 ```
 
 Then open your browser to: [http://127.0.0.1:8080](http://127.0.0.1:8080)
 
 ## Developer Guide
-ensure you have go and make installed (with `GOPATH` set) then follow these steps:
+
+**Requirements:**
+- `go` v1.8+ (with `GOPATH` set)
+- `npm` v3.5+
+- `make`
+- `docker` (optional)
+
+follow these steps:
 ```
 # clone source
 mkdir -p ${GOPATH}/src/github.com/gbolo/aws-power-toggle
@@ -50,25 +57,22 @@ cd ${GOPATH}/src/github.com/gbolo/aws-power-toggle
 export AWS_ACCESS_KEY_ID=<your_key_id>
 export AWS_SECRET_ACCESS_KEY=<your_secret_key>
 
-# build it
+# build it (builds both frontend and backend)
 make all
 
 # run it
 ./bin/aws-power-toggle -config testdata/sampleconfig/power-toggle-config.yaml
 
 # do a test API call
-curl -v 127.0.0.1:8080/api/env/summary
+curl -v 127.0.0.1:8080/api/v1/env/summary
 ```
 
-**TODO add the frontend stuff to Makefile**
-```bash
-cd frontend
-npm install
-npm run build
-cd ..
-./testdata/scripts/dev-start.sh
-```
+**Optional**
 
+If you prefer to use `docker` for building (which I recommend), you can build the docker image with:
+```
+make docker
+```
 
 ### API Documentation
 For further details on an API endpoint (including example responses), click on the endpoint's name.
@@ -116,4 +120,4 @@ make all
 ```
 
 if you would like to add/remove/change any of the fake inventory, then modify this file:
-`testdata/mock_env_cachedTable.json`
+`testdata/mock/mock_env_cachedTable.json`
