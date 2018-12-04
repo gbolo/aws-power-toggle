@@ -22,6 +22,12 @@ export const fetchAllEnvironmentsDetails = ({ commit }) => {
     .finally(() => commit('setIsLoading', false));
 };
 
+export const refresh = ({ commit }) => {
+  EnvironmentsApi.fetchAllEnvironmentsDetails()
+    .then(data => commit('setEnvironments', data))
+    .catch(e => commit('setError', e.response.data.error));
+};
+
 export const fetchEnvironmentDetails = ({ commit }, id) => {
   commit('setEnvironmentLoading', { id, flag: true });
   EnvironmentsApi.fetchEnvironmentDetails(id)

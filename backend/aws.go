@@ -3,13 +3,15 @@ package backend
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"sync"
 	"time"
 
-	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/liip/sheriff"
 	"github.com/spf13/viper"
+
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/service/ec2"
 )
 
 const (
@@ -43,9 +45,24 @@ var (
 	instanceTypeIgnore []string
 	// ignore these environment names
 	envNameIgnore []string
-
-	// MockEnabled enables mocking of API calls to aws for development purposes
-	MockEnabled = false
+	// aws api poll interval
+	pollInterval time.Duration
+	// bills accrued per env
+	billsAccruedMap = map[string]float64{}
+	// bills saved per env
+	billsSavedMap = map[string]float64{}
+	// total bills accrued since aws-power-toggle server start
+	totalBillsAccrued float64
+	// total bills saved since aws-power-toggle server start
+	totalBillsSaved float64
+	// instance IDs the server has actually toggled off
+	toggledOffInstanceIds = map[string]bool{}
+	// lock to prevent concurrent access of the above map
+	toggledOffInstanceIdsLock sync.RWMutex
+	// last time aws api was accessed
+	lastRefreshedTimeUnixNano int64
+	// MockEnabled enable mocking of API calls to aws for development purposes
+	MockEnabled bool
 )
 
 type virtualMachine struct {
@@ -61,8 +78,9 @@ type virtualMachine struct {
 	Region       string `json:"region" groups:"summary,details"`
 
 	// these values are mapped from another source for aws
-	VCPU     int     `json:"vcpu" groups:"summary,details"`
-	MemoryGB float32 `json:"memory_gb" groups:"summary,details"`
+	VCPU          int     `json:"vcpu" groups:"summary,details"`
+	MemoryGB      float32 `json:"memory_gb" groups:"summary,details"`
+	PricingHourly float64 `json:"pricing" groups:"summary,details"`
 }
 
 type environment struct {
@@ -80,6 +98,8 @@ type environment struct {
 	TotalVCPU        int     `json:"total_vcpu" groups:"summary,details"`
 	TotalMemoryGB    float32 `json:"total_memory_gb" groups:"summary,details"`
 	State            string  `json:"state" groups:"summary,details"`
+	BillsAccrued     string  `json:"bills_accrued" groups:"summary,details"`
+	BillsSaved       string  `json:"bills_saved" groups:"summary,details"`
 }
 
 // for global cached table
@@ -99,6 +119,13 @@ func updateEnvDetails() {
 			cachedTable[i].Region,
 			env.Name,
 		)
+		// add bills accrued and bills saved to env details
+		if envbillAccrued, exists := billsAccruedMap[cachedTable[i].ID]; exists {
+			cachedTable[i].BillsAccrued = fmt.Sprintf("%.02f", envbillAccrued)
+		}
+		if envbillSaved, exists := billsSavedMap[cachedTable[i].ID]; exists {
+			cachedTable[i].BillsSaved = fmt.Sprintf("%.02f", envbillSaved)
+		}
 
 		// vm total count
 		cachedTable[i].TotalInstances = len(env.Instances)
@@ -143,6 +170,41 @@ func updateEnvDetails() {
 			cachedTable[i].State = EnvStateChanging
 		}
 	}
+}
+
+// calculateEnvBills calculate bills accrued / saved since the last aws poll
+// return a map of env IDs with their respective bills accrued/saved
+func calculateEnvBills() {
+	// acquire and release lock on instance id map only once here, to avoid doing it for every map read
+	toggledOffInstanceIdsLock.RLock()
+	defer toggledOffInstanceIdsLock.RUnlock()
+
+	newRefreshedTimeUnixNano := time.Now().UnixNano()
+	elapsedTimeInHour := (float64(newRefreshedTimeUnixNano) - float64(lastRefreshedTimeUnixNano)) * float64(time.Nanosecond) / float64(time.Hour)
+	lastRefreshedTimeUnixNano = newRefreshedTimeUnixNano
+	for _, env := range cachedTable {
+		var envBillsAccrued float64
+		var envBillsSaved float64
+		for _, instance := range env.Instances {
+			// calculate bills as if state of instances are unchanged since the last poll. It's the best we can do for now (or so I believe)
+			instanceBill := instance.PricingHourly * elapsedTimeInHour
+			switch instance.State {
+			case "running":
+				envBillsAccrued += instanceBill
+			case "stopped":
+				// before claiming any responsibilities, need to find out whether the instance was actually stopped by aws-power-toggle :)
+				if toggledOffInstanceIds[instance.InstanceID] {
+					envBillsSaved += instanceBill
+				}
+			default:
+			}
+		}
+		billsAccruedMap[env.ID] = billsAccruedMap[env.ID] + envBillsAccrued
+		billsSavedMap[env.ID] = billsSavedMap[env.ID] + envBillsSaved
+		totalBillsAccrued += envBillsAccrued
+		totalBillsSaved += envBillsSaved
+	}
+	return
 }
 
 // checks if an instance should be included based on instance type
@@ -223,6 +285,9 @@ func refreshTable() (err error) {
 		},
 	}
 
+	// calculate billing information before old table is ditched
+	calculateEnvBills()
+
 	for region, awsSvcClient := range awsClients {
 		req := awsSvcClient.DescribeInstancesRequest(params)
 		resp, respErr := req.Send()
@@ -260,6 +325,13 @@ func refreshTable() (err error) {
 				if details, found := getInstanceTypeDetails(instanceObj.InstanceType); found {
 					instanceObj.MemoryGB = details.MemoryGB
 					instanceObj.VCPU = details.VCPU
+					if pricingstr, ok := details.PricingHourlyByRegion[region]; ok {
+						pricing, err := strconv.ParseFloat(pricingstr, 64)
+						if err != nil {
+							log.Errorf("failed to parse pricing info to float: %s", pricingstr)
+						}
+						instanceObj.PricingHourly = pricing
+					}
 				}
 				if validateEnvName(instanceObj.Environment) {
 					addInstance(&instanceObj)
@@ -307,6 +379,14 @@ func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.E
 		awsResponse, reqErr := req.Send()
 		response, _ = json.MarshalIndent(awsResponse, "", "  ")
 		err = reqErr
+		if err == nil {
+			// BILLING: update toggled off instances map
+			toggledOffInstanceIdsLock.Lock()
+			for _, instanceID := range instanceIDs {
+				delete(toggledOffInstanceIds, instanceID)
+			}
+			toggledOffInstanceIdsLock.Unlock()
+		}
 		return
 
 	case "stop":
@@ -319,10 +399,18 @@ func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.E
 		awsResponse, reqErr := req.Send()
 		response, _ = json.MarshalIndent(awsResponse, "", "  ")
 		err = reqErr
+		if err == nil {
+			// BILLING: update toggled off instances map
+			toggledOffInstanceIdsLock.Lock()
+			for _, instanceID := range instanceIDs {
+				toggledOffInstanceIds[instanceID] = true
+			}
+			toggledOffInstanceIdsLock.Unlock()
+		}
 		return
 
 	default:
-		err = fmt.Errorf("unsupported desiredState soecified")
+		err = fmt.Errorf("unsupported desiredState specified")
 		return
 	}
 }
@@ -446,8 +534,8 @@ func getAWSInstanceID(id string) (awsInstanceID string) {
 	return
 }
 
-// getMarshalledRespone will filter out fields from the struct based on predefined groups
-func getMarshalledRespone(data interface{}, groups ...string) (response []byte, err error) {
+// getMarshaledResponse will filter out fields from the struct based on predefined groups
+func getMarshaledResponse(data interface{}, groups ...string) (response []byte, err error) {
 	// filter out the specified group(s)
 	if sMarshal, sErr := sheriff.Marshal(&sheriff.Options{Groups: groups}, data); sErr != nil {
 		log.Errorf("error parsing json (sheriff): %v", sErr)
@@ -463,7 +551,7 @@ func StartPoller() {
 	// build the initial cache
 	refreshTable()
 
-	pollInterval := time.Minute * time.Duration(viper.GetInt("aws.polling_interval"))
+	pollInterval = time.Minute * time.Duration(viper.GetInt("aws.polling_interval"))
 	log.Infof("start polling with interval %v", pollInterval)
 
 	t := time.Tick(pollInterval)

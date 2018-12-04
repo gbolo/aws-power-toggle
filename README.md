@@ -127,8 +127,8 @@ Need to finish these...
 It may be useful to mock the aws API when doing development work against the API (like for web ui development).
 This means you don't need an aws api key. To enable this feature:
 ```
-# modify aws.go and set this constant to true:
-MOCK_ENABLED = true
+# set MOCK_ENABLED env flag (or change mock.enabled in config file):
+export MOCK_ENABLED = true
 
 # set fake AWS API keys
 export AWS_ACCESS_KEY_ID=DOESNT_MATTER

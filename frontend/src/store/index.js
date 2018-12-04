@@ -11,6 +11,8 @@ const store = new Vuex.Store({
   state: {
     environments: [],
     version: '',
+    totalBillsAccrued: '',
+    totalBillsSaved: '',
     error: '',
     environmentsLoading: {},
     isLoading: false,

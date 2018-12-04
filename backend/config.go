@@ -29,6 +29,7 @@ func ConfigInit(cfgFile string, printConfig bool) {
 	requiredTagKey = viper.GetString("aws.required_tag_key")
 	requiredTagValue = viper.GetString("aws.required_tag_value")
 	environmentTagKey = viper.GetString("aws.environment_tag_key")
+	MockEnabled = viper.GetBool("mock.enabled")
 
 	return
 }

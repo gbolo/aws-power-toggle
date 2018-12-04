@@ -8,6 +8,22 @@
       <div class="divider"></div>
       <span>AWS Power-Toggle</span>
     </div>
+    <div class="bills-container">
+      <span class="info-container">
+        <clr-icon
+            shape="lightbulb"
+            size="18"
+        ></clr-icon>
+        ${{totalBillsAccruedLabel}}
+      </span>
+      <span class="info-container">
+        <clr-icon
+            shape="bolt"
+            size="18"
+        ></clr-icon>
+        ${{totalBillsSavedLabel}}
+      </span>
+    </div>
     <nav>
       <span class="version-container">{{versionLabel}}</span>
       <a
@@ -23,6 +39,8 @@ export default {
   name: 'Header',
   props: {
     version: String,
+    tba: String,
+    tbs: String,
   },
   data() {
     return {
@@ -35,6 +53,18 @@ export default {
         return '';
       }
       return /^\d/.test(this.version) ? `v${this.version}` : this.version;
+    },
+    totalBillsAccruedLabel() {
+      if (!this.tba) {
+        return '0.00';
+      }
+      return this.tba;
+    },
+    totalBillsSavedLabel() {
+      if (!this.tbs) {
+        return '0.00';
+      }
+      return this.tbs;
     },
   },
 };
@@ -68,8 +98,17 @@ header {
     }
   }
 
+  .bills-container {
+    position:relative;
+    margin:auto;
+    .info-container {
+      font-size: 0.8em;
+      margin: 2px;
+    }
+  }
+
   nav {
-    align-self: flex-end;
+    padding-left:140px;
     margin: auto 0;
     @media screen and (max-width: 630px) {
       display: none;

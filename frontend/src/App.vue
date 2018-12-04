@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header v-bind:version="version" />
+    <Header v-bind="{ version: version, tba:totalBillsAccrued, tbs:totalBillsSaved}" />
     <button
       class="refresh-btn"
       @click="refresh"
@@ -11,7 +11,6 @@
         size="16"
       ></clr-icon>
     </button>
-
     <EnvironmentList v-bind:environments="environments" />
     <Snackbar v-bind:message="error" />
   </div>
@@ -37,6 +36,12 @@ export default {
   computed: {
     environments() {
       return this.$store.state.environments;
+    },
+    totalBillsAccrued() {
+      return this.$store.state.totalBillsAccrued;
+    },
+    totalBillsSaved() {
+      return this.$store.state.totalBillsSaved;
     },
     version() {
       return this.$store.state.version;

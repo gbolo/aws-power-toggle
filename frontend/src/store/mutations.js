@@ -2,8 +2,10 @@ export const setVersion = (state, v) => {
   state.version = v;
 };
 
-export const setEnvironments = (state, envs) => {
-  state.environments = envs;
+export const setEnvironments = (state, data) => {
+  state.environments = data.envList;
+  state.totalBillsAccrued = data.totalBillsAccrued;
+  state.totalBillsSaved = data.totalBillsSaved;
 };
 
 export const setEnvironment = (state, { id, data }) => {

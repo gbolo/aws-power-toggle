@@ -29,8 +29,18 @@ func handlerEnvAll(w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 	group := vars["group"]
 
+	envAllResponse := struct {
+		EnvList           envList `json:"envList" groups:"summary,details"`
+		TotalBillsAccrued string  `json:"totalBillsAccrued" groups:"summary,details"`
+		TotalBillsSaved   string  `json:"totalBillsSaved" groups:"summary,details"`
+	}{
+		EnvList:           cachedTable,
+		TotalBillsAccrued: fmt.Sprintf("%.02f", totalBillsAccrued),
+		TotalBillsSaved:   fmt.Sprintf("%.02f", totalBillsSaved),
+	}
+
 	// prepare result and return it
-	if response, err := getMarshalledRespone(cachedTable, group); err != nil {
+	if response, err := getMarshaledResponse(envAllResponse, group); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, "{\"error\":\"%v\"}\n", err)
 	} else {
@@ -62,7 +72,7 @@ func handlerEnvSingle(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(w, "{\"error\":\"environment not found\"}\n")
 		return
 	}
-	response, err := getMarshalledRespone(envData, group)
+	response, err := getMarshaledResponse(envData, group)
 
 	// return filtered result
 	if err != nil {

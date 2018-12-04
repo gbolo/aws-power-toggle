@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strconv"
 )
 
 // mock of refreshTable
@@ -20,6 +21,28 @@ func mockRefreshTable() (err error) {
 		err = json.Unmarshal(cachedTableBytes, &cachedTable)
 		if err != nil {
 			log.Fatalf("mock API is enabled, but can't unmarshal json file: %s", err)
+		}
+	}
+	calculateEnvBills()
+	cachedTableTemp := cachedTable
+	cachedTable = cachedTable[:0]
+	for _, env := range cachedTableTemp {
+		for _, instanceObj := range env.Instances {
+			// determine instance cpu and memory
+			if details, found := getInstanceTypeDetails(instanceObj.InstanceType); found {
+				instanceObj.MemoryGB = details.MemoryGB
+				instanceObj.VCPU = details.VCPU
+				if pricingstr, ok := details.PricingHourlyByRegion["ca-central-1"]; ok {
+					pricing, err := strconv.ParseFloat(pricingstr, 64)
+					if err != nil {
+						log.Errorf("failed to parse pricing info to float: %s", pricingstr)
+					}
+					instanceObj.PricingHourly = pricing
+				}
+			}
+			if validateEnvName(instanceObj.Environment) {
+				addInstance(&instanceObj)
+			}
 		}
 	}
 
@@ -44,6 +67,12 @@ func mockShutdownEnv(envID string) (response []byte, err error) {
 				break
 			}
 		}
+		// MOCK BILLING: update toggled off instances map
+		toggledOffInstanceIdsLock.Lock()
+		for _, instanceID := range instanceIds {
+			toggledOffInstanceIds[instanceID] = true
+		}
+		toggledOffInstanceIdsLock.Unlock()
 		response = []byte(`{"mock": "OK"}`)
 		log.Infof("MOCK: successfully stopped env %s", envID)
 	} else {
@@ -66,6 +95,12 @@ func mockStartupEnv(envID string) (response []byte, err error) {
 				break
 			}
 		}
+		// MOCK BILLING: update toggled off instances map
+		toggledOffInstanceIdsLock.Lock()
+		for _, instanceID := range instanceIds {
+			delete(toggledOffInstanceIds, instanceID)
+		}
+		toggledOffInstanceIdsLock.Unlock()
 		response = []byte(`{"mock": "OK"}`)
 		log.Infof("MOCK: successfully started env %s", envID)
 	} else {
@@ -75,7 +110,7 @@ func mockStartupEnv(envID string) (response []byte, err error) {
 	return
 }
 
-// mock
+// mock toggleInstance
 func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 	// validate desiredState
 	if desiredState != "start" && desiredState != "stop" {
@@ -92,8 +127,16 @@ func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 					switch desiredState {
 					case "start":
 						cachedTable[e].Instances[i].State = "running"
+						// MOCK BILLING: update toggled off instances map
+						toggledOffInstanceIdsLock.Lock()
+						delete(toggledOffInstanceIds, instance.InstanceID)
+						toggledOffInstanceIdsLock.Unlock()
 					case "stop":
 						cachedTable[e].Instances[i].State = "stopped"
+						// MOCK BILLING: update toggled off instances map
+						toggledOffInstanceIdsLock.Lock()
+						toggledOffInstanceIds[instance.InstanceID] = true
+						toggledOffInstanceIdsLock.Unlock()
 					}
 					break
 				}

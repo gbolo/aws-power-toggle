@@ -47,6 +47,26 @@
           </div>
         </td>
       </tr>
+      <tr>
+        <td>
+          <div class="env__details">
+            <clr-icon
+              shape="lightbulb"
+              size="24"
+            ></clr-icon>
+            <span>${{env.bills_accrued}}&nbsp;used</span>
+          </div>
+        </td>
+        <td>
+          <div class="env__details">
+            <clr-icon
+              shape="bolt"
+              size="24"
+            ></clr-icon>
+            <span>${{env.bills_saved}}&nbsp;saved</span>
+          </div>
+        </td>
+      </tr>
     </table>
 
     <clr-icon
