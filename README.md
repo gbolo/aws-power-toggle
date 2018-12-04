@@ -3,7 +3,7 @@ aws-power-toggle [![Build Status](https://travis-ci.org/gbolo/aws-power-toggle.s
 
 web UI and API for quickly starting and stopping AWS environments
 
-<img src="https://raw.githubusercontent.com/gbolo/aws-power-toggle/master/testdata/screenshots/v3-0_mobile.png" width="432" />
+![Demo](https://thumbs.gfycat.com/CooperativeDifferentAsiaticlesserfreshwaterclam-size_restricted.gif)
 
 ## Getting Started
 aws-power-toggle groups your instances by environments (via instance tag [described below](#Required-Tags)), then allows you power toggle
