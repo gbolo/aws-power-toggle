@@ -39,6 +39,8 @@ docker run -d --name "aws-power-toggle" \
 Then open your browser to: [http://127.0.0.1:8080](http://127.0.0.1:8080)
 
 ## Developer Guide
+The [backend](backend/) server API is written in `go` and the [frontend](frontend/) web UI is written in javascript (vue.js).
+The backend also serves the frontend content, so the frontend must be built prior compiling the backend.
 
 **Requirements:**
 - `go` v1.8+ (with `GOPATH` set)

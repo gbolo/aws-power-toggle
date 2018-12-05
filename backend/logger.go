@@ -1,4 +1,4 @@
-package main
+package backend
 
 import (
 	"os"
@@ -6,6 +6,10 @@ import (
 	"github.com/op/go-logging"
 )
 
+// logFormat is an RFC 5424 style log format
+const logFormat = `%{level:.1s} %{time:2006-01-02 15:04:05} %{program}[%{pid}]: %{id:05d} %{shortfile} %{shortfunc} %{message}`
+
+// global logger for this package
 var log = logging.MustGetLogger("aws-power-toggle")
 
 func loggingInit(loglevel string) {
@@ -26,14 +30,7 @@ func loggingInit(loglevel string) {
 	var log_format logging.Formatter
 
 	// RFC 5424 style log format
-	log_format = logging.MustStringFormatter(
-		`%{level:.1s} ` +
-			`%{time:2006-01-02 15:04:05} ` +
-			`%{program}[%{pid}]: ` +
-			`%{id:05d} ` +
-			`%{shortfile} ` +
-			`%{shortfunc} ` +
-			`%{message}`)
+	log_format = logging.MustStringFormatter(logFormat)
 
 	// Configure log backends
 	log_backend := logging.NewLogBackend(os.Stdout, "", 0)
