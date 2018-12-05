@@ -1,13 +1,14 @@
-package main
+package backend
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/liip/sheriff"
+	"sync"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
+	"github.com/liip/sheriff"
 	"github.com/spf13/viper"
 )
 
@@ -21,9 +22,6 @@ const (
 	ENV_MIXED = "mixed"
 	// means that AT LEAST ONE instance for an env is NOT in a "running" state or "stopped" state
 	ENV_CHANGING = "changing"
-
-	// enables mocking of API calls to aws for development purposes
-	MOCK_ENABLED = false
 )
 
 var (
@@ -31,6 +29,8 @@ var (
 	awsClient *ec2.EC2
 	// global cached env list
 	cachedTable envList
+	// lock to prevent concurrent refreshes
+	cachedTableLock sync.Mutex
 	// aws region
 	awsRegion string
 	// aws tags
@@ -41,6 +41,9 @@ var (
 	instanceTypeIgnore []string
 	// ignore these environment names
 	envNameIgnore []string
+
+	// enables mocking of API calls to aws for development purposes
+	MOCK_ENABLED = false
 )
 
 type virtualMachine struct {
@@ -198,6 +201,9 @@ func addInstance(instance *virtualMachine) {
 
 // polls aws for updates to cachedTable
 func refreshTable() (err error) {
+	cachedTableLock.Lock()
+	defer cachedTableLock.Unlock()
+
 	// use the mock function if enabled
 	if MOCK_ENABLED {
 		return mockRefreshTable()
@@ -401,6 +407,7 @@ func getAWSInstanceId(id string) (awsInstanceId string) {
 	return
 }
 
+// getMarshalledRespone will filter out fields from the struct based on predefined groups
 func getMarshalledRespone(data interface{}, groups ...string) (response []byte, err error) {
 	// filter out the specified group(s)
 	if sMarshal, sErr := sheriff.Marshal(&sheriff.Options{Groups: groups}, data); sErr != nil {
@@ -412,7 +419,7 @@ func getMarshalledRespone(data interface{}, groups ...string) (response []byte, 
 	return
 }
 
-// starts the poller
+// StartPoller is an infinite loop which periodically polls AWS to refresh the cache
 func StartPoller() {
 	// build the initial cache
 	refreshTable()
