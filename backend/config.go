@@ -1,8 +1,6 @@
 package backend
 
 import (
-	"fmt"
-	"os"
 	"strings"
 
 	"github.com/spf13/viper"
@@ -53,19 +51,6 @@ func initViper(cfgFile string) {
 	viper.SetConfigType("yaml")
 	viper.SetConfigName("power-toggle-config")
 	viper.AddConfigPath("./")
-
-	// if env <env_prefix>_TESTING=true then set a path to sampleconfig
-	if viper.GetBool("testing") {
-		testConfig := "./testdata/sampleconfig"
-
-		goPath := os.Getenv("GOPATH")
-		if goPath != "" {
-			testConfig = fmt.Sprintf("%s/src/github.com/gbolo/aws-power-toggle/testdata/sampleconfig", goPath)
-		}
-
-		log.Debugf("dev mode enabled: %s", testConfig)
-		viper.AddConfigPath(testConfig)
-	}
 
 	// if the user provides a config file in a flag, lets use it
 	if cfgFile != "" {
