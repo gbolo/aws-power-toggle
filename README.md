@@ -76,6 +76,23 @@ If you prefer to use `docker` for building (which I recommend), you can build th
 make docker
 ```
 
+
+### Make Targets
+
+```
+$ make help
+
+all             Build main binary
+docker          Build docker image
+frontend        Build frontend
+dep             Run dep ensure to fetch dependencies
+fmt             Run gofmt on all source files
+goimports       Run goimports on backend source files
+test            Run go unit tests
+clean           Cleanup everything
+```
+
+
 ### API Documentation
 For further details on an API endpoint (including example responses), click on the endpoint's name.
 

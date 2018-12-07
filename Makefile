@@ -15,13 +15,13 @@ Q = $(if $(filter 1,$V),,@)
 M = $(shell printf "\033[34;1m▶\033[0m")
 
 .PHONY: all
-all: fmt dep $(BIN) frontend ; $(info $(M) building executable...) @ ## Build program binary
+all: fmt dep $(BIN) frontend ; $(info $(M) building executable...) @ ## Build main binary
 	$Q $(GO) build \
 		-ldflags '-X main.Version=$(VERSION) -X main.BuildDate=$(DATE) -X main.CommitSHA=$(COMMIT_SHA)' \
 		-o $(BIN)/$(PACKAGE)
 
 .PHONY: docker
-docker: clean ; $(info $(M) building docker image...)	@ ## Build docker imaage
+docker: clean ; $(info $(M) building docker image...)	@ ## Build docker image
 	$Q docker build -t gbolo/$(PACKAGE):$(VERSION) .
 
 .PHONY: frontend
@@ -41,6 +41,9 @@ $(BIN)/%: | $(BIN) ; $(info $(M) building $(REPOSITORY)...)
 DEP = $(BIN)/dep
 $(BIN)/dep: REPOSITORY=github.com/golang/dep/cmd/dep
 
+GOIMPORTS = $(BIN)/goimports
+$(BIN)/goimports: REPOSITORY=golang.org/x/tools/cmd/goimports
+
 .PHONY: dep
 dep: | $(DEP) ; $(info $(M) running dep...) @ ## Run dep ensure to fetch dependencies
 	$Q $(DEP) ensure -v
@@ -49,8 +52,12 @@ dep: | $(DEP) ; $(info $(M) running dep...) @ ## Run dep ensure to fetch depende
 fmt: ; $(info $(M) running gofmt...) @ ## Run gofmt on all source files
 	$Q $(GO) fmt ./...
 
+.PHONY: goimports
+goimports: | $(GOIMPORTS) ; $(info $(M) running goimports...) @ ## Run goimports on backend source files
+	$Q $(GOIMPORTS) -w backend/
+
 .PHONY: test
-test: ; $(info $(M) running go test...) @ ## Run go test
+test: ; $(info $(M) running go test...) @ ## Run go unit tests
 	$Q $(GO) test -v -cover $(TESTPKGS)
 
 # Misc

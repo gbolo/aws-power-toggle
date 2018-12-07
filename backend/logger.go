@@ -3,7 +3,7 @@ package backend
 import (
 	"os"
 
-	"github.com/op/go-logging"
+	logging "github.com/op/go-logging"
 )
 
 // logFormat is an RFC 5424 style log format
