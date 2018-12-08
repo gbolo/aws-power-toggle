@@ -7,18 +7,19 @@ import (
 
 func init() {
 	// load instancetype details
-	if err := loadAwsInstanceDetailsJson(); err != nil {
+	if err := loadAwsInstanceDetailsJSON(); err != nil {
 		log.Fatalf("could not load instance type details: %v", err)
 	}
 }
 
+// StartBackendDeamon Blocking function that starts the backend process
 func StartBackendDeamon(cfgFile string) {
 
 	// init the config
 	ConfigInit(cfgFile, true)
 
 	// start http server
-	go StartServer()
+	go startHTTPServer()
 
 	// init the aws client
 	cfg, err := external.LoadDefaultAWSConfig()

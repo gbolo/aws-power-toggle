@@ -8,8 +8,8 @@ func TestAwsInstanceDetails(t *testing.T) {
 
 	// this should NEVER return an error
 	// if it does then the json data may be incorrect
-	if err := loadAwsInstanceDetailsJson(); err != nil {
-		t.Error("loadAwsInstanceDetailsJson returned an error")
+	if err := loadAwsInstanceDetailsJSON(); err != nil {
+		t.Error("loadAwsInstanceDetailsJSON returned an error")
 	}
 
 	// check if instanceTypeDetailsCache was updated properly

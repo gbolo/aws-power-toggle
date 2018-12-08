@@ -47,21 +47,21 @@ func TestGetEnvironmentById(t *testing.T) {
 	if err := resetMockData(); err != nil {
 		t.Fatalf("mockRefreshTable failed: %v", err)
 	}
-	envId := "356f6265efcc"
+	envID := "356f6265efcc"
 
 	if len(cachedTable) == 0 {
 		t.Fatalf("cachedTable is of 0 size!")
 	}
 
-	env, found := getEnvironmentById(envId)
+	env, found := getEnvironmentByID(envID)
 	if !found {
-		t.Errorf("unable to retrieve test env %s", envId)
+		t.Errorf("unable to retrieve test env %s", envID)
 	}
 	if env.Name != "mockenv1" && len(env.Instances) < 1 {
 		t.Errorf("unexpected env retrieved")
 	}
-	if _, found := getEnvironmentById("incorrectEnvId"); found {
-		t.Errorf("getEnvironmentById reported found for an invalid env id")
+	if _, found := getEnvironmentByID("incorrectEnvId"); found {
+		t.Errorf("getEnvironmentByID reported found for an invalid env id")
 	}
 }
 
@@ -83,40 +83,40 @@ func TestUpdateEnvDetails(t *testing.T) {
 	// set an instance in this env to running, we should see env state change
 	cachedTable[1].Instances[1].State = "running"
 	updateEnvDetails()
-	if cachedTable[1].State != ENV_MIXED {
-		t.Errorf("unexpected env state: got %s expected %s", cachedTable[1].State, ENV_MIXED)
+	if cachedTable[1].State != EnvStateMixed {
+		t.Errorf("unexpected env state: got %s expected %s", cachedTable[1].State, EnvStateMixed)
 	}
 
 	// set an instance in this env to pending, we should see env state change
 	cachedTable[1].Instances[1].State = "pending"
 	updateEnvDetails()
-	if cachedTable[1].State != ENV_CHANGING {
-		t.Errorf("unexpected env state: got %s expected %s", cachedTable[1].State, ENV_CHANGING)
+	if cachedTable[1].State != EnvStateChanging {
+		t.Errorf("unexpected env state: got %s expected %s", cachedTable[1].State, EnvStateChanging)
 	}
 
 	// set all instances to running, we should see env state change
-	for i, _ := range cachedTable[1].Instances {
+	for i := range cachedTable[1].Instances {
 		cachedTable[1].Instances[i].State = "running"
 	}
 	updateEnvDetails()
-	if cachedTable[1].State != ENV_RUNNING {
-		t.Errorf("unexpected env state: got %s expected %s", cachedTable[1].State, ENV_RUNNING)
+	if cachedTable[1].State != EnvStateRunning {
+		t.Errorf("unexpected env state: got %s expected %s", cachedTable[1].State, EnvStateRunning)
 	}
 
 	// set all instances to stopped, we should see env state change
-	for i, _ := range cachedTable[1].Instances {
+	for i := range cachedTable[1].Instances {
 		cachedTable[1].Instances[i].State = "stopped"
 	}
 	updateEnvDetails()
-	if cachedTable[1].State != ENV_DOWN {
-		t.Errorf("unexpected env state: got %s expected %s", cachedTable[1].State, ENV_DOWN)
+	if cachedTable[1].State != EnvStateStopped {
+		t.Errorf("unexpected env state: got %s expected %s", cachedTable[1].State, EnvStateStopped)
 	}
 
 	// ensure that our counts are functioning correctly
-	currentTotalCpuCount := cachedTable[1].TotalVCPU
+	currentTotalCPUCount := cachedTable[1].TotalVCPU
 	cachedTable[1].Instances[1].VCPU++
 	updateEnvDetails()
-	if (currentTotalCpuCount + 1) != cachedTable[1].TotalVCPU {
+	if (currentTotalCPUCount + 1) != cachedTable[1].TotalVCPU {
 		t.Errorf("Total vCPU count has an unexpected value: %d", cachedTable[1].TotalVCPU)
 	}
 }
@@ -131,7 +131,7 @@ func TestToggleInstance(t *testing.T) {
 		"stop":  "stopped",
 		"start": "running",
 	} {
-		_, err := toggleInstance(cachedTable[1].Instances[1].Id, desiredState)
+		_, err := toggleInstance(cachedTable[1].Instances[1].ID, desiredState)
 		if err != nil || cachedTable[1].Instances[1].State != actualState {
 			t.Errorf("go %s but wanted %s. Err: %v", cachedTable[1].Instances[1].State, actualState, err)
 		}
@@ -143,8 +143,8 @@ func TestGetAWSInstanceId(t *testing.T) {
 		t.Fatalf("mockRefreshTable failed: %v", err)
 	}
 
-	if getAWSInstanceId(cachedTable[1].Instances[1].Id) != cachedTable[1].Instances[1].InstanceId {
-		t.Errorf("getAWSInstanceId is not returning correct id")
+	if getAWSInstanceID(cachedTable[1].Instances[1].ID) != cachedTable[1].Instances[1].InstanceID {
+		t.Errorf("getAWSInstanceID is not returning correct id")
 	}
 }
 
@@ -152,40 +152,39 @@ func TestEnvStartStop(t *testing.T) {
 	if err := resetMockData(); err != nil {
 		t.Fatalf("mockRefreshTable failed: %v", err)
 	}
-	envId := "4f9f1afb29f1"
+	envID := "4f9f1afb29f1"
 
-	_, err := startupEnv(envId)
+	_, err := startupEnv(envID)
 	if err != nil {
 		t.Errorf("startupEnv return and error: %v", err)
 	}
 	updateEnvDetails()
-	state, _ := getEnvState(envId)
+	state, _ := getEnvState(envID)
 	if state != "running" {
 		t.Errorf("test env is not in running state: %s", state)
 	}
 
-	_, err = shutdownEnv(envId)
+	_, err = shutdownEnv(envID)
 	if err != nil {
 		t.Errorf("startupEnv return and error: %v", err)
 	}
 	updateEnvDetails()
-	state, _ = getEnvState(envId)
+	state, _ = getEnvState(envID)
 	if state != "stopped" {
 		t.Errorf("test env is not in stopped state: %s", state)
 	}
 }
 
 func resetMockData() error {
-	MOCK_ENABLED = true
+	MockEnabled = true
 	cachedTable = cachedTable[:0]
 	return mockRefreshTable()
 }
 
-func getEnvState(envId string) (string, bool) {
-	env, found := getEnvironmentById(envId)
+func getEnvState(envID string) (string, bool) {
+	env, found := getEnvironmentByID(envID)
 	if !found {
 		return "", found
-	} else {
-		return env.State, found
 	}
+	return env.State, found
 }

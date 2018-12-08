@@ -1,4 +1,4 @@
-aws-power-toggle [![Build Status](https://travis-ci.org/gbolo/aws-power-toggle.svg?branch=master)](https://travis-ci.org/gbolo/aws-power-toggle)
+aws-power-toggle [![Build Status](https://travis-ci.org/gbolo/aws-power-toggle.svg?branch=master)](https://travis-ci.org/gbolo/aws-power-toggle) [![Go Report Card](https://goreportcard.com/badge/github.com/gbolo/aws-power-toggle)](https://goreportcard.com/report/github.com/gbolo/aws-power-toggle)
 ================
 
 web UI and API for quickly starting and stopping AWS environments
@@ -88,6 +88,7 @@ frontend        Build frontend
 dep             Run dep ensure to fetch dependencies
 fmt             Run gofmt on all source files
 goimports       Run goimports on backend source files
+lint            Run golint
 test            Run go unit tests
 clean           Cleanup everything
 ```

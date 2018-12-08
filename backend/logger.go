@@ -12,35 +12,35 @@ const logFormat = `%{level:.1s} %{time:2006-01-02 15:04:05} %{program}[%{pid}]: 
 // global logger for this package
 var log = logging.MustGetLogger("aws-power-toggle")
 
-func loggingInit(loglevel string) {
+func loggingInit(logLevelString string) {
 
 	// In case of an invalid log level we default to ERROR
-	var log_level logging.Level = logging.ERROR
+	var logLevel = logging.ERROR
 
 	// Validating log levels
-	_, err := logging.LogLevel(loglevel)
+	_, err := logging.LogLevel(logLevelString)
 	if err != nil {
-		log.Errorf("The specified log_level (%s) is invalid, defaulting to ERROR!", loglevel)
+		log.Errorf("The specified logLevel (%s) is invalid, defaulting to ERROR!", logLevelString)
 	} else {
-		// Converting the log_level to actual Level (int)
-		log_level, _ = logging.LogLevel(loglevel)
+		// Converting the logLevel to actual Level (int)
+		logLevel, _ = logging.LogLevel(logLevelString)
 	}
 
 	// Special logging format for the logs
-	var log_format logging.Formatter
+	var logFormatter logging.Formatter
 
 	// RFC 5424 style log format
-	log_format = logging.MustStringFormatter(logFormat)
+	logFormatter = logging.MustStringFormatter(logFormat)
 
 	// Configure log backends
-	log_backend := logging.NewLogBackend(os.Stdout, "", 0)
+	logBackend := logging.NewLogBackend(os.Stdout, "", 0)
 
 	// Bind log formats and log backends together
-	log_backend_f := logging.NewBackendFormatter(log_backend, log_format)
+	logBackendFormatter := logging.NewBackendFormatter(logBackend, logFormatter)
 
-	// Setup the log level for each backends
-	log_backend_fl := logging.AddModuleLevel(log_backend_f)
-	log_backend_fl.SetLevel(log_level, "")
+	// Setup the log level for each backend
+	leveledBackend := logging.AddModuleLevel(logBackendFormatter)
+	leveledBackend.SetLevel(logLevel, "")
 
-	logging.SetBackend(log_backend_fl)
+	logging.SetBackend(leveledBackend)
 }

@@ -104,7 +104,7 @@ func TestTLSConfig(t *testing.T) {
 }
 
 func TestHTTPConfig(t *testing.T) {
-	httpServerConfig := configureHttpServer(&mux.Router{})
+	httpServerConfig := configureHTTPServer(&mux.Router{})
 
 	if httpServerConfig.WriteTimeout != httpWriteTimeout {
 		t.Error("WriteTimeout is not set to correct value")
@@ -117,4 +117,4 @@ func TestHTTPConfig(t *testing.T) {
 	}
 }
 
-// TODO: test StartServer() somehow
+// TODO: test startHTTPServer() somehow

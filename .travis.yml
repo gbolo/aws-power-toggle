@@ -1,7 +1,6 @@
 language: go
 
 go:
-  - 1.10.x
   - 1.11.x
 
 services:
@@ -14,4 +13,5 @@ before_install:
 script:
   - make all
   - make test
+  - make lint
   - make docker

@@ -9,15 +9,17 @@ import (
 )
 
 const (
-	ApiVersion     = "1"
+	// APIVersion defines the compatability version of the API and is appended to each API route
+	APIVersion     = "1"
 	endpointFormat = "/api/v%s/%s"
 )
 
 // getEndpoint returns a properly formatted API endpoint
 func getEndpoint(suffix string) string {
-	return fmt.Sprintf(endpointFormat, ApiVersion, suffix)
+	return fmt.Sprintf(endpointFormat, APIVersion, suffix)
 }
 
+// Route defines a route passed to our mux
 type Route struct {
 	Name        string
 	Method      string
@@ -25,6 +27,7 @@ type Route struct {
 	HandlerFunc http.HandlerFunc
 }
 
+// Routes holds a list of Routes
 type Routes []Route
 
 // all defined server endpoints

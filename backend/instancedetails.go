@@ -10,8 +10,8 @@ type awsInstanceTypeDetails struct {
 
 var instanceTypeDetailsCache []awsInstanceTypeDetails
 
-func loadAwsInstanceDetailsJson() error {
-	return json.Unmarshal([]byte(AWS_INSTANCE_TYPE_DETAILS_JSON), &instanceTypeDetailsCache)
+func loadAwsInstanceDetailsJSON() error {
+	return json.Unmarshal([]byte(awsInstanceTypeDetailsJSON), &instanceTypeDetailsCache)
 }
 
 func getInstanceTypeDetails(instanceType string) (typeDetails awsInstanceTypeDetails, found bool) {
@@ -25,10 +25,10 @@ func getInstanceTypeDetails(instanceType string) (typeDetails awsInstanceTypeDet
 	return
 }
 
-// generated with command:
+// awsInstanceTypeDetailsJSON is generated with command:
 // curl -s https://raw.githubusercontent.com/powdahound/ec2instances.info/master/www/instances.json | jq '.[] | {instance_type, vCPU, memory}' | jq -s .
 // !! remove i3.metal since it uses a string for vCPU !!
-const AWS_INSTANCE_TYPE_DETAILS_JSON = `
+const awsInstanceTypeDetailsJSON = `
 [
   {
     "instance_type": "m1.small",
