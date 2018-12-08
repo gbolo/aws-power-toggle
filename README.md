@@ -1,4 +1,4 @@
-aws-power-toggle [![Build Status](https://travis-ci.org/gbolo/aws-power-toggle.svg?branch=master)](https://travis-ci.org/gbolo/aws-power-toggle) [![Go Report Card](https://goreportcard.com/badge/github.com/gbolo/aws-power-toggle)](https://goreportcard.com/report/github.com/gbolo/aws-power-toggle)
+aws-power-toggle [![Build Status](https://travis-ci.org/gbolo/aws-power-toggle.svg?branch=master)](https://travis-ci.org/gbolo/aws-power-toggle) [![Go Report Card](https://goreportcard.com/badge/github.com/gbolo/aws-power-toggle)](https://goreportcard.com/report/github.com/gbolo/aws-power-toggle) ![Coverage](https://gocover.io/_badge/github.com/gbolo/aws-power-toggle/backend)
 ================
 
 web UI and API for quickly starting and stopping AWS environments
