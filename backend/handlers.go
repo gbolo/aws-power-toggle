@@ -52,11 +52,11 @@ func handlerEnvSingle(w http.ResponseWriter, req *http.Request) {
 
 	// get vars from request to determine if environment id was specified
 	vars := mux.Vars(req)
-	envId := vars["env-id"]
+	envID := vars["env-id"]
 	group := vars["group"]
 
 	// filter this environment id
-	envData, found := getEnvironmentById(envId)
+	envData, found := getEnvironmentByID(envID)
 	if !found {
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "{\"error\":\"environment not found\"}\n")
@@ -79,16 +79,16 @@ func handlerEnvPowerToggle(w http.ResponseWriter, req *http.Request) {
 
 	// get vars from request to determine environment
 	vars := mux.Vars(req)
-	envId := vars["env-id"]
+	envID := vars["env-id"]
 	state := vars["state"]
 
 	switch state {
 	case "start":
-		response, err := startupEnv(envId)
-		writeJsonResponse(w, err, response)
+		response, err := startupEnv(envID)
+		writeJSONResponse(w, err, response)
 	case "stop":
-		response, err := shutdownEnv(envId)
-		writeJsonResponse(w, err, response)
+		response, err := shutdownEnv(envID)
+		writeJSONResponse(w, err, response)
 	default:
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "{\"error\":\"invalid request\"}\n")
@@ -106,7 +106,7 @@ func handlerInstancePowerToggle(w http.ResponseWriter, req *http.Request) {
 
 	if state == "start" || state == "stop" {
 		response, err := toggleInstance(id, state)
-		writeJsonResponse(w, err, response)
+		writeJSONResponse(w, err, response)
 	} else {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "{\"error\":\"invalid request\"}\n")
@@ -126,7 +126,7 @@ func handlerRefresh(w http.ResponseWriter, req *http.Request) {
 }
 
 // wrapper for json responses with error support
-func writeJsonResponse(w http.ResponseWriter, err error, response []byte) {
+func writeJSONResponse(w http.ResponseWriter, err error, response []byte) {
 	if err == nil {
 		w.WriteHeader(http.StatusOK)
 		w.Write(response)

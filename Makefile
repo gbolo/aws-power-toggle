@@ -14,6 +14,8 @@ V = 0
 Q = $(if $(filter 1,$V),,@)
 M = $(shell printf "\033[34;1m▶\033[0m")
 
+# Build
+
 .PHONY: all
 all: fmt dep $(BIN) frontend ; $(info $(M) building executable...) @ ## Build main binary
 	$Q $(GO) build \
@@ -44,6 +46,9 @@ $(BIN)/dep: REPOSITORY=github.com/golang/dep/cmd/dep
 GOIMPORTS = $(BIN)/goimports
 $(BIN)/goimports: REPOSITORY=golang.org/x/tools/cmd/goimports
 
+GOLINT = $(BIN)/golint
+$(BIN)/golint: REPOSITORY=golang.org/x/lint/golint
+
 .PHONY: dep
 dep: | $(DEP) ; $(info $(M) running dep...) @ ## Run dep ensure to fetch dependencies
 	$Q $(DEP) ensure -v
@@ -55,6 +60,12 @@ fmt: ; $(info $(M) running gofmt...) @ ## Run gofmt on all source files
 .PHONY: goimports
 goimports: | $(GOIMPORTS) ; $(info $(M) running goimports...) @ ## Run goimports on backend source files
 	$Q $(GOIMPORTS) -w backend/
+
+.PHONY: lint
+lint: | $(GOLINT) ; $(info $(M) running golint...) @ ## Run golint
+	$Q $(GOLINT) -set_exit_status backend/
+
+# Unit Test
 
 .PHONY: test
 test: ; $(info $(M) running go test...) @ ## Run go unit tests

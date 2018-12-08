@@ -52,13 +52,13 @@ var (
 	}
 )
 
-func StartServer() (err error) {
+func startHTTPServer() (err error) {
 
 	// create routes
 	mux := newRouter()
 
 	// get server config
-	srv := configureHttpServer(mux)
+	srv := configureHTTPServer(mux)
 
 	// get TLS config
 	tlsConifig, err := configureTLS()
@@ -85,7 +85,7 @@ func StartServer() (err error) {
 	return
 }
 
-func configureHttpServer(mux *mux.Router) (httpServer *http.Server) {
+func configureHTTPServer(mux *mux.Router) (httpServer *http.Server) {
 
 	// apply standard http server settings
 	address := fmt.Sprintf(

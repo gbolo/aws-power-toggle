@@ -14,14 +14,15 @@ import (
 
 const (
 	// defines environment states
-	// means that ALL instances for an env are in "running" state
-	ENV_RUNNING = "running"
-	// means that ALL instances for an env are in "stopped" state
-	ENV_DOWN = "stopped"
-	// means that instances for an env are in EITHER "stopped" or "running" state
-	ENV_MIXED = "mixed"
-	// means that AT LEAST ONE instance for an env is NOT in a "running" state or "stopped" state
-	ENV_CHANGING = "changing"
+
+	// EnvStateRunning means that ALL instances for an env are in "running" state
+	EnvStateRunning = "running"
+	// EnvStateStopped means that ALL instances for an env are in "stopped" state
+	EnvStateStopped = "stopped"
+	// EnvStateMixed means that instances for an env are in EITHER "stopped" or "running" state
+	EnvStateMixed = "mixed"
+	// EnvStateChanging means that AT LEAST ONE instance for an env is NOT in a "running" state or "stopped" state
+	EnvStateChanging = "changing"
 )
 
 var (
@@ -42,16 +43,16 @@ var (
 	// ignore these environment names
 	envNameIgnore []string
 
-	// enables mocking of API calls to aws for development purposes
-	MOCK_ENABLED = false
+	// MockEnabled enables mocking of API calls to aws for development purposes
+	MockEnabled = false
 )
 
 type virtualMachine struct {
-	// Id unique to this application
-	Id string `json:"id" groups:"summary,details"`
+	// ID unique to this application
+	ID string `json:"id" groups:"summary,details"`
 
 	// these values are straight from aws api
-	InstanceId   string `json:"instance_id" groups:"summary,details"`
+	InstanceID   string `json:"instance_id" groups:"summary,details"`
 	InstanceType string `json:"instance_type" groups:"summary,details"`
 	Name         string `json:"name" groups:"summary,details"`
 	State        string `json:"state" groups:"summary,details"`
@@ -63,8 +64,8 @@ type virtualMachine struct {
 }
 
 type environment struct {
-	// Id unique to this application
-	Id        string           `json:"id" groups:"summary,details"`
+	// ID unique to this application
+	ID        string           `json:"id" groups:"summary,details"`
 	Provider  string           `json:"provider" groups:"summary,details"`
 	Region    string           `json:"region" groups:"summary,details"`
 	Name      string           `json:"name" groups:"summary,details"`
@@ -92,7 +93,7 @@ func updateEnvDetails() {
 		cachedTable[i].Region = awsRegion
 
 		// compute a unique identifier for this environment
-		cachedTable[i].Id = ComputeId(
+		cachedTable[i].ID = ComputeID(
 			cachedTable[i].Provider,
 			cachedTable[i].Region,
 			env.Name,
@@ -109,12 +110,12 @@ func updateEnvDetails() {
 		// determine counts
 		for c, instance := range env.Instances {
 			// compute a unique identifier for this instance
-			//   InstanceId is already unique, but this will make ids consistent
+			//   InstanceID is already unique, but this will make ids consistent
 			//   in case we add other cloud providers
-			cachedTable[i].Instances[c].Id = ComputeId(
+			cachedTable[i].Instances[c].ID = ComputeID(
 				cachedTable[i].Provider,
 				cachedTable[i].Region,
-				instance.InstanceId,
+				instance.InstanceID,
 			)
 
 			// update cpu and memory counts
@@ -132,13 +133,13 @@ func updateEnvDetails() {
 		// determine environment state
 		switch {
 		case cachedTable[i].TotalInstances == cachedTable[i].RunningInstances:
-			cachedTable[i].State = ENV_RUNNING
+			cachedTable[i].State = EnvStateRunning
 		case cachedTable[i].TotalInstances == cachedTable[i].StoppedInstances:
-			cachedTable[i].State = ENV_DOWN
+			cachedTable[i].State = EnvStateStopped
 		case cachedTable[i].TotalInstances == (cachedTable[i].RunningInstances + cachedTable[i].StoppedInstances):
-			cachedTable[i].State = ENV_MIXED
+			cachedTable[i].State = EnvStateMixed
 		default:
-			cachedTable[i].State = ENV_CHANGING
+			cachedTable[i].State = EnvStateChanging
 		}
 	}
 }
@@ -205,7 +206,7 @@ func refreshTable() (err error) {
 	defer cachedTableLock.Unlock()
 
 	// use the mock function if enabled
-	if MOCK_ENABLED {
+	if MockEnabled {
 		return mockRefreshTable()
 	}
 
@@ -231,7 +232,7 @@ func refreshTable() (err error) {
 
 	for _, reservation := range resp.Reservations {
 		for _, instance := range reservation.Instances {
-			instanceObj := virtualMachine{InstanceId: *instance.InstanceId, State: string(instance.State.Name), InstanceType: string(instance.InstanceType)}
+			instanceObj := virtualMachine{InstanceID: *instance.InstanceId, State: string(instance.State.Name), InstanceType: string(instance.InstanceType)}
 			// populate info from tags
 			for _, tag := range instance.Tags {
 				if *tag.Key == environmentTagKey && *tag.Value != "" {
@@ -258,12 +259,12 @@ func refreshTable() (err error) {
 
 // get instance ids for an environment with a specific state
 // this is used for power up/down commands against aws API
-func getInstanceIds(envId, state string) (instanceIds []string) {
+func getInstanceIDs(envID, state string) (instanceIds []string) {
 	for _, env := range cachedTable {
-		if env.Id == envId {
+		if env.ID == envID {
 			for _, instance := range env.Instances {
 				if instance.State == state {
-					instanceIds = append(instanceIds, instance.InstanceId)
+					instanceIds = append(instanceIds, instance.InstanceID)
 				}
 			}
 		}
@@ -272,9 +273,9 @@ func getInstanceIds(envId, state string) (instanceIds []string) {
 }
 
 // toggleInstances can start or stop a list of instances
-func toggleInstances(instanceIds []string, desiredState string) (response []byte, err error) {
-	if len(instanceIds) < 1 {
-		err = fmt.Errorf("no instanceIds have been provided")
+func toggleInstances(instanceIDs []string, desiredState string) (response []byte, err error) {
+	if len(instanceIDs) < 1 {
+		err = fmt.Errorf("no instanceIDs have been provided")
 		return
 	}
 
@@ -282,7 +283,7 @@ func toggleInstances(instanceIds []string, desiredState string) (response []byte
 	switch desiredState {
 	case "start":
 		input := &ec2.StartInstancesInput{
-			InstanceIds: instanceIds,
+			InstanceIds: instanceIDs,
 			DryRun:      aws.Bool(false),
 		}
 
@@ -294,7 +295,7 @@ func toggleInstances(instanceIds []string, desiredState string) (response []byte
 
 	case "stop":
 		input := &ec2.StopInstancesInput{
-			InstanceIds: instanceIds,
+			InstanceIds: instanceIDs,
 			DryRun:      aws.Bool(false),
 		}
 
@@ -311,48 +312,48 @@ func toggleInstances(instanceIds []string, desiredState string) (response []byte
 }
 
 // shuts down an env
-func shutdownEnv(envId string) (response []byte, err error) {
+func shutdownEnv(envID string) (response []byte, err error) {
 	// use the mock function if enabled
-	if MOCK_ENABLED {
-		return mockShutdownEnv(envId)
+	if MockEnabled {
+		return mockShutdownEnv(envID)
 	}
 
-	instanceIds := getInstanceIds(envId, "running")
+	instanceIds := getInstanceIDs(envID, "running")
 	if len(instanceIds) > maxInstancesToShutdown {
-		err = fmt.Errorf("SAFETY: env [%s] has too many associated instances to shutdown %d", envId, len(instanceIds))
+		err = fmt.Errorf("SAFETY: env [%s] has too many associated instances to shutdown %d", envID, len(instanceIds))
 		log.Debugf("SAFETY: instances: %v", instanceIds)
 	} else if len(instanceIds) > 0 {
 		response, err = toggleInstances(instanceIds, "stop")
 		if err != nil {
-			log.Errorf("error trying to stop env %s: %v", envId, err)
+			log.Errorf("error trying to stop env %s: %v", envID, err)
 		} else {
-			log.Infof("successfully stopped env %s", envId)
+			log.Infof("successfully stopped env %s", envID)
 		}
 	} else {
-		err = fmt.Errorf("env [%s] has no associated instances", envId)
-		log.Errorf("env [%s] has no associated instances", envId)
+		err = fmt.Errorf("env [%s] has no associated instances", envID)
+		log.Errorf("env [%s] has no associated instances", envID)
 	}
 	return
 }
 
 // starts up an env
-func startupEnv(envId string) (response []byte, err error) {
+func startupEnv(envID string) (response []byte, err error) {
 	// use the mock function if enabled
-	if MOCK_ENABLED {
-		return mockStartupEnv(envId)
+	if MockEnabled {
+		return mockStartupEnv(envID)
 	}
 
-	instanceIds := getInstanceIds(envId, "stopped")
+	instanceIds := getInstanceIDs(envID, "stopped")
 	if len(instanceIds) > 0 {
 		response, err = toggleInstances(instanceIds, "start")
 		if err != nil {
-			log.Errorf("error trying to start env %s: %v", envId, err)
+			log.Errorf("error trying to start env %s: %v", envID, err)
 		} else {
-			log.Infof("successfully started env %s", envId)
+			log.Infof("successfully started env %s", envID)
 		}
 	} else {
-		err = fmt.Errorf("env [%s] has no associated instances", envId)
-		log.Errorf("env [%s] has no associated instances", envId)
+		err = fmt.Errorf("env [%s] has no associated instances", envID)
+		log.Errorf("env [%s] has no associated instances", envID)
 	}
 	return
 }
@@ -360,7 +361,7 @@ func startupEnv(envId string) (response []byte, err error) {
 // starts up an instance based on internal id (not aws instance id)
 func toggleInstance(id, desiredState string) (response []byte, err error) {
 	// use the mock function if enabled
-	if MOCK_ENABLED {
+	if MockEnabled {
 		return mockToggleInstance(id, desiredState)
 	}
 
@@ -370,9 +371,9 @@ func toggleInstance(id, desiredState string) (response []byte, err error) {
 		return
 	}
 	// get the AWS instance id
-	awsInstanceId := getAWSInstanceId(id)
-	if awsInstanceId != "" {
-		response, err = toggleInstances([]string{awsInstanceId}, desiredState)
+	awsInstanceID := getAWSInstanceID(id)
+	if awsInstanceID != "" {
+		response, err = toggleInstances([]string{awsInstanceID}, desiredState)
 		if err != nil {
 			log.Errorf("error trying to %s instance %s: %v", desiredState, id, err)
 		} else {
@@ -385,9 +386,9 @@ func toggleInstance(id, desiredState string) (response []byte, err error) {
 }
 
 // returns a single environment by id
-func getEnvironmentById(envId string) (environment, bool) {
+func getEnvironmentByID(envID string) (environment, bool) {
 	for _, env := range cachedTable {
-		if env.Id == envId {
+		if env.ID == envID {
 			return env, true
 		}
 	}
@@ -395,11 +396,11 @@ func getEnvironmentById(envId string) (environment, bool) {
 }
 
 // given an aws-power-toggle id, it will return the actual aws instance id
-func getAWSInstanceId(id string) (awsInstanceId string) {
+func getAWSInstanceID(id string) (awsInstanceID string) {
 	for _, env := range cachedTable {
 		for _, instance := range env.Instances {
-			if instance.Id == id {
-				awsInstanceId = instance.InstanceId
+			if instance.ID == id {
+				awsInstanceID = instance.InstanceID
 				break
 			}
 		}

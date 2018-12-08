@@ -6,12 +6,18 @@ import (
 )
 
 var (
-	// Variables defined by the Makefile and passed in with ldflags
-	Version   = "devel"
+	// !! These variables defined by the Makefile and passed in with ldflags !!
+	// !! DO NOT CHANGE THESE DEFAULT VALUES !!
+
+	// Version of application
+	Version = "devel"
+	// CommitSHA is the short SHA hash of the git commit
 	CommitSHA = "unknown"
+	// BuildDate is the date this application was compiled
 	BuildDate = "unknown"
 )
 
+// PrintVersion prints the current version information to stdout
 func PrintVersion() {
 	fmt.Printf(`aws-power-toggle:
   version     : %s
