@@ -3,8 +3,9 @@
     <div class="container">
       <span>{{instance.name}}</span>
       <ToggleSwitch
+        v-if="!isMixedState"
         v-bind:isChecked="isOn"
-        @click.native="toggleInstance(instance.id)"
+        @click.native="toggleInstance(instance.id, envId)"
       />
     </div>
     <div class="container">
@@ -32,7 +33,16 @@ export default {
     ToggleSwitch,
   },
   props: {
+    envId: String,
     instance: Object,
+  },
+  computed: {
+    isMixedState() {
+      return (
+        this.instance.state.toLowerCase() !== 'running'
+        && this.instance.state.toLowerCase() !== 'stopped'
+      );
+    },
   },
   data() {
     return {
@@ -40,11 +50,11 @@ export default {
     };
   },
   methods: {
-    toggleInstance(id) {
+    toggleInstance(id, envId) {
       if (this.isOn) {
-        this.$store.dispatch('stopInstance', id);
+        this.$store.dispatch('stopInstance', { id, envId });
       } else {
-        this.$store.dispatch('startInstance', id);
+        this.$store.dispatch('startInstance', { id, envId });
       }
       this.isOn = !this.isOn;
     },

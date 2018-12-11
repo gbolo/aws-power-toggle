@@ -8,7 +8,10 @@
         v-for="(instance, index) in instances"
         :key="index"
       >
-        <Instance v-bind:instance="instance" />
+        <Instance
+          v-bind:instance="instance"
+          v-bind:envId="envId"
+        />
       </li>
     </ul>
   </transition>
@@ -23,6 +26,7 @@ export default {
     Instance,
   },
   props: {
+    envId: String,
     instances: Array,
     show: Boolean,
   },

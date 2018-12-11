@@ -60,22 +60,29 @@
     <InstanceList
       v-bind:show="showInstanceList"
       v-bind:instances="env.instances"
+      v-bind:envId="env.id"
     />
-
-    <button
-      v-if="!isRunning"
-      class="button start"
-      @click="start(env.id)"
-    >
-      Start
-    </button>
-    <button
-      v-if="isRunning"
-      class="button stop"
-      @click="stop(env.id)"
-    >
-      Stop
-    </button>
+    <div v-if="!isChanging">
+      <button
+        v-if="!isRunning"
+        v-bind:class="['button', 'start', isMixed ? 'mixed' : '']"
+        @click="start(env.id)"
+      >
+        Start
+      </button>
+      <button
+        v-if="!isStopped"
+        v-bind:class="['button', 'stop', isMixed ? 'mixed' : '']"
+        @click="stop(env.id)"
+      >
+        Stop
+      </button>
+    </div>
+    <clr-icon
+      v-else
+      shape="hourglass"
+      size="24"
+    ></clr-icon>
   </div>
 </template>
 
@@ -100,7 +107,16 @@ export default {
   },
   computed: {
     isRunning() {
-      return this.env.running_instances > 0;
+      return this.env.running_instances === this.env.total_instances;
+    },
+    isStopped() {
+      return this.env.stopped_instances === this.env.total_instances;
+    },
+    isMixed() {
+      return !this.isRunning && !this.isStopped;
+    },
+    isChanging() {
+      return this.env.state && this.env.state.toLowerCase() === 'changing';
     },
   },
   methods: {
@@ -175,17 +191,21 @@ export default {
 
 .start {
   background: #09af00;
-
   &:hover {
     background: #008b00;
+  }
+  &.mixed {
+    border-radius: 24px 0 0 24px !important;
   }
 }
 
 .stop {
   background: #ee0290;
-
   &:hover {
     background: #dd0074;
+  }
+  &.mixed {
+    border-radius: 0 24px 24px 0 !important;
   }
 }
 
