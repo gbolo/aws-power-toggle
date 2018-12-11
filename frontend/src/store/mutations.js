@@ -13,3 +13,7 @@ export const setEnvironment = (state, { id, data }) => {
 export const setError = (state, err) => {
   state.error = err;
 };
+
+export const setIsLoading = (state, flag) => {
+  state.isLoading = flag;
+};
