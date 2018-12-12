@@ -11,6 +11,7 @@ const store = new Vuex.Store({
     environments: [],
     version: '',
     error: '',
+    isLoading: false,
   },
   mutations,
   actions,

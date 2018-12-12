@@ -6,7 +6,7 @@
       @click="refresh"
     >
       <clr-icon
-        class="refresh"
+        v-bind:class="[shouldSpinIcon ? 'spin-icon' : '']"
         shape="sync"
         size="16"
       ></clr-icon>
@@ -29,6 +29,11 @@ export default {
     Header,
     Snackbar,
   },
+  data() {
+    return {
+      shouldSpinIcon: false,
+    };
+  },
   computed: {
     environments() {
       return this.$store.state.environments;
@@ -38,6 +43,22 @@ export default {
     },
     error() {
       return this.$store.state.error;
+    },
+    isLoading() {
+      return this.$store.state.isLoading;
+    },
+  },
+  watch: {
+    isLoading(current, previous) {
+      if (!current && previous === true) {
+        // artificial delay of 750ms, should be the same as
+        // the duration of the spin keyframes animation in styles
+        setTimeout(() => {
+          this.shouldSpinIcon = false;
+        }, 750);
+      } else if (current && previous === false) {
+        this.shouldSpinIcon = true;
+      }
     },
   },
   created() {
@@ -90,6 +111,19 @@ export default {
     &:hover {
       background: #7e3ff2;
     }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .spin-icon {
+    animation: spin infinite 0.75s linear;
   }
 }
 </style>
