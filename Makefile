@@ -1,6 +1,6 @@
 PACKAGE     = aws-power-toggle
 DATE       ?= $(shell date +%FT%T%z)
-VERSION     = 3.0
+VERSION     = 3.1
 COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
 PKGS        = $(or $(PKG),$(shell $(GO) list ./...))
 TESTPKGS    = $(shell $(GO) list -f '{{ if or .TestGoFiles .XTestGoFiles }}{{ .ImportPath }}{{ end }}' $(PKGS))
