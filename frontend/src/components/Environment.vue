@@ -62,7 +62,7 @@
       v-bind:instances="env.instances"
       v-bind:envId="env.id"
     />
-    <div v-if="!isChanging">
+    <div class="btn-container" v-if="!isChanging">
       <button
         v-if="!isRunning"
         v-bind:class="['button', 'start', isMixed ? 'mixed' : '']"
@@ -78,13 +78,14 @@
         Stop
       </button>
     </div>
-    <clr-icon
-      v-else
-      v-bind:class="['refresh-icon', isLoading ? 'spin-icon' : '']"
-      @click="refresh(env.id)"
-      shape="sync"
-      size="20"
-    ></clr-icon>
+    <div v-else class="btn-container">
+      <clr-icon
+        v-bind:class="['refresh-icon', shouldSpinIcon ? 'spin-icon' : '']"
+        @click="refresh(env.id)"
+        shape="sync"
+        size="24"
+      ></clr-icon>
+    </div>
   </div>
 </template>
 
@@ -102,6 +103,7 @@ export default {
     return {
       showInstanceList: false,
       showInstanceListItems: false,
+      shouldSpinIcon: false,
     };
   },
   props: {
@@ -122,6 +124,19 @@ export default {
     },
     isLoading() {
       return this.$store.getters.isEnvironmentLoading(this.env.id);
+    },
+  },
+  watch: {
+    isLoading(current, previous) {
+      if (!current && previous === true) {
+        // artificial delay of 750ms, should be the same as
+        // the duration of the spin keyframes animation in styles
+        setTimeout(() => {
+          this.shouldSpinIcon = false;
+        }, 750);
+      } else if (current && previous === false) {
+        this.shouldSpinIcon = true;
+      }
     },
   },
   methods: {
@@ -152,6 +167,7 @@ export default {
   align-self: flex-start;
 
   .refresh-icon {
+    margin: auto;
     cursor: pointer;
   }
 
@@ -165,6 +181,12 @@ export default {
       margin: auto 0;
       font-weight: bold;
     }
+  }
+
+  .btn-container {
+    min-height: 34px;
+    display: flex;
+    justify-content: center;
   }
 
   .chevron {
