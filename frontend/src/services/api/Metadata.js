@@ -1,13 +1,13 @@
-import axios from 'axios';
+import http from './HTTP';
 
 export default {
   getVersion() {
-    return axios.get('/api/v1/version').then(response => response.data);
+    return http.get('/version').then(response => response.data);
   },
   getConfig() {
-    return axios.get('/api/v1/config').then(response => response.data);
+    return http.get('/config').then(response => response.data);
   },
   refresh() {
-    return axios.post('/api/v1/refresh').then(response => response.data);
+    return http.post('/refresh').then(response => response.data);
   },
 };

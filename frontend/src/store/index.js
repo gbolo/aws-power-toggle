@@ -13,6 +13,7 @@ const store = new Vuex.Store({
     version: '',
     error: '',
     environmentsLoading: {},
+    isLoading: false,
   },
   mutations,
   actions,
