@@ -21,9 +21,11 @@ export const fetchAllEnvironmentsDetails = ({ commit }) => {
 };
 
 export const fetchEnvironmentDetails = ({ commit }, id) => {
+  commit('setEnvironmentLoading', { id, flag: true });
   EnvironmentsApi.fetchEnvironmentDetails(id)
     .then(data => commit('setEnvironment', { id, data }))
-    .catch(e => commit('setError', e.response.data.error));
+    .catch(e => commit('setError', e.response.data.error))
+    .finally(() => commit('setEnvironmentLoading', { id, flag: false }));
 };
 
 export const startEnvironment = ({ dispatch, commit }, id) => {

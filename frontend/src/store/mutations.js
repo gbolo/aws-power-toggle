@@ -13,3 +13,10 @@ export const setEnvironment = (state, { id, data }) => {
 export const setError = (state, err) => {
   state.error = err;
 };
+
+export const setEnvironmentLoading = (state, { id, flag }) => {
+  state.environmentsLoading = {
+    ...state.environmentsLoading,
+    [id]: flag,
+  };
+};

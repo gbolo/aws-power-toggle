@@ -6,7 +6,6 @@
       @click="refresh"
     >
       <clr-icon
-        class="refresh"
         shape="sync"
         size="16"
       ></clr-icon>
