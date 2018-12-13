@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import * as mutations from './mutations';
 import * as actions from './actions';
+import * as getters from './getters';
 
 Vue.use(Vuex);
 
@@ -11,10 +12,12 @@ const store = new Vuex.Store({
     environments: [],
     version: '',
     error: '',
+    environmentsLoading: {},
     isLoading: false,
   },
   mutations,
   actions,
+  getters,
 });
 
 export default store;

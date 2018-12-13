@@ -23,9 +23,11 @@ export const fetchAllEnvironmentsDetails = ({ commit }) => {
 };
 
 export const fetchEnvironmentDetails = ({ commit }, id) => {
+  commit('setEnvironmentLoading', { id, flag: true });
   EnvironmentsApi.fetchEnvironmentDetails(id)
     .then(data => commit('setEnvironment', { id, data }))
-    .catch(e => commit('setError', e.response.data.error));
+    .catch(e => commit('setError', e.response.data.error))
+    .finally(() => commit('setEnvironmentLoading', { id, flag: false }));
 };
 
 export const startEnvironment = ({ dispatch, commit }, id) => {
@@ -40,15 +42,15 @@ export const stopEnvironment = ({ dispatch, commit }, id) => {
     .catch(e => commit('setError', e.response.data.error));
 };
 
-export const startInstance = ({ commit }, id) => {
+export const startInstance = ({ dispatch, commit }, { id, envId }) => {
   InstancesApi.startInstance(id)
-    .then(() => {})
+    .then(() => dispatch('fetchEnvironmentDetails', envId))
     .catch(e => commit('setError', e.response.data.error));
 };
 
-export const stopInstance = ({ commit }, id) => {
+export const stopInstance = ({ dispatch, commit }, { id, envId }) => {
   InstancesApi.stopInstance(id)
-    .then(() => {})
+    .then(() => dispatch('fetchEnvironmentDetails', envId))
     .catch(e => commit('setError', e.response.data.error));
 };
 

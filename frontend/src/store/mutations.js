@@ -10,6 +10,13 @@ export const setEnvironment = (state, { id, data }) => {
   state.environments = state.environments.map(env => (env.id === id ? data : env));
 };
 
+export const setEnvironmentLoading = (state, { id, flag }) => {
+  state.environmentsLoading = {
+    ...state.environmentsLoading,
+    [id]: flag,
+  };
+};
+
 export const setError = (state, err) => {
   state.error = err;
 };

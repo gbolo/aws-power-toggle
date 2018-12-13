@@ -60,22 +60,31 @@
     <InstanceList
       v-bind:show="showInstanceList"
       v-bind:instances="env.instances"
+      v-bind:envId="env.id"
     />
-
-    <button
-      v-if="!isRunning"
-      class="button start"
-      @click="start(env.id)"
-    >
-      Start
-    </button>
-    <button
-      v-if="isRunning"
-      class="button stop"
-      @click="stop(env.id)"
-    >
-      Stop
-    </button>
+    <div v-if="!isChanging">
+      <button
+        v-if="!isRunning"
+        v-bind:class="['button', 'start', isMixed ? 'mixed' : '']"
+        @click="start(env.id)"
+      >
+        Start
+      </button>
+      <button
+        v-if="!isStopped"
+        v-bind:class="['button', 'stop', isMixed ? 'mixed' : '']"
+        @click="stop(env.id)"
+      >
+        Stop
+      </button>
+    </div>
+    <clr-icon
+      v-else
+      v-bind:class="['refresh-icon', isLoading ? 'spin-icon' : '']"
+      @click="refresh(env.id)"
+      shape="sync"
+      size="20"
+    ></clr-icon>
   </div>
 </template>
 
@@ -100,7 +109,19 @@ export default {
   },
   computed: {
     isRunning() {
-      return this.env.running_instances > 0;
+      return this.env.running_instances === this.env.total_instances;
+    },
+    isStopped() {
+      return this.env.stopped_instances === this.env.total_instances;
+    },
+    isMixed() {
+      return !this.isRunning && !this.isStopped;
+    },
+    isChanging() {
+      return this.env.state && this.env.state.toLowerCase() === 'changing';
+    },
+    isLoading() {
+      return this.$store.getters.isEnvironmentLoading(this.env.id);
     },
   },
   methods: {
@@ -112,6 +133,9 @@ export default {
     },
     stop(id) {
       this.$store.dispatch('stopEnvironment', id);
+    },
+    refresh(id) {
+      this.$store.dispatch('fetchEnvironmentDetails', id);
     },
   },
 };
@@ -126,6 +150,10 @@ export default {
   padding: 16px;
   margin: 16px;
   align-self: flex-start;
+
+  .refresh-icon {
+    cursor: pointer;
+  }
 
   .env__header {
     padding-bottom: 16px;
@@ -148,69 +176,85 @@ export default {
   .rotate-m180 {
     transform: rotate(-180deg);
   }
-}
 
-.env__details {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: auto 0;
-  align-items: center;
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .spin-icon {
+    animation: spin infinite 0.75s linear;
+  }
 
-  .icon {
+  .env__details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     margin: auto 0;
+    align-items: center;
+
+    .icon {
+      margin: auto 0;
+    }
   }
-}
 
-.button {
-  cursor: pointer;
-  font-size: 1em;
-  padding: 8px 32px;
-  border-radius: 24px;
-  color: white;
-  border: none;
-  outline-style: none;
-  transition: all 0.4s cubic-bezier(0.2, 0.2, 0.2, 1.2);
-}
-
-.start {
-  background: #09af00;
-
-  &:hover {
-    background: #008b00;
+  .button {
+    cursor: pointer;
+    font-size: 1em;
+    padding: 8px 32px;
+    border-radius: 24px;
+    color: white;
+    border: none;
+    outline-style: none;
+    transition: background 0.4s cubic-bezier(0.2, 0.2, 0.2, 1.2);
   }
-}
 
-.stop {
-  background: #ee0290;
-
-  &:hover {
-    background: #dd0074;
+  .start {
+    background: #09af00;
+    &:hover {
+      background: #008b00;
+    }
+    &.mixed {
+      border-radius: 24px 0 0 24px !important;
+    }
   }
-}
 
-.disabled {
-  background: #ddd;
-  cursor: wait;
-}
+  .stop {
+    background: #ee0290;
+    &:hover {
+      background: #dd0074;
+    }
+    &.mixed {
+      border-radius: 0 24px 24px 0 !important;
+    }
+  }
 
-.env__details-table {
-  width: 100%;
-  border-collapse: collapse;
+  .disabled {
+    background: #ddd;
+    cursor: wait;
+  }
 
-  td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    width: 50%;
-  }
-  tr:first-child td {
-    border-top: 0;
-  }
-  tr td:first-child {
-    border-left: 0;
-  }
-  tr td:last-child {
-    border-right: 0;
+  .env__details-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      width: 50%;
+    }
+    tr:first-child td {
+      border-top: 0;
+    }
+    tr td:first-child {
+      border-left: 0;
+    }
+    tr td:last-child {
+      border-right: 0;
+    }
   }
 }
 </style>
