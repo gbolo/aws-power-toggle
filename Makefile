@@ -1,4 +1,5 @@
 PACKAGE     = aws-power-toggle
+METAPKG     = github.com/gbolo/aws-power-toggle/backend
 DATE       ?= $(shell date +%FT%T%z)
 VERSION     = 3.1
 COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
@@ -19,7 +20,7 @@ M = $(shell printf "\033[34;1m▶\033[0m")
 .PHONY: all
 all: fmt dep $(BIN) frontend ; $(info $(M) building executable...) @ ## Build main binary
 	$Q $(GO) build \
-		-ldflags '-X main.Version=$(VERSION) -X main.BuildDate=$(DATE) -X main.CommitSHA=$(COMMIT_SHA)' \
+		-ldflags '-X $(METAPKG).Version=$(VERSION) -X $(METAPKG).BuildDate=$(DATE) -X $(METAPKG).CommitSHA=$(COMMIT_SHA)' \
 		-o $(BIN)/$(PACKAGE)
 
 .PHONY: docker

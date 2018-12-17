@@ -7,5 +7,5 @@ docker run -d --name "aws-power-toggle" \
   -e "POWER_TOGGLE_SERVER_ACCESS_LOG=true" \
   -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" \
   -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" \
-  gbolo/aws-power-toggle:3.0
+  gbolo/aws-power-toggle:3.1
 

@@ -6,11 +6,11 @@
 
 FROM gbolo/builder:alpine as builder
 
-COPY . ${GOPATH}/src/github.com/gbolo/go-util/aws-power-toggle
+COPY . ${GOPATH}/src/github.com/gbolo/aws-power-toggle
 
 # Building
 RUN   set -xe; \
-      SRC_DIR=${GOPATH}/src/github.com/gbolo/go-util/aws-power-toggle; \
+      SRC_DIR=${GOPATH}/src/github.com/gbolo/aws-power-toggle; \
       cd ${SRC_DIR}; \
       mkdir -p /tmp/build && npm -v; \
       make all && \
