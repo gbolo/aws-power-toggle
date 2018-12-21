@@ -35,8 +35,10 @@ aws:
   # the internal in minutes which we poll aws api
   polling_interval: 5
 
-  # which region to use
-  region: ca-central-1
+  # which regions to use
+  regions:
+    - ca-central-1
+    - us-east-1
 
   # ONLY instances with this tag will be considered
   # tag key is case sensitive
