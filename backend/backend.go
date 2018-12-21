@@ -21,15 +21,13 @@ func StartBackendDeamon(cfgFile string) {
 	// start http server
 	go startHTTPServer()
 
-	// init the aws client
+	// init the aws clients
 	cfg, err := external.LoadDefaultAWSConfig()
 	if err != nil {
 		log.Fatalf("failed to load config, %v", err)
 	}
 
-	// TODO: move this out of here
-	awsClients = make(map[string]*ec2.EC2, 15)
-
+	awsClients = make(map[string]*ec2.EC2, len(awsRegions))
 	for _, region := range awsRegions {
 		if region != "" {
 			cfg.Region = region
