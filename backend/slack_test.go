@@ -2,6 +2,7 @@ package backend
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"testing"
@@ -32,6 +33,9 @@ func TestSlackSendMessage(t *testing.T) {
 		if req.URL.String() != slackWebHooks[0] {
 			t.Errorf("slack client sent to unexpected endpoint: %v", req.URL.String())
 		}
+		if fmt.Sprintf("%s", req.Body) != "{{\"text\":\"test data\"}}" {
+			t.Errorf("slack client sent unexpected request body: %v", req.Body)
+		}
 
 		// response to slack client
 		return &http.Response{
@@ -42,7 +46,26 @@ func TestSlackSendMessage(t *testing.T) {
 		}
 	})
 
-	slackSendMessage("test data")
+	errs := slackSendMessage("test data")
+	if len(errs) > 0 {
+		t.Errorf("unexpected errors occured during slack client test: %v", errs)
+	}
+
+	// this time, we respond with a non-200 code
+	slackClient = NewTestClient(func(req *http.Request) *http.Response {
+		// respond to slack client with a 500
+		return &http.Response{
+			StatusCode: 500,
+			Body:       ioutil.NopCloser(bytes.NewBufferString(`error`)),
+			// Must be set to non-nil value or it panics
+			Header: make(http.Header),
+		}
+	})
+
+	errs = slackSendMessage("test data")
+	if len(errs) != 1 {
+		t.Errorf("expected 1 error but got: %v", errs)
+	}
 }
 
 // RoundTripFunc .

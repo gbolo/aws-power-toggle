@@ -4,12 +4,14 @@ import (
 	"bytes"
 	"crypto/tls"
 	"encoding/json"
+	"fmt"
 	"net"
 	"net/http"
 	"time"
 )
 
 var (
+	// values are set by ConfigInit
 	slackClient   *http.Client
 	slackEnabled  bool
 	slackWebHooks []string
@@ -54,24 +56,28 @@ func createHTTPClient() *http.Client {
 }
 
 // slackSendMessage boradcasts a text message to all configured webhooks
-func slackSendMessage(message string) {
+func slackSendMessage(message string) (errs []error) {
 	if !slackEnabled || len(slackWebHooks) == 0 || message == "" {
 		return
 	}
 
-	for _, hookURL := range slackWebHooks {
+	for i, hookURL := range slackWebHooks {
 		body := map[string]string{"text": message}
 		jsonBytes, _ := json.Marshal(body)
 		res, err := slackClient.Post(hookURL, "application/json", bytes.NewBuffer(jsonBytes))
 		if err != nil {
-			log.Errorf("error sending slack message %s", err)
+			log.Errorf("error sending slack message (%d/%d) %s", i+1, len(slackWebHooks), err)
+			errs = append(errs, err)
 			continue
 		}
 		defer res.Body.Close()
 		if res.StatusCode == 200 {
-			log.Info("sent slack message successfully")
+			log.Info("sent slack message successfully (%d/%d)", i+1, len(slackWebHooks))
 		} else {
-			log.Errorf("slack message response code was: %v", res.StatusCode)
+			log.Errorf("slack API response code was not successful (%d/%d): %v", i+1, len(slackWebHooks), res.StatusCode)
+			errs = append(errs, fmt.Errorf("slack API response code was not successful (%d/%d): %v", i+1, len(slackWebHooks), res.StatusCode))
 		}
 	}
+
+	return
 }
