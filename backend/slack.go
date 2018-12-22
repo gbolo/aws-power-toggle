@@ -72,7 +72,7 @@ func slackSendMessage(message string) (errs []error) {
 		}
 		defer res.Body.Close()
 		if res.StatusCode == 200 {
-			log.Info("sent slack message successfully (%d/%d)", i+1, len(slackWebHooks))
+			log.Infof("sent slack message successfully (%d/%d)", i+1, len(slackWebHooks))
 		} else {
 			log.Errorf("slack API response code was not successful (%d/%d): %v", i+1, len(slackWebHooks), res.StatusCode)
 			errs = append(errs, fmt.Errorf("slack API response code was not successful (%d/%d): %v", i+1, len(slackWebHooks), res.StatusCode))

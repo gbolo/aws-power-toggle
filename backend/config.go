@@ -87,6 +87,7 @@ func printConfigSummary() {
 		"aws.required_tag_value",
 		"aws.environment_tag_key",
 		"aws.max_instances_to_shutdown",
+		"slack.enabled",
 	} {
 		log.Debugf("%s: %s\n", c, viper.GetString(c))
 	}
