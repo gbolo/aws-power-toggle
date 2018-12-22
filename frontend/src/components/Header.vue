@@ -8,7 +8,7 @@
       <div class="divider"></div>
       <span>AWS Power-Toggle</span>
     </div>
-    <div class="bills-container">
+    <div class="bills-container" v-if="totalBillsAccruedLabel && totalBillsSavedLabel">
       <span class="info-container">
         <clr-icon
             shape="lightbulb"
@@ -55,15 +55,9 @@ export default {
       return /^\d/.test(this.version) ? `v${this.version}` : this.version;
     },
     totalBillsAccruedLabel() {
-      if (!this.tba) {
-        return '0.00';
-      }
       return this.tba;
     },
     totalBillsSavedLabel() {
-      if (!this.tbs) {
-        return '0.00';
-      }
       return this.tbs;
     },
   },

@@ -30,6 +30,7 @@ func ConfigInit(cfgFile string, printConfig bool) {
 	requiredTagValue = viper.GetString("aws.required_tag_value")
 	environmentTagKey = viper.GetString("aws.environment_tag_key")
 	MockEnabled = viper.GetBool("mock.enabled")
+	ExperimentalEnabled = viper.GetBool("experimental.enabled")
 
 	return
 }
@@ -86,6 +87,8 @@ func printConfigSummary() {
 		"aws.required_tag_value",
 		"aws.environment_tag_key",
 		"aws.max_instances_to_shutdown",
+		"mock.enabled",
+		"experimental.enabled",
 	} {
 		log.Debugf("%s: %s\n", c, viper.GetString(c))
 	}

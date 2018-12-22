@@ -23,7 +23,9 @@ func mockRefreshTable() (err error) {
 			log.Fatalf("mock API is enabled, but can't unmarshal json file: %s", err)
 		}
 	}
-	calculateEnvBills()
+	if ExperimentalEnabled {
+		calculateEnvBills()
+	}
 	cachedTableTemp := cachedTable
 	cachedTable = cachedTable[:0]
 	for _, env := range cachedTableTemp {
@@ -68,11 +70,9 @@ func mockShutdownEnv(envID string) (response []byte, err error) {
 			}
 		}
 		// MOCK BILLING: update toggled off instances map
-		toggledOffInstanceIdsLock.Lock()
-		for _, instanceID := range instanceIds {
-			toggledOffInstanceIds[instanceID] = true
+		if ExperimentalEnabled {
+			putToggledOffInstanceIDs(instanceIds)
 		}
-		toggledOffInstanceIdsLock.Unlock()
 		response = []byte(`{"mock": "OK"}`)
 		log.Infof("MOCK: successfully stopped env %s", envID)
 	} else {
@@ -96,11 +96,9 @@ func mockStartupEnv(envID string) (response []byte, err error) {
 			}
 		}
 		// MOCK BILLING: update toggled off instances map
-		toggledOffInstanceIdsLock.Lock()
-		for _, instanceID := range instanceIds {
-			delete(toggledOffInstanceIds, instanceID)
+		if ExperimentalEnabled {
+			deleteToggledOffInstanceIDs(instanceIds)
 		}
-		toggledOffInstanceIdsLock.Unlock()
 		response = []byte(`{"mock": "OK"}`)
 		log.Infof("MOCK: successfully started env %s", envID)
 	} else {
@@ -128,15 +126,15 @@ func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 					case "start":
 						cachedTable[e].Instances[i].State = "running"
 						// MOCK BILLING: update toggled off instances map
-						toggledOffInstanceIdsLock.Lock()
-						delete(toggledOffInstanceIds, instance.InstanceID)
-						toggledOffInstanceIdsLock.Unlock()
+						if ExperimentalEnabled {
+							deleteToggledOffInstanceIDs([]string{instance.InstanceID})
+						}
 					case "stop":
 						cachedTable[e].Instances[i].State = "stopped"
 						// MOCK BILLING: update toggled off instances map
-						toggledOffInstanceIdsLock.Lock()
-						toggledOffInstanceIds[instance.InstanceID] = true
-						toggledOffInstanceIdsLock.Unlock()
+						if ExperimentalEnabled {
+							putToggledOffInstanceIDs([]string{instance.InstanceID})
+						}
 					}
 					break
 				}

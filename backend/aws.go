@@ -7,11 +7,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/liip/sheriff"
-	"github.com/spf13/viper"
-
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
+	"github.com/liip/sheriff"
+	"github.com/spf13/viper"
 )
 
 const (
@@ -28,7 +27,6 @@ const (
 )
 
 var (
-
 	// global aws clients (based on regions)
 	awsClients map[string]*ec2.EC2
 	// global cached env list
@@ -63,6 +61,8 @@ var (
 	lastRefreshedTimeUnixNano int64
 	// MockEnabled enable mocking of API calls to aws for development purposes
 	MockEnabled bool
+	// ExperimentalEnabled enable experimental features. Currently include billing stats
+	ExperimentalEnabled bool
 )
 
 type virtualMachine struct {
@@ -98,8 +98,8 @@ type environment struct {
 	TotalVCPU        int     `json:"total_vcpu" groups:"summary,details"`
 	TotalMemoryGB    float32 `json:"total_memory_gb" groups:"summary,details"`
 	State            string  `json:"state" groups:"summary,details"`
-	BillsAccrued     string  `json:"bills_accrued" groups:"summary,details"`
-	BillsSaved       string  `json:"bills_saved" groups:"summary,details"`
+	BillsAccrued     string  `json:"bills_accrued,omitempty" groups:"summary,details"`
+	BillsSaved       string  `json:"bills_saved,omitempty" groups:"summary,details"`
 }
 
 // for global cached table
@@ -120,11 +120,13 @@ func updateEnvDetails() {
 			env.Name,
 		)
 		// add bills accrued and bills saved to env details
-		if envbillAccrued, exists := billsAccruedMap[cachedTable[i].ID]; exists {
-			cachedTable[i].BillsAccrued = fmt.Sprintf("%.02f", envbillAccrued)
-		}
-		if envbillSaved, exists := billsSavedMap[cachedTable[i].ID]; exists {
-			cachedTable[i].BillsSaved = fmt.Sprintf("%.02f", envbillSaved)
+		if ExperimentalEnabled {
+			if envbillAccrued, exists := billsAccruedMap[cachedTable[i].ID]; exists {
+				cachedTable[i].BillsAccrued = fmt.Sprintf("%.02f", envbillAccrued)
+			}
+			if envbillSaved, exists := billsSavedMap[cachedTable[i].ID]; exists {
+				cachedTable[i].BillsSaved = fmt.Sprintf("%.02f", envbillSaved)
+			}
 		}
 
 		// vm total count
@@ -286,7 +288,9 @@ func refreshTable() (err error) {
 	}
 
 	// calculate billing information before old table is ditched
-	calculateEnvBills()
+	if ExperimentalEnabled {
+		calculateEnvBills()
+	}
 
 	for region, awsSvcClient := range awsClients {
 		req := awsSvcClient.DescribeInstancesRequest(params)
@@ -379,13 +383,9 @@ func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.E
 		awsResponse, reqErr := req.Send()
 		response, _ = json.MarshalIndent(awsResponse, "", "  ")
 		err = reqErr
-		if err == nil {
+		if ExperimentalEnabled && err == nil {
 			// BILLING: update toggled off instances map
-			toggledOffInstanceIdsLock.Lock()
-			for _, instanceID := range instanceIDs {
-				delete(toggledOffInstanceIds, instanceID)
-			}
-			toggledOffInstanceIdsLock.Unlock()
+			deleteToggledOffInstanceIDs(instanceIDs)
 		}
 		return
 
@@ -399,13 +399,9 @@ func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.E
 		awsResponse, reqErr := req.Send()
 		response, _ = json.MarshalIndent(awsResponse, "", "  ")
 		err = reqErr
-		if err == nil {
+		if ExperimentalEnabled && err == nil {
 			// BILLING: update toggled off instances map
-			toggledOffInstanceIdsLock.Lock()
-			for _, instanceID := range instanceIDs {
-				toggledOffInstanceIds[instanceID] = true
-			}
-			toggledOffInstanceIdsLock.Unlock()
+			putToggledOffInstanceIDs(instanceIDs)
 		}
 		return
 
@@ -413,6 +409,22 @@ func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.E
 		err = fmt.Errorf("unsupported desiredState specified")
 		return
 	}
+}
+
+func putToggledOffInstanceIDs(instanceIDs []string) {
+	toggledOffInstanceIdsLock.Lock()
+	for _, instanceID := range instanceIDs {
+		toggledOffInstanceIds[instanceID] = true
+	}
+	toggledOffInstanceIdsLock.Unlock()
+}
+
+func deleteToggledOffInstanceIDs(instanceIDs []string) {
+	toggledOffInstanceIdsLock.Lock()
+	for _, instanceID := range instanceIDs {
+		delete(toggledOffInstanceIds, instanceID)
+	}
+	toggledOffInstanceIdsLock.Unlock()
 }
 
 // shuts down an env

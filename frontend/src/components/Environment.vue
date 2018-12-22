@@ -47,7 +47,7 @@
           </div>
         </td>
       </tr>
-      <tr>
+      <tr v-if="env.bills_accrued && env.bills_saved">
         <td>
           <div class="env__details">
             <clr-icon

@@ -31,12 +31,14 @@ func handlerEnvAll(w http.ResponseWriter, req *http.Request) {
 
 	envAllResponse := struct {
 		EnvList           envList `json:"envList" groups:"summary,details"`
-		TotalBillsAccrued string  `json:"totalBillsAccrued" groups:"summary,details"`
-		TotalBillsSaved   string  `json:"totalBillsSaved" groups:"summary,details"`
+		TotalBillsAccrued string  `json:"totalBillsAccrued,omitempty" groups:"summary,details"`
+		TotalBillsSaved   string  `json:"totalBillsSaved,omitempty" groups:"summary,details"`
 	}{
-		EnvList:           cachedTable,
-		TotalBillsAccrued: fmt.Sprintf("%.02f", totalBillsAccrued),
-		TotalBillsSaved:   fmt.Sprintf("%.02f", totalBillsSaved),
+		EnvList: cachedTable,
+	}
+	if ExperimentalEnabled {
+		envAllResponse.TotalBillsAccrued = fmt.Sprintf("%.02f", totalBillsAccrued)
+		envAllResponse.TotalBillsSaved = fmt.Sprintf("%.02f", totalBillsSaved)
 	}
 
 	// prepare result and return it
