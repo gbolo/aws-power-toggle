@@ -29,6 +29,8 @@ func ConfigInit(cfgFile string, printConfig bool) {
 	requiredTagKey = viper.GetString("aws.required_tag_key")
 	requiredTagValue = viper.GetString("aws.required_tag_value")
 	environmentTagKey = viper.GetString("aws.environment_tag_key")
+	slackEnabled = viper.GetBool("slack.enabled")
+	slackWebHooks = viper.GetStringSlice("slack.webhook_urls")
 
 	return
 }
@@ -130,5 +132,9 @@ func sanityChecks() {
 
 	if !(viper.GetInt("aws.polling_interval") > 0) {
 		log.Fatal("polling_interval MUST be defined and greater than 0")
+	}
+
+	if viper.GetBool("slack.enabled") && len(viper.GetStringSlice("slack.webhook_urls")) == 0 {
+		log.Warning("slack is ENABLED but slack.webhook_urls is empty")
 	}
 }

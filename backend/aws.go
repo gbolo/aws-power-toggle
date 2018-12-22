@@ -344,6 +344,17 @@ func shutdownEnv(envID string) (response []byte, err error) {
 			log.Errorf("error trying to stop env %s: %v", envID, err)
 		} else {
 			log.Infof("successfully stopped env %s", envID)
+			env, _ := getEnvironmentByID(envID)
+			slackSendMessage(
+				fmt.Sprintf(
+					"*STOPPING* environment `%s` in region _%s_ composed of *%v instances* totaling *%v* CPU cores and *%vGB* of memory",
+					env.Name,
+					env.Region,
+					env.TotalInstances,
+					env.TotalVCPU,
+					env.TotalMemoryGB,
+				),
+			)
 		}
 	} else {
 		err = fmt.Errorf("env [%s] has no associated instances", envID)
@@ -366,6 +377,17 @@ func startupEnv(envID string) (response []byte, err error) {
 			log.Errorf("error trying to start env %s: %v", envID, err)
 		} else {
 			log.Infof("successfully started env %s", envID)
+			env, _ := getEnvironmentByID(envID)
+			slackSendMessage(
+				fmt.Sprintf(
+					"*STARTING* environment `%s` in region _%s_ composed of *%v instances* totaling *%v* CPU cores and *%vGB* of memory",
+					env.Name,
+					env.Region,
+					env.TotalInstances,
+					env.TotalVCPU,
+					env.TotalMemoryGB,
+				),
+			)
 		}
 	} else {
 		err = fmt.Errorf("env [%s] has no associated instances", envID)
