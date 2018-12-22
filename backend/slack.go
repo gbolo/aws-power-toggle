@@ -30,24 +30,9 @@ func createHTTPClient() *http.Client {
 			// TLS Config
 			TLSClientConfig: &tls.Config{
 				InsecureSkipVerify: false,
-				MinVersion:         tls.VersionTLS12,
-				// strongest ciphers
-				CipherSuites: []uint16{
-					tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-					tls.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
-					tls.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
-					tls.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
-				},
-
-				// https://www.iana.org/assignments/tls-parameters/tls-parameters.xml#tls-parameters-8
-				CurvePreferences: []tls.CurveID{
-					// secp521r1
-					tls.CurveP521,
-					// secp384r1
-					tls.CurveP384,
-					// secp256r1
-					tls.CurveP256,
-				},
+				MinVersion:         tlsMinVersion,
+				CipherSuites:       tlsCiphers,
+				CurvePreferences:   tlsCurvePreferences,
 			},
 
 			// sane timeouts
@@ -68,8 +53,9 @@ func createHTTPClient() *http.Client {
 	}
 }
 
+// slackSendMessage boradcasts a text message to all configured webhooks
 func slackSendMessage(message string) {
-	if !slackEnabled || len(slackWebHooks) == 0 {
+	if !slackEnabled || len(slackWebHooks) == 0 || message == "" {
 		return
 	}
 
