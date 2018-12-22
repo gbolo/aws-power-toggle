@@ -22,7 +22,7 @@ func ConfigInit(cfgFile string, printConfig bool) {
 	sanityChecks()
 
 	// assign variable values to config values
-	awsRegion = viper.GetString("aws.region")
+	awsRegions = viper.GetStringSlice("aws.regions")
 	envNameIgnore = viper.GetStringSlice("aws.ignore_environments")
 	instanceTypeIgnore = viper.GetStringSlice("aws.ignore_instance_types")
 	maxInstancesToShutdown = viper.GetInt("aws.max_instances_to_shutdown")
@@ -80,7 +80,6 @@ func printConfigSummary() {
 		"server.bind_port",
 		"server.tls.enabled",
 		"server.access_log",
-		"aws.region",
 		"aws.polling_interval",
 		"aws.required_tag_key",
 		"aws.required_tag_value",
@@ -91,6 +90,7 @@ func printConfigSummary() {
 	}
 
 	for _, c := range []string{
+		"aws.regions",
 		"aws.ignore_instance_types",
 		"aws.ignore_environments",
 	} {
@@ -102,14 +102,17 @@ func printConfigSummary() {
 func sanityChecks() {
 
 	for _, k := range []string{
-		"aws.region",
 		"aws.required_tag_key",
 		"aws.required_tag_value",
 		"aws.environment_tag_key",
 	} {
 		if viper.GetString(k) == "" {
-			log.Fatalf("%s region MUST be defined and not empty", k)
+			log.Fatalf("%s MUST be defined and not empty", k)
 		}
+	}
+
+	if len(viper.GetStringSlice("aws.regions")) == 0 {
+		log.Fatal("aws.regions MUST be defined and not empty")
 	}
 
 	for _, k := range []string{

@@ -26,14 +26,15 @@ const (
 )
 
 var (
-	// global aws client
-	awsClient *ec2.EC2
+
+	// global aws clients (based on regions)
+	awsClients map[string]*ec2.EC2
 	// global cached env list
 	cachedTable envList
 	// lock to prevent concurrent refreshes
 	cachedTableLock sync.Mutex
-	// aws region
-	awsRegion string
+	// aws regions
+	awsRegions []string
 	// aws tags
 	requiredTagKey, requiredTagValue, environmentTagKey string
 	// safety, will refuse to shutdown if more than this amount of instances is requested
@@ -57,6 +58,7 @@ type virtualMachine struct {
 	Name         string `json:"name" groups:"summary,details"`
 	State        string `json:"state" groups:"summary,details"`
 	Environment  string `json:"environment" groups:"summary,details"`
+	Region       string `json:"region" groups:"summary,details"`
 
 	// these values are mapped from another source for aws
 	VCPU     int     `json:"vcpu" groups:"summary,details"`
@@ -90,7 +92,6 @@ func updateEnvDetails() {
 		// these are not fully used yet (currently only for api response)
 		// in future we may support other providers and multiple regions
 		cachedTable[i].Provider = "aws"
-		cachedTable[i].Region = awsRegion
 
 		// compute a unique identifier for this environment
 		cachedTable[i].ID = ComputeID(
@@ -114,7 +115,7 @@ func updateEnvDetails() {
 			//   in case we add other cloud providers
 			cachedTable[i].Instances[c].ID = ComputeID(
 				cachedTable[i].Provider,
-				cachedTable[i].Region,
+				instance.Region,
 				instance.InstanceID,
 			)
 
@@ -195,6 +196,7 @@ func addInstance(instance *virtualMachine) {
 		ec2env := environment{
 			Name:      instance.Environment,
 			Instances: []virtualMachine{*instance},
+			Region:    instance.Region,
 		}
 		cachedTable = append(cachedTable, ec2env)
 	}
@@ -221,39 +223,53 @@ func refreshTable() (err error) {
 		},
 	}
 
-	req := awsClient.DescribeInstancesRequest(params)
-	resp, err := req.Send()
-	if err != nil {
-		log.Errorf("failed to describe instances, %s, %v", awsRegion, err)
-		return
-	}
-	log.Infof("aws poll was successful, clearing old cached table")
-	cachedTable = cachedTable[:0]
-
-	for _, reservation := range resp.Reservations {
-		for _, instance := range reservation.Instances {
-			instanceObj := virtualMachine{InstanceID: *instance.InstanceId, State: string(instance.State.Name), InstanceType: string(instance.InstanceType)}
-			// populate info from tags
-			for _, tag := range instance.Tags {
-				if *tag.Key == environmentTagKey && *tag.Value != "" {
-					instanceObj.Environment = *tag.Value
-				}
-				if *tag.Key == "Name" {
-					instanceObj.Name = *tag.Value
-				}
-			}
-			// determine instance cpu and memory
-			if details, found := getInstanceTypeDetails(instanceObj.InstanceType); found {
-				instanceObj.MemoryGB = details.MemoryGB
-				instanceObj.VCPU = details.VCPU
-			}
-			if validateEnvName(instanceObj.Environment) {
-				addInstance(&instanceObj)
+	for region, awsSvcClient := range awsClients {
+		req := awsSvcClient.DescribeInstancesRequest(params)
+		resp, respErr := req.Send()
+		if respErr != nil {
+			log.Errorf("failed to describe instances, %s, %v", region, respErr)
+			err = respErr
+			return
+		}
+		log.Infof("aws poll was successful, clearing old cached table for region: %s", region)
+		var newcachedTable envList
+		for _, env := range cachedTable {
+			if env.Region != region {
+				newcachedTable = append(newcachedTable, env)
 			}
 		}
+		cachedTable = newcachedTable
+
+		for _, reservation := range resp.Reservations {
+			for _, instance := range reservation.Instances {
+				instanceObj := virtualMachine{
+					InstanceID: *instance.InstanceId, State: string(instance.State.Name),
+					InstanceType: string(instance.InstanceType),
+					Region:       region,
+				}
+				// populate info from tags
+				for _, tag := range instance.Tags {
+					if *tag.Key == environmentTagKey && *tag.Value != "" {
+						instanceObj.Environment = *tag.Value
+					}
+					if *tag.Key == "Name" {
+						instanceObj.Name = *tag.Value
+					}
+				}
+				// determine instance cpu and memory
+				if details, found := getInstanceTypeDetails(instanceObj.InstanceType); found {
+					instanceObj.MemoryGB = details.MemoryGB
+					instanceObj.VCPU = details.VCPU
+				}
+				if validateEnvName(instanceObj.Environment) {
+					addInstance(&instanceObj)
+				}
+			}
+		}
+		updateEnvDetails()
+		log.Debugf("valid environment(s) in cache: %d", len(cachedTable))
 	}
-	updateEnvDetails()
-	log.Debugf("valid environment(s) in cache: %d", len(cachedTable))
+
 	return
 }
 
@@ -273,7 +289,7 @@ func getInstanceIDs(envID, state string) (instanceIds []string) {
 }
 
 // toggleInstances can start or stop a list of instances
-func toggleInstances(instanceIDs []string, desiredState string) (response []byte, err error) {
+func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.EC2) (response []byte, err error) {
 	if len(instanceIDs) < 1 {
 		err = fmt.Errorf("no instanceIDs have been provided")
 		return
@@ -323,7 +339,7 @@ func shutdownEnv(envID string) (response []byte, err error) {
 		err = fmt.Errorf("SAFETY: env [%s] has too many associated instances to shutdown %d", envID, len(instanceIds))
 		log.Debugf("SAFETY: instances: %v", instanceIds)
 	} else if len(instanceIds) > 0 {
-		response, err = toggleInstances(instanceIds, "stop")
+		response, err = toggleInstances(instanceIds, "stop", getEnvironmentAwsClient(envID))
 		if err != nil {
 			log.Errorf("error trying to stop env %s: %v", envID, err)
 		} else {
@@ -345,7 +361,7 @@ func startupEnv(envID string) (response []byte, err error) {
 
 	instanceIds := getInstanceIDs(envID, "stopped")
 	if len(instanceIds) > 0 {
-		response, err = toggleInstances(instanceIds, "start")
+		response, err = toggleInstances(instanceIds, "start", getEnvironmentAwsClient(envID))
 		if err != nil {
 			log.Errorf("error trying to start env %s: %v", envID, err)
 		} else {
@@ -373,7 +389,7 @@ func toggleInstance(id, desiredState string) (response []byte, err error) {
 	// get the AWS instance id
 	awsInstanceID := getAWSInstanceID(id)
 	if awsInstanceID != "" {
-		response, err = toggleInstances([]string{awsInstanceID}, desiredState)
+		response, err = toggleInstances([]string{awsInstanceID}, desiredState, getInstanceAwsClient(id))
 		if err != nil {
 			log.Errorf("error trying to %s instance %s: %v", desiredState, id, err)
 		} else {
@@ -393,6 +409,28 @@ func getEnvironmentByID(envID string) (environment, bool) {
 		}
 	}
 	return environment{}, false
+}
+
+// returns awsClient for the specific environment ID
+func getEnvironmentAwsClient(envID string) *ec2.EC2 {
+	for _, env := range cachedTable {
+		if env.ID == envID {
+			return awsClients[env.Region]
+		}
+	}
+	return nil
+}
+
+// returns awsClient for the specific environment ID
+func getInstanceAwsClient(instanceID string) *ec2.EC2 {
+	for _, env := range cachedTable {
+		for _, instance := range env.Instances {
+			if instance.ID == instanceID {
+				return awsClients[instance.Region]
+			}
+		}
+	}
+	return nil
 }
 
 // given an aws-power-toggle id, it will return the actual aws instance id
