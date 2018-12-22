@@ -339,12 +339,20 @@ func shutdownEnv(envID string) (response []byte, err error) {
 		err = fmt.Errorf("SAFETY: env [%s] has too many associated instances to shutdown %d", envID, len(instanceIds))
 		log.Debugf("SAFETY: instances: %v", instanceIds)
 	} else if len(instanceIds) > 0 {
+		env, _ := getEnvironmentByID(envID)
 		response, err = toggleInstances(instanceIds, "stop", getEnvironmentAwsClient(envID))
 		if err != nil {
 			log.Errorf("error trying to stop env %s: %v", envID, err)
+			slackSendMessage(
+				fmt.Sprintf(
+					"*ERROR STOPPING* environment `%s` in region _%s_: %v",
+					env.Name,
+					env.Region,
+					err,
+				),
+			)
 		} else {
 			log.Infof("successfully stopped env %s", envID)
-			env, _ := getEnvironmentByID(envID)
 			slackSendMessage(
 				fmt.Sprintf(
 					"*STOPPING* environment `%s` in region _%s_ composed of *%v instances* totaling *%v* CPU cores and *%vGB* of memory",
@@ -372,12 +380,20 @@ func startupEnv(envID string) (response []byte, err error) {
 
 	instanceIds := getInstanceIDs(envID, "stopped")
 	if len(instanceIds) > 0 {
+		env, _ := getEnvironmentByID(envID)
 		response, err = toggleInstances(instanceIds, "start", getEnvironmentAwsClient(envID))
 		if err != nil {
 			log.Errorf("error trying to start env %s: %v", envID, err)
+			slackSendMessage(
+				fmt.Sprintf(
+					"*ERROR STARTING* environment `%s` in region _%s_: %v",
+					env.Name,
+					env.Region,
+					err,
+				),
+			)
 		} else {
 			log.Infof("successfully started env %s", envID)
-			env, _ := getEnvironmentByID(envID)
 			slackSendMessage(
 				fmt.Sprintf(
 					"*STARTING* environment `%s` in region _%s_ composed of *%v instances* totaling *%v* CPU cores and *%vGB* of memory",
