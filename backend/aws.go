@@ -345,7 +345,7 @@ func shutdownEnv(envID string) (response []byte, err error) {
 			log.Errorf("error trying to stop env %s: %v", envID, err)
 			slackSendMessage(
 				fmt.Sprintf(
-					"*ERROR STOPPING* environment `%s` in region _%s_: %v",
+					"*ERROR STOPPING* environment *`%s`* in region _%s_ --> `%v`",
 					env.Name,
 					env.Region,
 					err,
@@ -355,7 +355,7 @@ func shutdownEnv(envID string) (response []byte, err error) {
 			log.Infof("successfully stopped env %s", envID)
 			slackSendMessage(
 				fmt.Sprintf(
-					"*STOPPING* environment `%s` in region _%s_ composed of *%v instances* totaling *%v* CPU cores and *%vGB* of memory",
+					"*STOPPING* environment *`%s`* in region _%s_ --> *%v instance(s)* totaling *%v vCPU(s)* & *%vGB* memory",
 					env.Name,
 					env.Region,
 					env.TotalInstances,
@@ -386,7 +386,7 @@ func startupEnv(envID string) (response []byte, err error) {
 			log.Errorf("error trying to start env %s: %v", envID, err)
 			slackSendMessage(
 				fmt.Sprintf(
-					"*ERROR STARTING* environment `%s` in region _%s_: %v",
+					"*ERROR STARTING* environment *`%s`* in region _%s_ --> `%v`",
 					env.Name,
 					env.Region,
 					err,
@@ -396,7 +396,7 @@ func startupEnv(envID string) (response []byte, err error) {
 			log.Infof("successfully started env %s", envID)
 			slackSendMessage(
 				fmt.Sprintf(
-					"*STARTING* environment `%s` in region _%s_ composed of *%v instances* totaling *%v* CPU cores and *%vGB* of memory",
+					"*STARTING* environment *`%s`* in region _%s_ --> *%v instance(s)* totaling *%v vCPU(s)* & *%vGB* memory",
 					env.Name,
 					env.Region,
 					env.TotalInstances,
