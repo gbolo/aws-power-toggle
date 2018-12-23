@@ -141,3 +141,15 @@ make all
 
 if you would like to add/remove/change any of the fake inventory, then modify this file:
 `testdata/mock/mock_env_cachedTable.json`
+
+### Enabling Experimental Features
+Certain features in the project are experimental and subject to further enhancements.
+Current experimental features include:
+
+* Display billing stats per env (money used/saved)
+
+To enable experimental features:
+```
+# set EXPERIMENTAL_ENABLED env flag (or change experimental.enabled in config file):
+export EXPERIMENTAL_ENABLED = true
+```

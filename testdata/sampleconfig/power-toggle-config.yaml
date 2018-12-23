@@ -79,4 +79,4 @@ mock:
   enabled: false
 # experimental features, currently include billing stats
 experimental:
-  enabled: true
+  enabled: false
