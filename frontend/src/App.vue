@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header v-bind="{ version: version, tba:totalBillsAccrued, tbs:totalBillsSaved}" />
+    <Header v-bind:version="version" />
     <button
       class="refresh-btn"
       @click="refresh"
@@ -36,12 +36,6 @@ export default {
   computed: {
     environments() {
       return this.$store.state.environments;
-    },
-    totalBillsAccrued() {
-      return this.$store.state.totalBillsAccrued;
-    },
-    totalBillsSaved() {
-      return this.$store.state.totalBillsSaved;
     },
     version() {
       return this.$store.state.version;

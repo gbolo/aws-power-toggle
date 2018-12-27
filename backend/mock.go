@@ -34,7 +34,7 @@ func mockRefreshTable() (err error) {
 			if details, found := getInstanceTypeDetails(instanceObj.InstanceType); found {
 				instanceObj.MemoryGB = details.MemoryGB
 				instanceObj.VCPU = details.VCPU
-				if pricingstr, ok := details.PricingHourlyByRegion["ca-central-1"]; ok {
+				if pricingstr, ok := details.PricingHourlyByRegion[instanceObj.Region]; ok {
 					pricing, err := strconv.ParseFloat(pricingstr, 64)
 					if err != nil {
 						log.Errorf("failed to parse pricing info to float: %s", pricingstr)
