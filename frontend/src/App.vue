@@ -13,6 +13,9 @@
     </button>
     <EnvironmentList v-bind:environments="environments" />
     <Snackbar v-bind:message="error" />
+    <div class="footer">
+      All billing information are shown in USD.
+    </div>
   </div>
 </template>
 
@@ -110,6 +113,10 @@ export default {
     &:hover {
       background: #7e3ff2;
     }
+  }
+
+  .footer {
+    padding: 20px 0px 40px 0px;
   }
 
   @keyframes spin {
