@@ -72,6 +72,16 @@ aws:
   ignore_environments:
     - prod
 
+# slack settings -------------------------------------------------------------------------------------------------------
+slack:
+  # enables aws-power-toggle to send event messages to slack channels
+  enabled: false
+
+  # a list of Incoming Webhook URLs
+  webhook_urls:
+    - https://hooks.slack.com/services/SOME/WEBHOOK/URL
+
+
 # misc settings --------------------------------------------------------------------------------------------------------
 log_level: DEBUG
 # mock server for testing
