@@ -1,18 +1,20 @@
 <template>
   <div id="app">
-    <Header v-bind:version="version" />
-    <button
-      class="refresh-btn"
-      @click="refresh"
-    >
-      <clr-icon
-        v-bind:class="[shouldSpinIcon ? 'spin-icon' : '']"
-        shape="sync"
-        size="16"
-      ></clr-icon>
-    </button>
-    <EnvironmentList v-bind:environments="environments" />
-    <Snackbar v-bind:message="error" />
+    <div class="appbody">
+      <Header v-bind:version="version" />
+      <button
+        class="refresh-btn"
+        @click="refresh"
+      >
+        <clr-icon
+          v-bind:class="[shouldSpinIcon ? 'spin-icon' : '']"
+          shape="sync"
+          size="16"
+        ></clr-icon>
+      </button>
+      <EnvironmentList v-bind:environments="environments" />
+      <Snackbar v-bind:message="error" />
+    </div>
     <div class="footer">
       All billing information are shown in USD.
     </div>
@@ -115,8 +117,13 @@ export default {
     }
   }
 
+  .appbody {
+    min-height: calc(100vh - 60px);
+  }
+
   .footer {
-    padding: 20px 0px 40px 0px;
+    padding:20px 0px 0px 0px;
+    height:60px;
   }
 
   @keyframes spin {
