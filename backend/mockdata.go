@@ -1,3 +1,33 @@
+package backend
+
+import (
+	"encoding/json"
+)
+
+// mock of refreshTable
+func mockRefreshTable() (err error) {
+	// introduce delays and possible error
+	err = mockDelayWithPossibleError()
+	if err != nil {
+		log.Errorf("mock error refreshing table")
+		return
+	}
+
+	// we only need to load initial test data when cachedTable is empty
+	if len(cachedTable) == 0 {
+		err = json.Unmarshal([]byte(mockEnvDetailsJSON), &cachedTable)
+		if err != nil {
+			log.Fatalf("mock API is enabled, but can't unmarshal json file: %s", err)
+		}
+	}
+
+	updateEnvDetails()
+	log.Debugf("MOCK: valid environment(s) in cache: %d", len(cachedTable))
+	return
+}
+
+// test data for cachedTable
+const mockEnvDetailsJSON = `
 [
   {
     "id": "356f6265efcc",
@@ -2815,3 +2845,4 @@
     "total_vcpu": 12
   }
 ]
+`

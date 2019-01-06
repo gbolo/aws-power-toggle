@@ -44,8 +44,8 @@ var (
 	// ignore these environment names
 	envNameIgnore []string
 
-	// MockEnabled enables mocking of API calls to aws for development purposes
-	MockEnabled = false
+	// mockEnabled enables mocking of API calls to aws for development purposes
+	mockEnabled bool
 )
 
 type virtualMachine struct {
@@ -208,7 +208,7 @@ func refreshTable() (err error) {
 	defer cachedTableLock.Unlock()
 
 	// use the mock function if enabled
-	if MockEnabled {
+	if mockEnabled {
 		return mockRefreshTable()
 	}
 
@@ -330,7 +330,7 @@ func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.E
 // shuts down an env
 func shutdownEnv(envID string) (response []byte, err error) {
 	// use the mock function if enabled
-	if MockEnabled {
+	if mockEnabled {
 		return mockShutdownEnv(envID)
 	}
 
@@ -374,7 +374,7 @@ func shutdownEnv(envID string) (response []byte, err error) {
 // starts up an env
 func startupEnv(envID string) (response []byte, err error) {
 	// use the mock function if enabled
-	if MockEnabled {
+	if mockEnabled {
 		return mockStartupEnv(envID)
 	}
 
@@ -415,7 +415,7 @@ func startupEnv(envID string) (response []byte, err error) {
 // starts up an instance based on internal id (not aws instance id)
 func toggleInstance(id, desiredState string) (response []byte, err error) {
 	// use the mock function if enabled
-	if MockEnabled {
+	if mockEnabled {
 		return mockToggleInstance(id, desiredState)
 	}
 
