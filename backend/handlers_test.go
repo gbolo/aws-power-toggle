@@ -9,6 +9,9 @@ import (
 
 func TestHttpHandlers(t *testing.T) {
 
+	// disabled mock delays and chance of errors
+	unitTestRunning = true
+
 	// discard logs
 	loggingInit("INFO")
 

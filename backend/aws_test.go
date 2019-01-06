@@ -149,6 +149,9 @@ func TestGetAWSInstanceId(t *testing.T) {
 }
 
 func TestEnvStartStop(t *testing.T) {
+	// disabled mock delays and chance of errors
+	unitTestRunning = true
+
 	if err := resetMockData(); err != nil {
 		t.Fatalf("mockRefreshTable failed: %v", err)
 	}
@@ -176,7 +179,9 @@ func TestEnvStartStop(t *testing.T) {
 }
 
 func resetMockData() error {
-	MockEnabled = true
+	// disabled mock delays and chance of errors
+	unitTestRunning = true
+	mockEnabled = true
 	cachedTable = cachedTable[:0]
 	return mockRefreshTable()
 }
