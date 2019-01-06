@@ -77,7 +77,7 @@ func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 	// introduce delays and possible error
 	err = mockDelayWithPossibleError(1)
 	if err != nil {
-		response = []byte(fmt.Sprintf("%s", err))
+		response = []byte(fmt.Sprintf(`{"error":"%s"}`, err))
 		log.Errorf("mock error instance id: %s: %s", id, err)
 		return
 	}
