@@ -6,6 +6,10 @@ import (
 	"time"
 )
 
+// unitTestRunning lets use know if a unit test is running
+// currently, it will disable introduced delays and chance of mocked errors
+var unitTestRunning = false
+
 // mock of shutdownEnv
 func mockShutdownEnv(envID string) (response []byte, err error) {
 	// introduce delays and possible error
@@ -108,6 +112,11 @@ func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 // mockDelayWithPossibleError will add a delay and possibly return an error.
 // This is done to simulate real world delays and issues to aid in web UI development
 func mockDelayWithPossibleError(delay int) (err error) {
+	// if we are doing unit tests, this should be disabled
+	if unitTestRunning {
+		return
+	}
+
 	time.Sleep(time.Duration(delay) * time.Second)
 	if rand.Intn(4) == 0 {
 		err = fmt.Errorf("MOCK: Fate has thrown you an error")
