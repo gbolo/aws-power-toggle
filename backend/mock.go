@@ -110,7 +110,7 @@ func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 func mockDelayWithPossibleError(delay int) (err error) {
 	time.Sleep(time.Duration(delay) * time.Second)
 	if rand.Intn(4) == 0 {
-		err = fmt.Errorf("MOCK: Fate has thrown you an error!")
+		err = fmt.Errorf("MOCK: Fate has thrown you an error")
 	}
 	return
 }
