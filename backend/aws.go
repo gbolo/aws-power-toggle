@@ -45,7 +45,7 @@ var (
 	envNameIgnore []string
 
 	// MockEnabled enables mocking of API calls to aws for development purposes
-	MockEnabled = false
+	MockEnabled = true
 )
 
 type virtualMachine struct {

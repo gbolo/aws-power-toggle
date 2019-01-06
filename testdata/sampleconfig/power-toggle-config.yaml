@@ -56,7 +56,7 @@ aws:
 
   # !! SAFETY option !!
   # prevents shutting down of too many instances
-  max_instances_to_shutdown: 16
+  max_instances_to_shutdown: 100
 
   # optional list of instance types to ignore
   ignore_instance_types:

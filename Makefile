@@ -23,6 +23,12 @@ all: fmt dep $(BIN) frontend ; $(info $(M) building executable...) @ ## Build ma
 		-ldflags '-X $(METAPKG).Version=$(VERSION) -X $(METAPKG).BuildDate=$(DATE) -X $(METAPKG).CommitSHA=$(COMMIT_SHA)' \
 		-o $(BIN)/$(PACKAGE)
 
+.PHONY: backend
+backend: ; $(info $(M) building backend executable...) @ ## Build backend binary
+	$Q $(GO) build \
+		-ldflags '-X $(METAPKG).Version=$(VERSION) -X $(METAPKG).BuildDate=$(DATE) -X $(METAPKG).CommitSHA=$(COMMIT_SHA)' \
+		-o $(BIN)/$(PACKAGE)
+
 .PHONY: docker
 docker: clean ; $(info $(M) building docker image...)	@ ## Build docker image
 	$Q docker build -t gbolo/$(PACKAGE):$(VERSION) .

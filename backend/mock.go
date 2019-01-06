@@ -1,35 +1,20 @@
 package backend
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
+	"math/rand"
+	"time"
 )
-
-// mock of refreshTable
-func mockRefreshTable() (err error) {
-	// we only need to load initial test data when cachedTable is empty
-	if len(cachedTable) == 0 {
-		cachedTableJSONFile, err := os.Open("../testdata/mock/mock_env_cachedTable.json")
-		if err != nil {
-			log.Fatalf("mock API is enabled, but can't load test data: %s", err)
-		}
-		defer cachedTableJSONFile.Close()
-		cachedTableBytes, _ := ioutil.ReadAll(cachedTableJSONFile)
-		err = json.Unmarshal(cachedTableBytes, &cachedTable)
-		if err != nil {
-			log.Fatalf("mock API is enabled, but can't unmarshal json file: %s", err)
-		}
-	}
-
-	updateEnvDetails()
-	log.Debugf("MOCK: valid environment(s) in cache: %d", len(cachedTable))
-	return
-}
 
 // mock of shutdownEnv
 func mockShutdownEnv(envID string) (response []byte, err error) {
+	// introduce delays and possible error
+	err = mockDelayWithPossibleError(1)
+	if err != nil {
+		response = []byte(fmt.Sprintf(`{"error":"%s"}`, err))
+		log.Errorf("mock error envID: %s: %s", envID, err)
+		return
+	}
 	instanceIds := getInstanceIDs(envID, "running")
 	if len(instanceIds) > maxInstancesToShutdown {
 		err = fmt.Errorf("SAFETY: env [%s] has too many associated instances to shutdown %d", envID, len(instanceIds))
@@ -44,7 +29,7 @@ func mockShutdownEnv(envID string) (response []byte, err error) {
 				break
 			}
 		}
-		response = []byte(`{"mock": "OK"}`)
+		response = []byte(fmt.Sprintf(`{"error":"%s"}`, err))
 		log.Infof("MOCK: successfully stopped env %s", envID)
 	} else {
 		err = fmt.Errorf("MOCK: env [%s] has no associated instances", envID)
@@ -55,6 +40,13 @@ func mockShutdownEnv(envID string) (response []byte, err error) {
 
 // mock of startupEnv
 func mockStartupEnv(envID string) (response []byte, err error) {
+	// introduce delays and possible error
+	err = mockDelayWithPossibleError(1)
+	if err != nil {
+		response = []byte(fmt.Sprintf(`{"error":"%s"}`, err))
+		log.Errorf("mock error envID: %s: %s", envID, err)
+		return
+	}
 	instanceIds := getInstanceIDs(envID, "stopped")
 	if len(instanceIds) > 0 {
 		// set all instances to running
@@ -82,6 +74,13 @@ func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 		err = fmt.Errorf("invalid desired state: %s", desiredState)
 		return
 	}
+	// introduce delays and possible error
+	err = mockDelayWithPossibleError(1)
+	if err != nil {
+		response = []byte(fmt.Sprintf("%s", err))
+		log.Errorf("mock error instance id: %s: %s", id, err)
+		return
+	}
 	// get the AWS instance id
 	awsInstanceID := getAWSInstanceID(id)
 	if awsInstanceID != "" {
@@ -102,6 +101,16 @@ func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 		response = []byte(`{"mock": "OK"}`)
 	} else {
 		err = fmt.Errorf("no mapping found between internal id (%s) and aws instance id", id)
+	}
+	return
+}
+
+// mockDelayWithPossibleError will add a delay and possibly return an error.
+// This is done to simulate real world delays and issues to aid in web UI development
+func mockDelayWithPossibleError(delay int) (err error) {
+	time.Sleep(time.Duration(delay) * time.Second)
+	if rand.Intn(4) == 0 {
+		err = fmt.Errorf("MOCK: Fate has thrown you an error!")
 	}
 	return
 }
