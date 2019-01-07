@@ -6,6 +6,13 @@ import (
 
 // mock of refreshTable
 func mockRefreshTable() (err error) {
+	// introduce delays and possible error
+	err = mockDelayWithPossibleError()
+	if err != nil {
+		log.Errorf("mock error refreshing table")
+		return
+	}
+
 	// we only need to load initial test data when cachedTable is empty
 	if len(cachedTable) == 0 {
 		err = json.Unmarshal([]byte(mockEnvDetailsJSON), &cachedTable)
