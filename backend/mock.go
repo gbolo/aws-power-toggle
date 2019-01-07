@@ -13,9 +13,9 @@ var unitTestRunning = false
 // mock of shutdownEnv
 func mockShutdownEnv(envID string) (response []byte, err error) {
 	// introduce delays and possible error
-	err = mockDelayWithPossibleError(1)
+	err = mockDelayWithPossibleError()
 	if err != nil {
-		response = []byte(fmt.Sprintf(`{"error":"%s"}`, err))
+		response = []byte(fmt.Sprintf(`{"error":"%v"}`, err))
 		log.Errorf("mock error envID: %s: %s", envID, err)
 		return
 	}
@@ -33,7 +33,7 @@ func mockShutdownEnv(envID string) (response []byte, err error) {
 				break
 			}
 		}
-		response = []byte(fmt.Sprintf(`{"error":"%s"}`, err))
+		response = []byte(`{"mock": "OK"}`)
 		log.Infof("MOCK: successfully stopped env %s", envID)
 	} else {
 		err = fmt.Errorf("MOCK: env [%s] has no associated instances", envID)
@@ -45,9 +45,9 @@ func mockShutdownEnv(envID string) (response []byte, err error) {
 // mock of startupEnv
 func mockStartupEnv(envID string) (response []byte, err error) {
 	// introduce delays and possible error
-	err = mockDelayWithPossibleError(1)
+	err = mockDelayWithPossibleError()
 	if err != nil {
-		response = []byte(fmt.Sprintf(`{"error":"%s"}`, err))
+		response = []byte(fmt.Sprintf(`{"error":"%v"}`, err))
 		log.Errorf("mock error envID: %s: %s", envID, err)
 		return
 	}
@@ -71,7 +71,7 @@ func mockStartupEnv(envID string) (response []byte, err error) {
 	return
 }
 
-// mock
+// mock of toggleInstance
 func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 	// validate desiredState
 	if desiredState != "start" && desiredState != "stop" {
@@ -79,7 +79,7 @@ func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 		return
 	}
 	// introduce delays and possible error
-	err = mockDelayWithPossibleError(1)
+	err = mockDelayWithPossibleError()
 	if err != nil {
 		response = []byte(fmt.Sprintf(`{"error":"%s"}`, err))
 		log.Errorf("mock error instance id: %s: %s", id, err)
@@ -111,14 +111,18 @@ func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 
 // mockDelayWithPossibleError will add a delay and possibly return an error.
 // This is done to simulate real world delays and issues to aid in web UI development
-func mockDelayWithPossibleError(delay int) (err error) {
+func mockDelayWithPossibleError() (err error) {
 	// if we are doing unit tests, this should be disabled
 	if unitTestRunning {
 		return
 	}
 
-	time.Sleep(time.Duration(delay) * time.Second)
-	if rand.Intn(4) == 0 {
+	// random delay betwen 100-2000 ms
+	r := rand.Intn(2000) + 100
+	time.Sleep(time.Duration(r) * time.Millisecond)
+
+	// 1/4 chance of producing an error
+	if r%4 == 0 {
 		err = fmt.Errorf("MOCK: Fate has thrown you an error")
 	}
 	return
