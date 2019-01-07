@@ -14,6 +14,7 @@
     "axios": "^0.18.0",
     "i": "^0.3.6",
     "register-service-worker": "^1.0.0",
+    "v-tooltip": "^2.0.0-rc.33",
     "vue": "^2.5.17",
     "vuex": "^3.0.1"
   },

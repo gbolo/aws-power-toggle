@@ -89,6 +89,11 @@ func handlerEnvSingle(w http.ResponseWriter, req *http.Request) {
 func handlerEnvPowerToggle(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
+	// re-calculate env bills before toggling
+	if ExperimentalEnabled {
+		calculateEnvBills()
+	}
+
 	// get vars from request to determine environment
 	vars := mux.Vars(req)
 	envID := vars["env-id"]

@@ -15,9 +15,7 @@
       <EnvironmentList v-bind:environments="environments" />
       <Snackbar v-bind:message="error" />
     </div>
-    <div class="footer">
-      All billing information are shown in USD.
-    </div>
+    <div class="footer"></div>
   </div>
 </template>
 
@@ -137,6 +135,19 @@ export default {
 
   .spin-icon {
     animation: spin infinite 0.75s linear;
+  }
+}
+.tooltip {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: block;
+  z-index: 10000;
+  .tooltip-inner {
+    background: black;
+    color: white;
+    border-radius: 6px;
+    padding: 5px 10px 4px;
   }
 }
 </style>

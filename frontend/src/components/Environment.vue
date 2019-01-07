@@ -54,7 +54,7 @@
               shape="lightbulb"
               size="24"
             ></clr-icon>
-            <span>${{env.bills_accrued}}&nbsp;used</span>
+            <span v-tooltip.bottom="'in USD'">${{env.bills_accrued}}&nbsp;used</span>
           </div>
         </td>
         <td>
@@ -63,7 +63,7 @@
               shape="bolt"
               size="24"
             ></clr-icon>
-            <span>${{env.bills_saved}}&nbsp;saved</span>
+            <span v-tooltip.bottom="'in USD'">${{env.bills_saved}}&nbsp;saved</span>
           </div>
         </td>
       </tr>
@@ -291,7 +291,7 @@ export default {
     tr:first-child td {
       border-top: 0;
     }
-    tr td:first-child {
+    tr td:first-child {;
       border-left: 0;
     }
     tr td:last-child {
