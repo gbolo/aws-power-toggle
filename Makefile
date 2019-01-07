@@ -18,7 +18,7 @@ M = $(shell printf "\033[34;1m▶\033[0m")
 # Build
 
 .PHONY: all
-all: fmt dep $(BIN) frontend ; $(info $(M) building executable...) @ ## Build main binary
+all: fmt dep $(BIN) frontend ; $(info $(M) building executable...) @ ## Build both backend and frontend
 	$Q $(GO) build \
 		-ldflags '-X $(METAPKG).Version=$(VERSION) -X $(METAPKG).BuildDate=$(DATE) -X $(METAPKG).CommitSHA=$(COMMIT_SHA)' \
 		-o $(BIN)/$(PACKAGE)

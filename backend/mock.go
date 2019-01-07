@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+
+	"github.com/spf13/viper"
 )
 
 // unitTestRunning lets use know if a unit test is running
@@ -117,12 +119,14 @@ func mockDelayWithPossibleError() (err error) {
 		return
 	}
 
-	// random delay betwen 100-2000 ms
+	// random delay betwen 100-2100 ms
 	r := rand.Intn(2000) + 100
-	time.Sleep(time.Duration(r) * time.Millisecond)
+	if viper.GetBool("mock.delay") {
+		time.Sleep(time.Duration(r) * time.Millisecond)
+	}
 
 	// 1/4 chance of producing an error
-	if r%4 == 0 {
+	if r%4 == 0 && viper.GetBool("mock.errors") {
 		err = fmt.Errorf("MOCK: Fate has thrown you an error")
 	}
 	return
