@@ -31,7 +31,7 @@ func ConfigInit(cfgFile string, printConfig bool) {
 	environmentTagKey = viper.GetString("aws.environment_tag_key")
 	slackEnabled = viper.GetBool("slack.enabled")
 	slackWebHooks = viper.GetStringSlice("slack.webhook_urls")
-	MockEnabled = viper.GetBool("mock.enabled")
+	mockEnabled = viper.GetBool("mock.enabled")
 	ExperimentalEnabled = viper.GetBool("experimental.enabled")
 
 	return
@@ -91,6 +91,8 @@ func printConfigSummary() {
 		"aws.max_instances_to_shutdown",
 		"slack.enabled",
 		"mock.enabled",
+		"mock.delay",
+		"mock.errors",
 		"experimental.enabled",
 	} {
 		log.Debugf("%s: %s\n", c, viper.GetString(c))

@@ -60,7 +60,7 @@ var (
 	// last time aws api was accessed
 	lastRefreshedTimeUnixNano int64
 	// MockEnabled enable mocking of API calls to aws for development purposes
-	MockEnabled bool
+	mockEnabled bool
 	// ExperimentalEnabled enable experimental features. Currently include billing stats
 	ExperimentalEnabled bool
 )
@@ -272,7 +272,7 @@ func refreshTable() (err error) {
 	defer cachedTableLock.Unlock()
 
 	// use the mock function if enabled
-	if MockEnabled {
+	if mockEnabled {
 		return mockRefreshTable()
 	}
 
@@ -430,7 +430,7 @@ func deleteToggledOffInstanceIDs(instanceIDs []string) {
 // shuts down an env
 func shutdownEnv(envID string) (response []byte, err error) {
 	// use the mock function if enabled
-	if MockEnabled {
+	if mockEnabled {
 		return mockShutdownEnv(envID)
 	}
 
@@ -474,7 +474,7 @@ func shutdownEnv(envID string) (response []byte, err error) {
 // starts up an env
 func startupEnv(envID string) (response []byte, err error) {
 	// use the mock function if enabled
-	if MockEnabled {
+	if mockEnabled {
 		return mockStartupEnv(envID)
 	}
 
@@ -515,7 +515,7 @@ func startupEnv(envID string) (response []byte, err error) {
 // starts up an instance based on internal id (not aws instance id)
 func toggleInstance(id, desiredState string) (response []byte, err error) {
 	// use the mock function if enabled
-	if MockEnabled {
+	if mockEnabled {
 		return mockToggleInstance(id, desiredState)
 	}
 

@@ -1,3 +1,59 @@
+package backend
+
+import (
+	"encoding/json"
+	"strconv"
+)
+
+// mock of refreshTable
+func mockRefreshTable() (err error) {
+	// introduce delays and possible error
+	err = mockDelayWithPossibleError()
+	if err != nil {
+		log.Errorf("mock error refreshing table")
+		return
+	}
+
+	// we only need to load initial test data when cachedTable is empty
+	if len(cachedTable) == 0 {
+		err = json.Unmarshal([]byte(mockEnvDetailsJSON), &cachedTable)
+		if err != nil {
+			log.Fatalf("mock API is enabled, but can't unmarshal json file: %s", err)
+		}
+	}
+
+	if ExperimentalEnabled {
+		calculateEnvBills()
+		cachedTableTemp := cachedTable
+		cachedTable = cachedTable[:0]
+		for _, env := range cachedTableTemp {
+			for _, instanceObj := range env.Instances {
+				// determine instance cpu and memory
+				if details, found := getInstanceTypeDetails(instanceObj.InstanceType); found {
+					instanceObj.MemoryGB = details.MemoryGB
+					instanceObj.VCPU = details.VCPU
+					if pricingstr, ok := details.PricingHourlyByRegion[instanceObj.Region]; ok {
+						pricing, err := strconv.ParseFloat(pricingstr, 64)
+						if err != nil {
+							log.Errorf("failed to parse pricing info to float: %s", pricingstr)
+						}
+						instanceObj.PricingHourly = pricing
+					}
+				}
+				if validateEnvName(instanceObj.Environment) {
+					addInstance(&instanceObj)
+				}
+			}
+		}
+	}
+
+	updateEnvDetails()
+	log.Debugf("MOCK: valid environment(s) in cache: %d", len(cachedTable))
+	return
+}
+
+// test data for cachedTable
+const mockEnvDetailsJSON = `
 [
   {
     "id": "356f6265efcc",
@@ -2815,3 +2871,4 @@
     "total_vcpu": 12
   }
 ]
+`

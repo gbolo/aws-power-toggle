@@ -1,60 +1,26 @@
 package backend
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
-	"strconv"
+	"math/rand"
+	"time"
+
+	"github.com/spf13/viper"
 )
 
-// mock of refreshTable
-func mockRefreshTable() (err error) {
-	// we only need to load initial test data when cachedTable is empty
-	if len(cachedTable) == 0 {
-		cachedTableJSONFile, err := os.Open("../testdata/mock/mock_env_cachedTable.json")
-		if err != nil {
-			log.Fatalf("mock API is enabled, but can't load test data: %s", err)
-		}
-		defer cachedTableJSONFile.Close()
-		cachedTableBytes, _ := ioutil.ReadAll(cachedTableJSONFile)
-		err = json.Unmarshal(cachedTableBytes, &cachedTable)
-		if err != nil {
-			log.Fatalf("mock API is enabled, but can't unmarshal json file: %s", err)
-		}
-	}
-	if ExperimentalEnabled {
-		calculateEnvBills()
-	}
-	cachedTableTemp := cachedTable
-	cachedTable = cachedTable[:0]
-	for _, env := range cachedTableTemp {
-		for _, instanceObj := range env.Instances {
-			// determine instance cpu and memory
-			if details, found := getInstanceTypeDetails(instanceObj.InstanceType); found {
-				instanceObj.MemoryGB = details.MemoryGB
-				instanceObj.VCPU = details.VCPU
-				if pricingstr, ok := details.PricingHourlyByRegion[instanceObj.Region]; ok {
-					pricing, err := strconv.ParseFloat(pricingstr, 64)
-					if err != nil {
-						log.Errorf("failed to parse pricing info to float: %s", pricingstr)
-					}
-					instanceObj.PricingHourly = pricing
-				}
-			}
-			if validateEnvName(instanceObj.Environment) {
-				addInstance(&instanceObj)
-			}
-		}
-	}
-
-	updateEnvDetails()
-	log.Debugf("MOCK: valid environment(s) in cache: %d", len(cachedTable))
-	return
-}
+// unitTestRunning lets use know if a unit test is running
+// currently, it will disable introduced delays and chance of mocked errors
+var unitTestRunning = false
 
 // mock of shutdownEnv
 func mockShutdownEnv(envID string) (response []byte, err error) {
+	// introduce delays and possible error
+	err = mockDelayWithPossibleError()
+	if err != nil {
+		response = []byte(fmt.Sprintf(`{"error":"%v"}`, err))
+		log.Errorf("mock error envID: %s: %s", envID, err)
+		return
+	}
 	instanceIds := getInstanceIDs(envID, "running")
 	if len(instanceIds) > maxInstancesToShutdown {
 		err = fmt.Errorf("SAFETY: env [%s] has too many associated instances to shutdown %d", envID, len(instanceIds))
@@ -84,6 +50,13 @@ func mockShutdownEnv(envID string) (response []byte, err error) {
 
 // mock of startupEnv
 func mockStartupEnv(envID string) (response []byte, err error) {
+	// introduce delays and possible error
+	err = mockDelayWithPossibleError()
+	if err != nil {
+		response = []byte(fmt.Sprintf(`{"error":"%v"}`, err))
+		log.Errorf("mock error envID: %s: %s", envID, err)
+		return
+	}
 	instanceIds := getInstanceIDs(envID, "stopped")
 	if len(instanceIds) > 0 {
 		// set all instances to running
@@ -108,11 +81,18 @@ func mockStartupEnv(envID string) (response []byte, err error) {
 	return
 }
 
-// mock toggleInstance
+// mock of toggleInstance
 func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 	// validate desiredState
 	if desiredState != "start" && desiredState != "stop" {
 		err = fmt.Errorf("invalid desired state: %s", desiredState)
+		return
+	}
+	// introduce delays and possible error
+	err = mockDelayWithPossibleError()
+	if err != nil {
+		response = []byte(fmt.Sprintf(`{"error":"%s"}`, err))
+		log.Errorf("mock error instance id: %s: %s", id, err)
 		return
 	}
 	// get the AWS instance id
@@ -143,6 +123,27 @@ func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 		response = []byte(`{"mock": "OK"}`)
 	} else {
 		err = fmt.Errorf("no mapping found between internal id (%s) and aws instance id", id)
+	}
+	return
+}
+
+// mockDelayWithPossibleError will add a delay and possibly return an error.
+// This is done to simulate real world delays and issues to aid in web UI development
+func mockDelayWithPossibleError() (err error) {
+	// if we are doing unit tests, this should be disabled
+	if unitTestRunning {
+		return
+	}
+
+	// random delay betwen 100-2100 ms
+	r := rand.Intn(2000) + 100
+	if viper.GetBool("mock.delay") {
+		time.Sleep(time.Duration(r) * time.Millisecond)
+	}
+
+	// 1/4 chance of producing an error
+	if r%4 == 0 && viper.GetBool("mock.errors") {
+		err = fmt.Errorf("MOCK: Fate has thrown you an error")
 	}
 	return
 }

@@ -82,7 +82,8 @@ make docker
 ```
 $ make help
 
-all             Build main binary
+all             Build both backend and frontend
+backend         Build backend binary
 docker          Build docker image
 frontend        Build frontend
 dep             Run dep ensure to fetch dependencies
@@ -125,22 +126,16 @@ Need to finish these...
 
 ### Enabling AWS API mocking (web dev mode)
 It may be useful to mock the aws API when doing development work against the API (like for web ui development).
-This means you don't need an aws api key. To enable this feature:
+This means you don't need an aws api key. To enable this feature, set env variable `POWER_TOGGLE_MOCK_ENABLED=true`:
+
 ```
-# set MOCK_ENABLED env flag (or change mock.enabled in config file):
-export MOCK_ENABLED = true
-
-# set fake AWS API keys
-export AWS_ACCESS_KEY_ID=DOESNT_MATTER
-export AWS_SECRET_ACCESS_KEY=DOESNT_MATTER
-
 # build then start
 make all
-./bin/aws-power-toggle -config testdata/sampleconfig/power-toggle-config.yaml
+POWER_TOGGLE_MOCK_ENABLED=true ./bin/aws-power-toggle -config testdata/sampleconfig/power-toggle-config.yaml
 ```
 
 if you would like to add/remove/change any of the fake inventory, then modify this file:
-`testdata/mock/mock_env_cachedTable.json`
+`backend/mockdata.go`
 
 ### Enabling Experimental Features
 Certain features in the project are experimental and subject to further enhancements.

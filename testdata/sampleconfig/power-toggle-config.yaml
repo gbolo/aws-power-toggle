@@ -56,7 +56,7 @@ aws:
 
   # !! SAFETY option !!
   # prevents shutting down of too many instances
-  max_instances_to_shutdown: 16
+  max_instances_to_shutdown: 100
 
   # optional list of instance types to ignore
   ignore_instance_types:
@@ -72,6 +72,19 @@ aws:
   ignore_environments:
     - prod
 
+# mock settings --------------------------------------------------------------------------------------------------------
+mock:
+  # when mock is enabled, calls to aws are disabled. Instead, calls that would normally go to aws are mocked
+  # FOR DEVELOPMENT PURPOSES ONLY
+  enabled: false
+
+  # when set to true, a delay of 100-2100ms are added for each mocked call
+  delay: true
+
+  # when set to true, there is a 1/4 chance that a mocked call will produce an error
+  # use for testing how web UI handles errors
+  errors: true
+
 # slack settings -------------------------------------------------------------------------------------------------------
 slack:
   # enables aws-power-toggle to send event messages to slack channels
@@ -84,9 +97,7 @@ slack:
 
 # misc settings --------------------------------------------------------------------------------------------------------
 log_level: DEBUG
-# mock server for testing
-mock:
-  enabled: false
+
 # experimental features, currently include billing stats
 experimental:
-  enabled: false
+  enabled: true
