@@ -145,6 +145,6 @@ Current experimental features include:
 
 To enable experimental features:
 ```
-# set EXPERIMENTAL_ENABLED env flag (or change experimental.enabled in config file):
-export EXPERIMENTAL_ENABLED = true
+# set env variable POWER_TOGGLE_EXPERIMENTAL_ENABLED to true (or change experimental.enabled in config file):
+export POWER_TOGGLE_EXPERIMENTAL_ENABLED = true
 ```
