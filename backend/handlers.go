@@ -36,7 +36,7 @@ func handlerEnvAll(w http.ResponseWriter, req *http.Request) {
 	}{
 		EnvList: cachedTable,
 	}
-	if ExperimentalEnabled {
+	if experimentalEnabled {
 		envAllResponse.TotalBillsAccrued = fmt.Sprintf("%.02f", totalBillsAccrued)
 		envAllResponse.TotalBillsSaved = fmt.Sprintf("%.02f", totalBillsSaved)
 	}
@@ -90,7 +90,7 @@ func handlerEnvPowerToggle(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	// re-calculate env bills before toggling
-	if ExperimentalEnabled {
+	if experimentalEnabled {
 		calculateEnvBills()
 	}
 

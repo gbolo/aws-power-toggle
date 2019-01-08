@@ -61,8 +61,8 @@ var (
 	lastRefreshedTimeUnixNano int64
 	// MockEnabled enable mocking of API calls to aws for development purposes
 	mockEnabled bool
-	// ExperimentalEnabled enable experimental features. Currently include billing stats
-	ExperimentalEnabled bool
+	// experimentalEnabled enable experimental features. Currently include billing stats
+	experimentalEnabled bool
 )
 
 type virtualMachine struct {
@@ -120,7 +120,7 @@ func updateEnvDetails() {
 			env.Name,
 		)
 		// add bills accrued and bills saved to env details
-		if ExperimentalEnabled {
+		if experimentalEnabled {
 			if envbillAccrued, exists := billsAccruedMap[cachedTable[i].ID]; exists {
 				cachedTable[i].BillsAccrued = fmt.Sprintf("%.02f", envbillAccrued)
 			}
@@ -288,7 +288,7 @@ func refreshTable() (err error) {
 	}
 
 	// calculate billing information before old table is ditched
-	if ExperimentalEnabled {
+	if experimentalEnabled {
 		calculateEnvBills()
 	}
 
@@ -383,7 +383,7 @@ func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.E
 		awsResponse, reqErr := req.Send()
 		response, _ = json.MarshalIndent(awsResponse, "", "  ")
 		err = reqErr
-		if ExperimentalEnabled && err == nil {
+		if experimentalEnabled && err == nil {
 			// BILLING: update toggled off instances map
 			deleteToggledOffInstanceIDs(instanceIDs)
 		}
@@ -399,7 +399,7 @@ func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.E
 		awsResponse, reqErr := req.Send()
 		response, _ = json.MarshalIndent(awsResponse, "", "  ")
 		err = reqErr
-		if ExperimentalEnabled && err == nil {
+		if experimentalEnabled && err == nil {
 			// BILLING: update toggled off instances map
 			putToggledOffInstanceIDs(instanceIDs)
 		}

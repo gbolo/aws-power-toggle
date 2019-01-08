@@ -22,7 +22,7 @@ func mockRefreshTable() (err error) {
 		}
 	}
 
-	if ExperimentalEnabled {
+	if experimentalEnabled {
 		calculateEnvBills()
 		cachedTableTemp := cachedTable
 		cachedTable = cachedTable[:0]
