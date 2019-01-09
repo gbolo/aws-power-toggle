@@ -118,10 +118,6 @@ For further details on an API endpoint (including example responses), click on t
 
 * [Version](docs/api/version.md): `GET /api/v1/version` returns backend version information
 
-
-#### TODO:
-Need to finish these...
-
 * [Config](docs/api/config.md): `GET /api/v1/config` returns relevant backend configuration
 
 ### Enabling AWS API mocking (web dev mode)

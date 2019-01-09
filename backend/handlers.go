@@ -1,10 +1,12 @@
 package backend
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/spf13/viper"
 )
 
 // returns version information
@@ -123,6 +125,27 @@ func handlerRefresh(w http.ResponseWriter, req *http.Request) {
 		log.Info("refresh successful")
 		fmt.Fprint(w, "{\"status\":\"OK\"}\n")
 	}
+}
+
+// handler for displaying relevant config
+func handlerConfig(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	configuredOption := map[string]interface{}{
+		"aws_polling_interval":          viper.GetInt("aws.polling_interval"),
+		"aws_regions":                   awsRegions,
+		"aws_required_tag_key":          requiredTagKey,
+		"aws_required_tag_value":        requiredTagValue,
+		"aws_environment_tag_key":       environmentTagKey,
+		"aws_max_instances_to_shutdown": maxInstancesToShutdown,
+		"aws_ignore_instance_types":     instanceTypeIgnore,
+		"aws_ignore_environments":       envNameIgnore,
+		"slack_enabled":                 slackEnabled,
+		"mock_enabled":                  mockEnabled,
+		"mock_delay":                    viper.GetBool("mock.delay"),
+		"mock_errors":                   viper.GetBool("mock.errors"),
+	}
+	jsonResponse, _ := json.MarshalIndent(configuredOption, "", "  ")
+	fmt.Fprint(w, string(jsonResponse))
 }
 
 // wrapper for json responses with error support

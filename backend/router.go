@@ -70,6 +70,12 @@ var routes = Routes{
 		getEndpoint("instance/{instance-id}/{state:start|stop}"),
 		handlerInstancePowerToggle,
 	},
+	Route{
+		"Config",
+		"GET",
+		getEndpoint("config"),
+		handlerConfig,
+	},
 }
 
 func newRouter() *mux.Router {

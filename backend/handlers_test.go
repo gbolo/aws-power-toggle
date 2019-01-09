@@ -31,6 +31,7 @@ func TestHttpHandlers(t *testing.T) {
 	for _, testReq := range []req{
 		{"GET", "/", http.StatusNotFound},
 		{"GET", getEndpoint("version"), http.StatusOK},
+		{"GET", getEndpoint("config"), http.StatusOK},
 		{"POST", getEndpoint("refresh"), http.StatusOK},
 		{"GET", getEndpoint("env/summary"), http.StatusOK},
 		{"GET", getEndpoint("env/details"), http.StatusOK},
