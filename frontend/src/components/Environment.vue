@@ -136,7 +136,25 @@ export default {
       this.$store.dispatch('startEnvironment', id);
     },
     stop(id) {
-      this.$store.dispatch('stopEnvironment', id);
+      this.$modal.show('dialog', {
+        title: 'Are you sure?',
+        text: `This action will stop all running instances of environment ${
+          this.env.name
+        }.`,
+        buttons: [
+          {
+            title: 'Cancel',
+            default: true,
+          },
+          {
+            title: 'Stop',
+            handler: () => {
+              this.$store.dispatch('stopEnvironment', id);
+              this.$modal.hide('dialog');
+            },
+          },
+        ],
+      });
     },
     refresh(id) {
       this.$store.dispatch('fetchEnvironmentDetails', id);
