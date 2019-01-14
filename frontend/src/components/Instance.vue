@@ -2,46 +2,50 @@
   <div class="instance">
     <div class="container">
       <span>{{instance.name}}</span>
-      <ToggleSwitch
-        v-if="!isMixedState"
-        v-bind:isChecked="isOn"
-        @click.native="toggleInstance(instance.id, envId)"
+      <ToggleButton
+        v-if="!isUnknownState"
+        :disabled="isLoading"
+        :value="isOn"
+        :sync="true"
+        :color="'#09af00'"
+        :width="40"
+        :height="20"
+        @change="toggleInstance"
       />
     </div>
     <div class="container">
       <span class="instance__type">{{instance.instance_type}}</span>
       <span>
-        <clr-icon
-          shape="cpu"
-          size="24"
-        ></clr-icon> {{instance.vcpu}}
-        <clr-icon
-          shape="memory"
-          size="24"
-        ></clr-icon> {{instance.memory_gb}}
+        <clr-icon shape="cpu" size="24"></clr-icon>
+        {{instance.vcpu}}
+        <clr-icon shape="memory" size="24"></clr-icon>
+        {{instance.memory_gb}}
       </span>
     </div>
   </div>
 </template>
 
 <script>
-import ToggleSwitch from '@/components/ToggleSwitch.vue';
+import ToggleButton from 'vue-js-toggle-button/src/Button.vue';
 
 export default {
   name: 'Instance',
   components: {
-    ToggleSwitch,
+    ToggleButton,
   },
   props: {
     envId: String,
     instance: Object,
   },
   computed: {
-    isMixedState() {
+    isUnknownState() {
       return (
-        this.instance.state.toLowerCase() !== 'running'
-        && this.instance.state.toLowerCase() !== 'stopped'
+        this.instance.state.toLowerCase() !== 'running' &&
+        this.instance.state.toLowerCase() !== 'stopped'
       );
+    },
+    isLoading() {
+      return this.$store.getters.isInstanceLoading(this.instance.id);
     },
   },
   data() {
@@ -50,13 +54,20 @@ export default {
     };
   },
   methods: {
-    toggleInstance(id, envId) {
-      if (this.isOn) {
+    toggleInstance({ value, srcEvent }) {
+      const { id } = this.instance;
+      const envId = this.envId;
+      this.isOn = value;
+      if (!value) {
         this.$store.dispatch('stopInstance', { id, envId });
       } else {
         this.$store.dispatch('startInstance', { id, envId });
       }
-      this.isOn = !this.isOn;
+    },
+  },
+  watch: {
+    instance(newInstance, oldInstance) {
+      this.isOn = this.instance.state.toLowerCase() === 'running';
     },
   },
 };

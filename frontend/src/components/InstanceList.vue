@@ -1,17 +1,8 @@
 <template>
   <transition name="expand">
-    <ul
-      v-if="show"
-      class="instance-list"
-    >
-      <li
-        v-for="(instance, index) in instances"
-        :key="index"
-      >
-        <Instance
-          v-bind:instance="instance"
-          v-bind:envId="envId"
-        />
+    <ul v-if="show" class="instance-list">
+      <li v-for="(instance, index) in instances" :key="index">
+        <Instance v-bind:instance="instance" v-bind:envId="envId"/>
       </li>
     </ul>
   </transition>
