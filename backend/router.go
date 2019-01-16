@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
 )
@@ -83,8 +84,12 @@ func newRouter() *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	for _, route := range routes {
 
+		// add compression support to handler if enabled
 		var handler http.Handler
 		handler = route.HandlerFunc
+		if viper.GetBool("server.compression") {
+			handler = handlers.CompressHandler(route.HandlerFunc)
+		}
 
 		// add routes to mux
 		router.
@@ -100,10 +105,16 @@ func newRouter() *mux.Router {
 		staticPath = "./frondent/dist"
 	}
 
+	handlerStatic := http.StripPrefix("/", http.FileServer(http.Dir(staticPath)))
+	// add compression support to handler if enabled
+	if viper.GetBool("server.compression") {
+		handlerStatic = handlers.CompressHandler(handlerStatic)
+	}
+
 	router.
 		Methods("GET").
 		PathPrefix("/").
-		Handler(http.StripPrefix("/", http.FileServer(http.Dir(staticPath))))
+		Handler(handlerStatic)
 
 	return router
 }
