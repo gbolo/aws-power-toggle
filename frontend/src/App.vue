@@ -128,7 +128,7 @@ export default {
       left: 0 !important;
       border-radius: 10px;
 
-      @media screen and (max-width: 500px) {
+      @media screen and (max-width: 550px) {
         width: 100% !important;
         border-radius: 0px;
       }
