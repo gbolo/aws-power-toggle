@@ -121,9 +121,18 @@ export default {
   }
 
   // Override vue-js-modal (<vdialog/>) css
-  .vue-dialog {
-    width: 400px !important;
-    left: calc(50% - 200px) !important;
+  .v--modal-overlay {
+    background: rgba(0, 0, 0, 0.65) !important;
+    .vue-dialog {
+      margin: auto;
+      left: 0 !important;
+      border-radius: 10px;
+
+      @media screen and (max-width: 500px) {
+        width: 100% !important;
+        border-radius: 0px;
+      }
+    }
   }
 }
 </style>
