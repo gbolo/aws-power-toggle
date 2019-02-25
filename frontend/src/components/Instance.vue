@@ -40,8 +40,8 @@ export default {
   computed: {
     isUnknownState() {
       return (
-        this.instance.state.toLowerCase() !== 'running' &&
-        this.instance.state.toLowerCase() !== 'stopped'
+        this.instance.state.toLowerCase() !== 'running'
+        && this.instance.state.toLowerCase() !== 'stopped'
       );
     },
     isLoading() {
@@ -54,9 +54,9 @@ export default {
     };
   },
   methods: {
-    toggleInstance({ value, srcEvent }) {
+    toggleInstance({ value }) {
       const { id } = this.instance;
-      const envId = this.envId;
+      const { envId } = this;
       this.isOn = value;
       if (!value) {
         this.$store.dispatch('stopInstance', { id, envId });
@@ -66,7 +66,7 @@ export default {
     },
   },
   watch: {
-    instance(newInstance, oldInstance) {
+    instance() {
       this.isOn = this.instance.state.toLowerCase() === 'running';
     },
   },

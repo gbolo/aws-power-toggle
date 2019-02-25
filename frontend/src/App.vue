@@ -1,19 +1,13 @@
 <template>
   <div id="app">
-    <Header v-bind:version="version" />
-    <button
-      class="refresh-btn"
-      @click="refresh"
-    >
-      <clr-icon
-        v-bind:class="[shouldSpinIcon ? 'spin-icon' : '']"
-        shape="sync"
-        size="16"
-      ></clr-icon>
+    <Header v-bind:version="version"/>
+    <button class="refresh-btn" @click="refresh">
+      <clr-icon v-bind:class="[shouldSpinIcon ? 'spin-icon' : '']" shape="sync" size="16"></clr-icon>
     </button>
 
-    <EnvironmentList v-bind:environments="environments" />
-    <Snackbar v-bind:message="error" />
+    <EnvironmentList v-bind:environments="environments"/>
+    <Snackbar v-bind:message="error"/>
+    <v-dialog/>
   </div>
 </template>
 
@@ -124,6 +118,21 @@ export default {
 
   .spin-icon {
     animation: spin infinite 0.75s linear;
+  }
+
+  // Override vue-js-modal (<vdialog/>) css
+  .v--modal-overlay {
+    background: rgba(0, 0, 0, 0.65) !important;
+    .vue-dialog {
+      margin: auto;
+      left: 0 !important;
+      border-radius: 10px;
+
+      @media screen and (max-width: 550px) {
+        width: 100% !important;
+        border-radius: 0px;
+      }
+    }
   }
 }
 </style>
