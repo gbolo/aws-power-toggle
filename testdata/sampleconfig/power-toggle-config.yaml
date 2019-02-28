@@ -13,6 +13,10 @@ server:
   # enable access log on stdout
   access_log: false
 
+  # enable supported compression of http responses when client requests for it
+  # currently only gzip is supported
+  compression: true
+
   # TLS options
   tls:
     # enables TLS

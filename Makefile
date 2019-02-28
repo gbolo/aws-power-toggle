@@ -3,7 +3,7 @@
 PACKAGE     = aws-power-toggle
 METAPKG     = github.com/gbolo/aws-power-toggle/backend
 DATE       ?= $(shell date +%FT%T%z)
-VERSION     = 3.1
+VERSION     = 3.2
 COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
 LDFLAGS     = -X $(METAPKG).Version=$(VERSION) -X $(METAPKG).BuildDate=$(DATE) -X $(METAPKG).CommitSHA=$(COMMIT_SHA)
 PKGS        = $(or $(PKG),$(shell $(GO) list ./...))

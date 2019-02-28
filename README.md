@@ -33,7 +33,7 @@ docker run -d --name "aws-power-toggle" \
  -p 8080:8080 \
  -e "AWS_ACCESS_KEY_ID=<your_key_id>" \
  -e "AWS_SECRET_ACCESS_KEY=<your_secret_key>" \
- gbolo/aws-power-toggle:3.1
+ gbolo/aws-power-toggle:3.2
 ```
 
 Then open your browser to: [http://127.0.0.1:8080](http://127.0.0.1:8080)
@@ -117,10 +117,6 @@ For further details on an API endpoint (including example responses), click on t
 * [Refresh](docs/api/refresh.md): `POST /api/v1/refresh` forces backend to refresh it's cache
 
 * [Version](docs/api/version.md): `GET /api/v1/version` returns backend version information
-
-
-#### TODO:
-Need to finish these...
 
 * [Config](docs/api/config.md): `GET /api/v1/config` returns relevant backend configuration
 

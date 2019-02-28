@@ -1,28 +1,21 @@
 <template>
   <div class="env">
-
     <div class="env__header">
       <span class="env__name">{{ env.name }}</span>
-      <StatusBadge v-bind:text="env.state" />
+      <StatusBadge v-bind:text="env.state"/>
     </div>
 
     <table class="env__details-table">
       <tr>
         <td>
           <div class="env__details">
-            <clr-icon
-              shape="cloud"
-              size="24"
-            ></clr-icon>
+            <clr-icon shape="cloud" size="24"></clr-icon>
             <span>{{env.region}}</span>
           </div>
         </td>
         <td>
           <div class="env__details">
-            <clr-icon
-              shape="cluster"
-              size="24"
-            ></clr-icon>
+            <clr-icon shape="cluster" size="24"></clr-icon>
             <span>{{env.running_instances}}/{{env.total_instances}}</span>
           </div>
         </td>
@@ -30,19 +23,13 @@
       <tr>
         <td>
           <div class="env__details">
-            <clr-icon
-              shape="cpu"
-              size="24"
-            ></clr-icon>
+            <clr-icon shape="cpu" size="24"></clr-icon>
             <span>{{env.total_vcpu}} cores</span>
           </div>
         </td>
         <td>
           <div class="env__details">
-            <clr-icon
-              shape="memory"
-              size="24"
-            ></clr-icon>
+            <clr-icon shape="memory" size="24"></clr-icon>
             <span>{{env.total_memory_gb}} GB</span>
           </div>
         </td>
@@ -82,30 +69,32 @@
       v-bind:instances="env.instances"
       v-bind:envId="env.id"
     />
-    <div class="btn-container" v-if="!isChanging">
-      <button
-        v-if="!isRunning"
-        v-bind:class="['button', 'start', isMixed ? 'mixed' : '']"
-        @click="start(env.id)"
-      >
-        Start
-      </button>
-      <button
-        v-if="!isStopped"
-        v-bind:class="['button', 'stop', isMixed ? 'mixed' : '']"
-        @click="stop(env.id)"
-      >
-        Stop
-      </button>
+
+    <div v-if="isLoading" class="btn-container">
+      <clr-icon shape="hourglass" size="24"></clr-icon>
     </div>
-    <div v-else class="btn-container">
-      <clr-icon
-        v-bind:class="['refresh-icon', shouldSpinIcon ? 'spin-icon' : '']"
-        @click="refresh(env.id)"
-        shape="sync"
-        size="24"
-      ></clr-icon>
-    </div>
+    <template v-else>
+      <div v-if="isChanging" class="btn-container">
+        <clr-icon
+          v-bind:class="['refresh-icon', shouldSpinIcon ? 'spin-icon' : '']"
+          @click="refresh(env.id)"
+          shape="sync"
+          size="24"
+        ></clr-icon>
+      </div>
+      <div v-else class="btn-container">
+        <button
+          v-if="!isRunning"
+          v-bind:class="['button', 'start', isMixed ? 'mixed' : '']"
+          @click="start(env.id)"
+        >Start</button>
+        <button
+          v-if="!isStopped"
+          v-bind:class="['button', 'stop', isMixed ? 'mixed' : '']"
+          @click="stop(env.id)"
+        >Stop</button>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -131,16 +120,16 @@ export default {
   },
   computed: {
     isRunning() {
-      return this.env.running_instances === this.env.total_instances;
+      return this.$store.getters.isEnvironmentStateRunning(this.env.id);
     },
     isStopped() {
-      return this.env.stopped_instances === this.env.total_instances;
+      return this.$store.getters.isEnvironmentStateStopped(this.env.id);
     },
     isMixed() {
-      return !this.isRunning && !this.isStopped;
+      return this.$store.getters.isEnvironmentStateMixed(this.env.id);
     },
     isChanging() {
-      return this.env.state && this.env.state.toLowerCase() === 'changing';
+      return this.$store.getters.isEnvironmentStateChanging(this.env.id);
     },
     isLoading() {
       return this.$store.getters.isEnvironmentLoading(this.env.id);
@@ -167,7 +156,25 @@ export default {
       this.$store.dispatch('startEnvironment', id);
     },
     stop(id) {
-      this.$store.dispatch('stopEnvironment', id);
+      this.$modal.show('dialog', {
+        title: 'Are you sure?',
+        text: `This action will stop all running instances of environment ${
+          this.env.name
+        }.`,
+        buttons: [
+          {
+            title: 'Cancel',
+            default: true,
+          },
+          {
+            title: 'Stop',
+            handler: () => {
+              this.$store.dispatch('stopEnvironment', id);
+              this.$modal.hide('dialog');
+            },
+          },
+        ],
+      });
     },
     refresh(id) {
       this.$store.dispatch('fetchEnvironmentDetails', id);
