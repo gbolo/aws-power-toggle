@@ -25,6 +25,8 @@ response of request: `/api/v1/env/931decfe6fd5/summary`
   "stopped_instances": 10,
   "total_instances": 10,
   "total_memory_gb": 94,
-  "total_vcpu": 30
+  "total_vcpu": 30,
+  "billsAccrued":"1.00",
+  "billsSaved":"1.00"
 }
 ```

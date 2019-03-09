@@ -132,3 +132,15 @@ POWER_TOGGLE_MOCK_ENABLED=true ./bin/aws-power-toggle -config testdata/samplecon
 
 if you would like to add/remove/change any of the fake inventory, then modify this file:
 `backend/mockdata.go`
+
+### Enabling Experimental Features
+Certain features in the project are experimental and subject to further enhancements.
+Current experimental features include:
+
+* Display billing stats per env (money used/saved)
+
+To enable experimental features:
+```
+# set env variable POWER_TOGGLE_EXPERIMENTAL_ENABLED to true (or change experimental.enabled in config file):
+export POWER_TOGGLE_EXPERIMENTAL_ENABLED = true
+```

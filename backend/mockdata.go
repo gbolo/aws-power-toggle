@@ -2,6 +2,7 @@ package backend
 
 import (
 	"encoding/json"
+	"strconv"
 )
 
 // mock of refreshTable
@@ -18,6 +19,31 @@ func mockRefreshTable() (err error) {
 		err = json.Unmarshal([]byte(mockEnvDetailsJSON), &cachedTable)
 		if err != nil {
 			log.Fatalf("mock API is enabled, but can't unmarshal json file: %s", err)
+		}
+	}
+
+	if experimentalEnabled {
+		calculateEnvBills()
+		cachedTableTemp := cachedTable
+		cachedTable = cachedTable[:0]
+		for _, env := range cachedTableTemp {
+			for _, instanceObj := range env.Instances {
+				// determine instance cpu and memory
+				if details, found := getInstanceTypeDetails(instanceObj.InstanceType); found {
+					instanceObj.MemoryGB = details.MemoryGB
+					instanceObj.VCPU = details.VCPU
+					if pricingstr, ok := details.PricingHourlyByRegion[instanceObj.Region]; ok {
+						pricing, err := strconv.ParseFloat(pricingstr, 64)
+						if err != nil {
+							log.Errorf("failed to parse pricing info to float: %s", pricingstr)
+						}
+						instanceObj.PricingHourly = pricing
+					}
+				}
+				if validateEnvName(instanceObj.Environment) {
+					addInstance(&instanceObj)
+				}
+			}
 		}
 	}
 

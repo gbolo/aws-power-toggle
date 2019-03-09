@@ -2,8 +2,8 @@ export const setVersion = (state, v) => {
   state.version = v;
 };
 
-export const setEnvironments = (state, envs) => {
-  state.environments = envs;
+export const setEnvironments = (state, data) => {
+  state.environments = data.envList;
 };
 
 export const setEnvironment = (state, { id, data }) => {

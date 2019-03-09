@@ -31,8 +31,20 @@ func handlerEnvAll(w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 	group := vars["group"]
 
+	envAllResponse := struct {
+		EnvList           envList `json:"envList" groups:"summary,details"`
+		TotalBillsAccrued string  `json:"totalBillsAccrued,omitempty" groups:"summary,details"`
+		TotalBillsSaved   string  `json:"totalBillsSaved,omitempty" groups:"summary,details"`
+	}{
+		EnvList: cachedTable,
+	}
+	if experimentalEnabled {
+		envAllResponse.TotalBillsAccrued = fmt.Sprintf("%.02f", totalBillsAccrued)
+		envAllResponse.TotalBillsSaved = fmt.Sprintf("%.02f", totalBillsSaved)
+	}
+
 	// prepare result and return it
-	if response, err := getMarshalledRespone(cachedTable, group); err != nil {
+	if response, err := getMarshaledResponse(envAllResponse, group); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, "{\"error\":\"%v\"}\n", err)
 	} else {
@@ -64,7 +76,7 @@ func handlerEnvSingle(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(w, "{\"error\":\"environment not found\"}\n")
 		return
 	}
-	response, err := getMarshalledRespone(envData, group)
+	response, err := getMarshaledResponse(envData, group)
 
 	// return filtered result
 	if err != nil {
@@ -78,6 +90,11 @@ func handlerEnvSingle(w http.ResponseWriter, req *http.Request) {
 // handler for power toggling an environment
 func handlerEnvPowerToggle(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+
+	// re-calculate env bills before toggling
+	if experimentalEnabled {
+		calculateEnvBills()
+	}
 
 	// get vars from request to determine environment
 	vars := mux.Vars(req)

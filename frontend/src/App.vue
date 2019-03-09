@@ -1,13 +1,15 @@
 <template>
   <div id="app">
-    <Header v-bind:version="version"/>
-    <button class="refresh-btn" @click="refresh">
-      <clr-icon v-bind:class="[shouldSpinIcon ? 'spin-icon' : '']" shape="sync" size="16"></clr-icon>
-    </button>
-
-    <EnvironmentList v-bind:environments="environments"/>
-    <Snackbar v-bind:message="error"/>
-    <v-dialog/>
+    <div class="appbody">
+      <Header v-bind:version="version"/>
+      <button class="refresh-btn" @click="refresh">
+        <clr-icon v-bind:class="[shouldSpinIcon ? 'spin-icon' : '']" shape="sync" size="16"></clr-icon>
+      </button>
+      <EnvironmentList v-bind:environments="environments"/>
+      <Snackbar v-bind:message="error"/>
+      <v-dialog/>
+    </div>
+    <div class="footer"></div>
   </div>
 </template>
 
@@ -107,6 +109,15 @@ export default {
     }
   }
 
+  .appbody {
+    min-height: calc(100vh - 60px);
+  }
+
+  .footer {
+    padding:20px 0px 0px 0px;
+    height:60px;
+  }
+
   @keyframes spin {
     from {
       transform: rotate(0deg);
@@ -133,6 +144,19 @@ export default {
         border-radius: 0px;
       }
     }
+  }
+}
+.tooltip {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: block;
+  z-index: 10000;
+  .tooltip-inner {
+    background: black;
+    color: white;
+    border-radius: 6px;
+    padding: 5px 10px 4px;
   }
 }
 </style>

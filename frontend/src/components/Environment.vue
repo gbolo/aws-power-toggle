@@ -34,6 +34,26 @@
           </div>
         </td>
       </tr>
+      <tr v-if="env.bills_accrued && env.bills_saved">
+        <td>
+          <div class="env__details">
+            <clr-icon
+              shape="lightbulb"
+              size="24"
+            ></clr-icon>
+            <span v-tooltip.bottom="'in USD'">${{env.bills_accrued}}&nbsp;used</span>
+          </div>
+        </td>
+        <td>
+          <div class="env__details">
+            <clr-icon
+              shape="bolt"
+              size="24"
+            ></clr-icon>
+            <span v-tooltip.bottom="'in USD'">${{env.bills_saved}}&nbsp;saved</span>
+          </div>
+        </td>
+      </tr>
     </table>
 
     <clr-icon
@@ -278,7 +298,7 @@ export default {
     tr:first-child td {
       border-top: 0;
     }
-    tr td:first-child {
+    tr td:first-child {;
       border-left: 0;
     }
     tr td:last-child {

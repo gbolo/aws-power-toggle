@@ -35,6 +35,10 @@ func mockShutdownEnv(envID string) (response []byte, err error) {
 				break
 			}
 		}
+		// MOCK BILLING: update toggled off instances map
+		if experimentalEnabled {
+			putToggledOffInstanceIDs(instanceIds)
+		}
 		response = []byte(`{"mock": "OK"}`)
 		log.Infof("MOCK: successfully stopped env %s", envID)
 	} else {
@@ -63,6 +67,10 @@ func mockStartupEnv(envID string) (response []byte, err error) {
 				}
 				break
 			}
+		}
+		// MOCK BILLING: update toggled off instances map
+		if experimentalEnabled {
+			deleteToggledOffInstanceIDs(instanceIds)
 		}
 		response = []byte(`{"mock": "OK"}`)
 		log.Infof("MOCK: successfully started env %s", envID)
@@ -97,8 +105,16 @@ func mockToggleInstance(id, desiredState string) (response []byte, err error) {
 					switch desiredState {
 					case "start":
 						cachedTable[e].Instances[i].State = "running"
+						// MOCK BILLING: update toggled off instances map
+						if experimentalEnabled {
+							deleteToggledOffInstanceIDs([]string{instance.InstanceID})
+						}
 					case "stop":
 						cachedTable[e].Instances[i].State = "stopped"
+						// MOCK BILLING: update toggled off instances map
+						if experimentalEnabled {
+							putToggledOffInstanceIDs([]string{instance.InstanceID})
+						}
 					}
 					break
 				}

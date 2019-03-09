@@ -24,7 +24,8 @@ Given the following instance:
   "state": "stopped",
   "environment": "kube",
   "vcpu": 4,
-  "memory_gb": 16
+  "memory_gb": 16,
+  "pricing": 0.1856
 }
 ```
 
