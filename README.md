@@ -137,10 +137,10 @@ if you would like to add/remove/change any of the fake inventory, then modify th
 Certain features in the project are experimental and subject to further enhancements.
 Current experimental features include:
 
-* Display billing stats per env (money used/saved)
+* Display billing stats: This feature displays the estimated total cost of all instances in each env. **Counter will reset upon application restarts**
 
 To enable experimental features:
 ```
 # set env variable POWER_TOGGLE_EXPERIMENTAL_ENABLED to true (or change experimental.enabled in config file):
-export POWER_TOGGLE_EXPERIMENTAL_ENABLED = true
+export POWER_TOGGLE_EXPERIMENTAL_ENABLED=true
 ```

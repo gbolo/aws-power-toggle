@@ -104,4 +104,4 @@ log_level: DEBUG
 
 # experimental features, currently include billing stats
 experimental:
-  enabled: true
+  enabled: false
