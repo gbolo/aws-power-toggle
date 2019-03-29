@@ -179,3 +179,36 @@ func writeJSONResponse(w http.ResponseWriter, err error, response []byte) {
 		}
 	}
 }
+
+// handler for form data with aws credentials
+func handlerCredentials(w http.ResponseWriter, req *http.Request) {
+	// set credentials if they exist in the form
+	if req.FormValue("aws_access_key_id") != "" && req.FormValue("aws_secret_access_key") != "" {
+		log.Info("setting aws credentials from post data")
+		awsAccessKeyId = req.FormValue("aws_access_key_id")
+		awsAccessKeySecret = req.FormValue("aws_secret_access_key")
+		fmt.Fprint(w, "Successfully added credentials!")
+		return
+	}
+
+	// bad request
+	w.WriteHeader(http.StatusBadRequest)
+	fmt.Fprint(w, "Bad Request!")
+}
+
+// handler returns a simple html form for user to enter aws credentials
+func handlerCredentialsForm(w http.ResponseWriter, req *http.Request) {
+	fmt.Fprint(w, fmt.Sprintf(credentialsFormHtmlTemplate, getEndpoint("credentials")))
+}
+
+var credentialsFormHtmlTemplate = `
+	<h1>Enter AWS Credentials</h1>
+	<form method="POST" action="%s">
+		<label>AWS_ACCESS_KEY_ID:</label>
+		<input type="text" name="aws_access_key_id"><br />
+		<label>AWS_SECRET_ACCESS_KEY:</label>
+		<input type="text" name="aws_secret_access_key"><br />
+		<br />
+		<input type="submit">
+	</form>
+`

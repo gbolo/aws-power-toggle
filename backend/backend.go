@@ -1,7 +1,6 @@
 package backend
 
 import (
-	"github.com/aws/aws-sdk-go-v2/aws/external"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 )
 
@@ -22,7 +21,7 @@ func StartBackendDeamon(cfgFile string) {
 	go startHTTPServer()
 
 	// init the aws clients
-	cfg, err := external.LoadDefaultAWSConfig()
+	cfg, err := loadAWSConfig()
 	if err != nil {
 		log.Fatalf("failed to load config, %v", err)
 	}

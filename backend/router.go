@@ -77,6 +77,18 @@ var routes = Routes{
 		getEndpoint("config"),
 		handlerConfig,
 	},
+	Route{
+		"Credentials",
+		"POST",
+		getEndpoint("credentials"),
+		handlerCredentials,
+	},
+	Route{
+		"CredentialsForm",
+		"GET",
+		"/credentials",
+		handlerCredentialsForm,
+	},
 }
 
 func newRouter() *mux.Router {
