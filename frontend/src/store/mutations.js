@@ -7,7 +7,7 @@ export const setEnvironments = (state, data) => {
 };
 
 export const setEnvironment = (state, { id, data }) => {
-  state.environments = state.environments.map(env => (env.id === id ? data : env));
+  state.environments = state.environments.map((env) => (env.id === id ? data : env));
 };
 
 export const setEnvironmentLoading = (state, { id, flag }) => {
@@ -31,7 +31,7 @@ export const setInstanceStateStatus = (state, { id, status, envId }) => {
     }
 
     const newInstances = env.instances.map(
-      instance => (instance.id !== id
+      (instance) => (instance.id !== id
         ? instance
         : {
           ...instance,
@@ -39,7 +39,7 @@ export const setInstanceStateStatus = (state, { id, status, envId }) => {
         }),
     );
 
-    const numInstancesRunning = newInstances.filter(x => x.state === 'running').length;
+    const numInstancesRunning = newInstances.filter((x) => x.state === 'running').length;
     const newState = numInstancesRunning === env.total_instances
       ? 'running'
       : numInstancesRunning === 0

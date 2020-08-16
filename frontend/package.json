@@ -5,13 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@clr/icons": "^0.13.10",
     "@webcomponents/custom-elements": "^1.0.0",
     "axios": "^0.18.1",
+    "core-js": "^3.6.5",
     "i": "^0.3.6",
     "register-service-worker": "^1.0.0",
     "v-tooltip": "^2.0.0-rc.33",
@@ -21,18 +22,19 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.1.1",
-    "@vue/cli-plugin-eslint": "^3.1.5",
-    "@vue/cli-plugin-pwa": "^3.1.2",
-    "@vue/cli-plugin-unit-jest": "^3.1.1",
-    "@vue/cli-service": "^3.1.4",
-    "@vue/eslint-config-airbnb": "^4.0.0",
+    "@vue/cli-plugin-babel": "^4.5.3",
+    "@vue/cli-plugin-eslint": "^4.5.3",
+    "@vue/cli-plugin-pwa": "^4.5.3",
+    "@vue/cli-plugin-unit-jest": "^4.5.3",
+    "@vue/cli-service": "^4.5.3",
+    "@vue/eslint-config-airbnb": "^5.0.2",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.1.0",
     "babel-jest": "^23.6.0",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0-0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^4.14.1",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17"
