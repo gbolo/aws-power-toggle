@@ -11,7 +11,7 @@
   "dependencies": {
     "@clr/icons": "^0.13.10",
     "@webcomponents/custom-elements": "^1.0.0",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "i": "^0.3.6",
     "register-service-worker": "^1.0.0",
     "v-tooltip": "^2.0.0-rc.33",
@@ -33,7 +33,7 @@
     "babel-jest": "^23.6.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.14.1",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17"
   }
