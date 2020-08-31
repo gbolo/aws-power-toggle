@@ -36,7 +36,7 @@ $(BIN)/golint: REPOSITORY=golang.org/x/lint/golint
 # Targets for our app --------------------------------------------------------------------------------------------------
 
 .PHONY: all
-all: $(BIN) frontend backend;                                 @ ## Build both backend and frontend
+all: $(BIN) backend frontend;                                 @ ## Build both backend and frontend
 
 .PHONY: backend
 backend: ; $(info $(M) building backend executable...)        @ ## Build backend binary

@@ -12,35 +12,35 @@ const errMsg = (e) => {
 
 export const fetchVersion = ({ commit }) => {
   MetadataApi.getVersion()
-    .then(data => commit('setVersion', data.version))
-    .catch(e => commit('setError', errMsg(e)));
+    .then((data) => commit('setVersion', data.version))
+    .catch((e) => commit('setError', errMsg(e)));
 };
 
 export const fetchAllEnvironmentsSummary = ({ commit }) => {
   EnvironmentsApi.fetchAllEnvironmentsSummary()
-    .then(data => commit('setEnvironments', data))
-    .catch(e => commit('setError', errMsg(e)));
+    .then((data) => commit('setEnvironments', data))
+    .catch((e) => commit('setError', errMsg(e)));
 };
 
 export const fetchAllEnvironmentsDetails = ({ commit }) => {
   commit('setIsLoading', true);
   EnvironmentsApi.fetchAllEnvironmentsDetails()
-    .then(data => commit('setEnvironments', data))
-    .catch(e => commit('setError', errMsg(e)))
+    .then((data) => commit('setEnvironments', data))
+    .catch((e) => commit('setError', errMsg(e)))
     .finally(() => commit('setIsLoading', false));
 };
 
 export const refresh = ({ commit }) => {
   EnvironmentsApi.fetchAllEnvironmentsDetails()
-    .then(data => commit('setEnvironments', data))
-    .catch(e => commit('setError', e.response.data.error));
+    .then((data) => commit('setEnvironments', data))
+    .catch((e) => commit('setError', e.response.data.error));
 };
 
 export const fetchEnvironmentDetails = ({ commit }, id) => {
   commit('setEnvironmentLoading', { id, flag: true });
   EnvironmentsApi.fetchEnvironmentDetails(id)
-    .then(data => commit('setEnvironment', { id, data }))
-    .catch(e => commit('setError', errMsg(e)))
+    .then((data) => commit('setEnvironment', { id, data }))
+    .catch((e) => commit('setError', errMsg(e)))
     .finally(() => commit('setEnvironmentLoading', { id, flag: false }));
 };
 
