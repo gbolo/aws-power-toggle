@@ -1,6 +1,7 @@
 package backend
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"strconv"
@@ -28,7 +29,7 @@ const (
 
 var (
 	// global aws clients (based on regions)
-	awsClients map[string]*ec2.EC2
+	awsClients map[string]*ec2.Client
 	// global cached env list
 	cachedTable envList
 	// lock to prevent concurrent refreshes
@@ -294,7 +295,7 @@ func refreshTable() (err error) {
 
 	for region, awsSvcClient := range awsClients {
 		req := awsSvcClient.DescribeInstancesRequest(params)
-		resp, respErr := req.Send()
+		resp, respErr := req.Send(context.Background())
 		if respErr != nil {
 			log.Errorf("failed to describe instances, %s, %v", region, respErr)
 			err = respErr
@@ -365,7 +366,7 @@ func getInstanceIDs(envID, state string) (instanceIds []string) {
 }
 
 // toggleInstances can start or stop a list of instances
-func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.EC2) (response []byte, err error) {
+func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.Client) (response []byte, err error) {
 	if len(instanceIDs) < 1 {
 		err = fmt.Errorf("no instanceIDs have been provided")
 		return
@@ -380,7 +381,7 @@ func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.E
 		}
 
 		req := awsClient.StartInstancesRequest(input)
-		awsResponse, reqErr := req.Send()
+		awsResponse, reqErr := req.Send(context.Background())
 		response, _ = json.MarshalIndent(awsResponse, "", "  ")
 		err = reqErr
 		if experimentalEnabled && err == nil {
@@ -396,7 +397,7 @@ func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.E
 		}
 
 		req := awsClient.StopInstancesRequest(input)
-		awsResponse, reqErr := req.Send()
+		awsResponse, reqErr := req.Send(context.Background())
 		response, _ = json.MarshalIndent(awsResponse, "", "  ")
 		err = reqErr
 		if experimentalEnabled && err == nil {
@@ -550,7 +551,7 @@ func getEnvironmentByID(envID string) (environment, bool) {
 }
 
 // returns awsClient for the specific environment ID
-func getEnvironmentAwsClient(envID string) *ec2.EC2 {
+func getEnvironmentAwsClient(envID string) *ec2.Client {
 	for _, env := range cachedTable {
 		if env.ID == envID {
 			return awsClients[env.Region]
@@ -560,7 +561,7 @@ func getEnvironmentAwsClient(envID string) *ec2.EC2 {
 }
 
 // returns awsClient for the specific environment ID
-func getInstanceAwsClient(instanceID string) *ec2.EC2 {
+func getInstanceAwsClient(instanceID string) *ec2.Client {
 	for _, env := range cachedTable {
 		for _, instance := range env.Instances {
 			if instance.ID == instanceID {

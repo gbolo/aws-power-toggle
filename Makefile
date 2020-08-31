@@ -3,7 +3,7 @@
 PACKAGE     = aws-power-toggle
 METAPKG     = github.com/gbolo/aws-power-toggle/backend
 DATE       ?= $(shell date +%FT%T%z)
-VERSION     = 3.2
+VERSION     = 3.3
 COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
 LDFLAGS     = -X $(METAPKG).Version=$(VERSION) -X $(METAPKG).BuildDate=$(DATE) -X $(METAPKG).CommitSHA=$(COMMIT_SHA)
 PKGS        = $(or $(PKG),$(shell $(GO) list ./...))
@@ -23,12 +23,9 @@ $(BIN):
 
 $(BIN)/%: | $(BIN) ; $(info $(M) building $(REPOSITORY)...)
 	$Q tmp=$$(mktemp -d); \
-	   env GO111MODULE=off GOCACHE=off GOPATH=$$tmp GOBIN=$(BIN) $(GO) get $(REPOSITORY) \
+	   env GOPATH=$$tmp GOBIN=$(BIN) $(GO) get $(REPOSITORY) \
 		|| ret=$$?; \
 	   rm -rf $$tmp ; exit $$ret
-
-DEP = $(BIN)/dep
-$(BIN)/dep: REPOSITORY=github.com/golang/dep/cmd/dep
 
 GOIMPORTS = $(BIN)/goimports
 $(BIN)/goimports: REPOSITORY=golang.org/x/tools/cmd/goimports
@@ -39,7 +36,7 @@ $(BIN)/golint: REPOSITORY=golang.org/x/lint/golint
 # Targets for our app --------------------------------------------------------------------------------------------------
 
 .PHONY: all
-all: $(BIN) fmt dep frontend backend;                         @ ## Build both backend and frontend
+all: $(BIN) backend frontend;                                 @ ## Build both backend and frontend
 
 .PHONY: backend
 backend: ; $(info $(M) building backend executable...)        @ ## Build backend binary
@@ -53,10 +50,6 @@ docker: clean ; $(info $(M) building docker image...)	      @ ## Build docker im
 frontend: ; $(info $(M) building web frontend ui...)	      @ ## Build frontend
 	$Q npm install --prefix $(FRONTEND) \
 	   && npm run build --prefix $(FRONTEND)
-
-.PHONY: dep
-dep: | $(DEP) ; $(info $(M) running dep...)                   @ ## Run dep ensure to fetch dependencies
-	$Q $(DEP) ensure -v
 
 .PHONY: fmt
 fmt: ; $(info $(M) running gofmt...)                          @ ## Run gofmt on all source files

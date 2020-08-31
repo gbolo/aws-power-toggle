@@ -4,17 +4,18 @@
 #  BUILD CONTAINER -------------------------------------------------------------
 #
 
-FROM gbolo/builder:alpine as builder
+FROM golang:1.14-alpine as builder
 
-COPY . ${GOPATH}/src/github.com/gbolo/aws-power-toggle
+WORKDIR /go/src/app
+COPY . .
 
 # Building
 RUN   set -xe; \
-      SRC_DIR=${GOPATH}/src/github.com/gbolo/aws-power-toggle; \
-      cd ${SRC_DIR}; \
-      mkdir -p /tmp/build && npm -v; \
+      mkdir -p /tmp/build && \
+      apk add --no-cache git nodejs nodejs-npm make && \
+      npm -v && node --version && \
       make all && \
-      cp -rp frontend/dist /tmp/build/frontend; \
+      cp -rp frontend/dist /tmp/build/frontend && \
       cp -rp testdata/sampleconfig/power-toggle-config.yaml bin/aws-power-toggle /tmp/build/
 
 

@@ -36,19 +36,71 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 4,
     "memory": 8,
     "pricing": {
+      "af-south-1": "0.26",
+      "ap-east-1": "0.246",
       "ap-northeast-1": "0.244",
       "ap-northeast-2": "0.22",
+      "ap-northeast-3": "0.244",
+      "ap-south-1": "0.198",
       "ap-southeast-1": "0.224",
       "ap-southeast-2": "0.252",
       "ca-central-1": "0.212",
       "eu-central-1": "0.222",
+      "eu-north-1": "0.208",
+      "eu-south-1": "0.228",
       "eu-west-1": "0.218",
       "eu-west-2": "0.23",
+      "eu-west-3": "0.23",
+      "me-south-1": "0.24",
+      "sa-east-1": "0.298",
       "us-east-1": "0.192",
       "us-east-2": "0.192",
+      "us-gov-east-1": "0.232",
       "us-gov-west-1": "0.232",
       "us-west-1": "0.24",
       "us-west-2": "0.192"
+    }
+  },
+  {
+    "instance_type": "m5dn.xlarge",
+    "vCPU": 4,
+    "memory": 16,
+    "pricing": {
+      "ap-northeast-1": "0.35",
+      "ap-southeast-1": "0.334",
+      "eu-central-1": "0.324",
+      "eu-west-1": "0.304",
+      "us-east-1": "0.272",
+      "us-east-2": "0.272",
+      "us-gov-west-1": "0.342",
+      "us-west-2": "0.272"
+    }
+  },
+  {
+    "instance_type": "c5.metal",
+    "vCPU": 96,
+    "memory": 192,
+    "pricing": {
+      "af-south-1": "5.472",
+      "ap-northeast-1": "5.136",
+      "ap-northeast-2": "4.608",
+      "ap-south-1": "4.08",
+      "ap-southeast-1": "4.704",
+      "ap-southeast-2": "5.328",
+      "ca-central-1": "4.464",
+      "eu-central-1": "4.656",
+      "eu-north-1": "4.368",
+      "eu-south-1": "4.848",
+      "eu-west-1": "4.608",
+      "eu-west-2": "4.848",
+      "eu-west-3": "4.848",
+      "sa-east-1": "6.288",
+      "us-east-1": "4.08",
+      "us-east-2": "4.08",
+      "us-gov-east-1": "4.896",
+      "us-gov-west-1": "4.896",
+      "us-west-1": "5.088",
+      "us-west-2": "4.08"
     }
   },
   {
@@ -56,11 +108,38 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 8,
     "memory": 32,
     "pricing": {
+      "ap-northeast-1": "0.448",
+      "ap-northeast-2": "0.424",
+      "ap-south-1": "0.222",
       "ap-southeast-1": "0.432",
+      "ap-southeast-2": "0.432",
+      "ca-central-1": "0.384",
+      "eu-central-1": "0.416",
       "eu-west-1": "0.384",
+      "eu-west-2": "0.4",
+      "eu-west-3": "0.404",
+      "sa-east-1": "0.552",
       "us-east-1": "0.344",
       "us-east-2": "0.344",
+      "us-gov-east-1": "0.436",
+      "us-gov-west-1": "0.436",
+      "us-west-1": "0.404",
       "us-west-2": "0.344"
+    }
+  },
+  {
+    "instance_type": "r5n.12xlarge",
+    "vCPU": 48,
+    "memory": 384,
+    "pricing": {
+      "ap-northeast-1": "4.344",
+      "ap-southeast-1": "4.272",
+      "eu-central-1": "4.272",
+      "eu-west-1": "4.008",
+      "us-east-1": "3.576",
+      "us-east-2": "3.576",
+      "us-gov-west-1": "4.296",
+      "us-west-2": "3.576"
     }
   },
   {
@@ -68,16 +147,22 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 36,
     "memory": 72,
     "pricing": {
+      "af-south-1": "2.052",
+      "ap-east-1": "1.944",
       "ap-northeast-1": "1.926",
       "ap-northeast-2": "1.728",
+      "ap-northeast-3": "1.926",
       "ap-south-1": "1.53",
       "ap-southeast-1": "1.764",
       "ap-southeast-2": "1.998",
       "ca-central-1": "1.674",
       "eu-central-1": "1.746",
+      "eu-north-1": "1.638",
+      "eu-south-1": "1.818",
       "eu-west-1": "1.728",
       "eu-west-2": "1.818",
       "eu-west-3": "1.818",
+      "me-south-1": "1.901",
       "sa-east-1": "2.358",
       "us-east-1": "1.53",
       "us-east-2": "1.53",
@@ -88,27 +173,118 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "r5ad.xlarge",
+    "vCPU": 4,
+    "memory": 32,
+    "pricing": {
+      "ap-northeast-1": "0.318",
+      "ap-northeast-2": "0.316",
+      "ap-south-1": "0.166",
+      "ap-southeast-1": "0.318",
+      "ap-southeast-2": "0.318",
+      "ca-central-1": "0.288",
+      "eu-central-1": "0.316",
+      "eu-west-1": "0.292",
+      "eu-west-2": "0.308",
+      "eu-west-3": "0.306",
+      "sa-east-1": "0.416",
+      "us-east-1": "0.262",
+      "us-east-2": "0.262",
+      "us-gov-west-1": "0.316",
+      "us-west-1": "0.296",
+      "us-west-2": "0.262"
+    }
+  },
+  {
     "instance_type": "m5.24xlarge",
     "vCPU": 96,
     "memory": 384,
     "pricing": {
+      "af-south-1": "6.096",
+      "ap-east-1": "6.336",
       "ap-northeast-1": "5.952",
       "ap-northeast-2": "5.664",
+      "ap-northeast-3": "5.952",
       "ap-south-1": "4.848",
       "ap-southeast-1": "5.76",
       "ap-southeast-2": "5.76",
       "ca-central-1": "5.136",
       "eu-central-1": "5.52",
+      "eu-north-1": "4.896",
+      "eu-south-1": "5.376",
       "eu-west-1": "5.136",
       "eu-west-2": "5.328",
       "eu-west-3": "5.376",
+      "me-south-1": "5.65",
       "sa-east-1": "7.344",
       "us-east-1": "4.608",
       "us-east-2": "4.608",
       "us-gov-east-1": "5.808",
       "us-gov-west-1": "5.808",
       "us-west-1": "5.376",
-      "us-west-2": "4.608"
+      "us-west-2": "5.53"
+    }
+  },
+  {
+    "instance_type": "r5n.xlarge",
+    "vCPU": 4,
+    "memory": 32,
+    "pricing": {
+      "ap-northeast-1": "0.362",
+      "ap-southeast-1": "0.356",
+      "eu-central-1": "0.356",
+      "eu-west-1": "0.334",
+      "us-east-1": "0.298",
+      "us-east-2": "0.298",
+      "us-gov-west-1": "0.358",
+      "us-west-2": "0.298"
+    }
+  },
+  {
+    "instance_type": "i3en.12xlarge",
+    "vCPU": 48,
+    "memory": 384,
+    "pricing": {
+      "ap-northeast-1": "6.384",
+      "ap-northeast-2": "6.384",
+      "ap-south-1": "6.168",
+      "ap-southeast-1": "6.504",
+      "ap-southeast-2": "6.504",
+      "ca-central-1": "6",
+      "eu-central-1": "6.48",
+      "eu-west-1": "6",
+      "eu-west-2": "6.312",
+      "eu-west-3": "6.312",
+      "sa-east-1": "8.64",
+      "us-east-1": "5.424",
+      "us-east-2": "5.424",
+      "us-gov-east-1": "6.552",
+      "us-gov-west-1": "6.552",
+      "us-west-1": "6",
+      "us-west-2": "5.424"
+    }
+  },
+  {
+    "instance_type": "i3en.metal",
+    "vCPU": 96,
+    "memory": 768,
+    "pricing": {
+      "ap-northeast-1": "12.768",
+      "ap-northeast-2": "12.768",
+      "ap-south-1": "12.336",
+      "ap-southeast-2": "13.008",
+      "ca-central-1": "12",
+      "eu-central-1": "12.96",
+      "eu-west-1": "12",
+      "eu-west-2": "12.624",
+      "eu-west-3": "12.624",
+      "sa-east-1": "17.28",
+      "us-east-1": "10.848",
+      "us-east-2": "10.848",
+      "us-gov-east-1": "13.104",
+      "us-gov-west-1": "13.104",
+      "us-west-1": "12",
+      "us-west-2": "13.018"
     }
   },
   {
@@ -116,16 +292,26 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 48,
     "memory": 192,
     "pricing": {
+      "af-south-1": "3.6",
+      "ap-east-1": "3.72",
       "ap-northeast-1": "3.504",
       "ap-northeast-2": "3.336",
+      "ap-northeast-3": "3.504",
+      "ap-south-1": "2.928",
       "ap-southeast-1": "3.384",
       "ap-southeast-2": "3.408",
       "ca-central-1": "3.024",
       "eu-central-1": "3.264",
+      "eu-north-1": "2.88",
+      "eu-south-1": "3.168",
       "eu-west-1": "3.024",
       "eu-west-2": "3.144",
+      "eu-west-3": "3.168",
+      "me-south-1": "3.326",
+      "sa-east-1": "4.32",
       "us-east-1": "2.712",
       "us-east-2": "2.712",
+      "us-gov-east-1": "3.432",
       "us-gov-west-1": "3.432",
       "us-west-1": "3.192",
       "us-west-2": "2.712"
@@ -136,23 +322,44 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 2,
     "memory": 4,
     "pricing": {
+      "af-south-1": "0.114",
+      "ap-east-1": "0.108",
       "ap-northeast-1": "0.107",
       "ap-northeast-2": "0.096",
+      "ap-northeast-3": "0.107",
       "ap-south-1": "0.085",
       "ap-southeast-1": "0.098",
       "ap-southeast-2": "0.111",
       "ca-central-1": "0.093",
       "eu-central-1": "0.097",
+      "eu-north-1": "0.091",
+      "eu-south-1": "0.101",
       "eu-west-1": "0.096",
       "eu-west-2": "0.101",
       "eu-west-3": "0.101",
+      "me-south-1": "0.106",
       "sa-east-1": "0.131",
       "us-east-1": "0.085",
       "us-east-2": "0.085",
       "us-gov-east-1": "0.102",
       "us-gov-west-1": "0.102",
       "us-west-1": "0.106",
-      "us-west-2": "0.085"
+      "us-west-2": "0.102"
+    }
+  },
+  {
+    "instance_type": "r5dn.xlarge",
+    "vCPU": 4,
+    "memory": 32,
+    "pricing": {
+      "ap-northeast-1": "0.406",
+      "ap-southeast-1": "0.4",
+      "eu-central-1": "0.398",
+      "eu-west-1": "0.372",
+      "us-east-1": "0.334",
+      "us-east-2": "0.334",
+      "us-gov-west-1": "0.402",
+      "us-west-2": "0.334"
     }
   },
   {
@@ -160,11 +367,47 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 2,
     "memory": 5.25,
     "pricing": {
+      "ap-northeast-1": "0.136",
+      "ap-northeast-2": "0.122",
+      "ap-south-1": "0.108",
+      "ap-southeast-1": "0.124",
+      "ap-southeast-2": "0.141",
+      "ca-central-1": "0.118",
+      "eu-central-1": "0.123",
       "eu-west-1": "0.122",
       "us-east-1": "0.108",
       "us-east-2": "0.108",
+      "us-gov-east-1": "0.13",
       "us-gov-west-1": "0.13",
+      "us-west-1": "0.135",
       "us-west-2": "0.108"
+    }
+  },
+  {
+    "instance_type": "c5.24xlarge",
+    "vCPU": 96,
+    "memory": 192,
+    "pricing": {
+      "af-south-1": "5.472",
+      "ap-northeast-1": "5.136",
+      "ap-northeast-2": "4.608",
+      "ap-south-1": "4.08",
+      "ap-southeast-1": "4.704",
+      "ap-southeast-2": "5.328",
+      "ca-central-1": "4.464",
+      "eu-central-1": "4.656",
+      "eu-north-1": "4.368",
+      "eu-south-1": "4.848",
+      "eu-west-1": "4.608",
+      "eu-west-2": "4.848",
+      "eu-west-3": "4.848",
+      "sa-east-1": "6.288",
+      "us-east-1": "4.08",
+      "us-east-2": "4.08",
+      "us-gov-east-1": "4.896",
+      "us-gov-west-1": "4.896",
+      "us-west-1": "5.088",
+      "us-west-2": "4.08"
     }
   },
   {
@@ -184,6 +427,21 @@ const awsInstanceTypeDetailsJSON = `
       "us-gov-west-1": "1.023",
       "us-west-1": "0.938",
       "us-west-2": "0.853"
+    }
+  },
+  {
+    "instance_type": "m5n.16xlarge",
+    "vCPU": 64,
+    "memory": 256,
+    "pricing": {
+      "ap-northeast-1": "4.896",
+      "ap-southeast-1": "4.672",
+      "eu-central-1": "4.512",
+      "eu-west-1": "4.256",
+      "us-east-1": "3.808",
+      "us-east-2": "3.808",
+      "us-gov-west-1": "4.768",
+      "us-west-2": "3.808"
     }
   },
   {
@@ -215,6 +473,8 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 36,
     "memory": 244,
     "pricing": {
+      "af-south-1": "7",
+      "ap-east-1": "7.656",
       "ap-northeast-1": "6.752",
       "ap-northeast-2": "6.752",
       "ap-northeast-3": "6.752",
@@ -223,14 +483,42 @@ const awsInstanceTypeDetailsJSON = `
       "ap-southeast-2": "6.96",
       "ca-central-1": "6.072",
       "eu-central-1": "6.352",
+      "eu-north-1": "5.584",
+      "eu-south-1": "6.176",
       "eu-west-1": "5.88",
       "eu-west-2": "6.174",
       "eu-west-3": "6.176",
+      "me-south-1": "6.468",
       "us-east-1": "5.52",
       "us-east-2": "5.52",
+      "us-gov-east-1": "6.624",
       "us-gov-west-1": "6.624",
       "us-west-1": "6.25",
       "us-west-2": "5.52"
+    }
+  },
+  {
+    "instance_type": "i3en.3xlarge",
+    "vCPU": 12,
+    "memory": 96,
+    "pricing": {
+      "ap-northeast-1": "1.596",
+      "ap-northeast-2": "1.596",
+      "ap-south-1": "1.542",
+      "ap-southeast-1": "1.626",
+      "ap-southeast-2": "1.626",
+      "ca-central-1": "1.5",
+      "eu-central-1": "1.62",
+      "eu-west-1": "1.5",
+      "eu-west-2": "1.578",
+      "eu-west-3": "1.578",
+      "sa-east-1": "2.16",
+      "us-east-1": "1.356",
+      "us-east-2": "1.356",
+      "us-gov-east-1": "1.638",
+      "us-gov-west-1": "1.638",
+      "us-west-1": "1.5",
+      "us-west-2": "1.627"
     }
   },
   {
@@ -239,9 +527,15 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 96,
     "pricing": {
       "ap-northeast-1": "1.362",
+      "ap-northeast-2": "1.35",
+      "ap-south-1": "1.176",
       "ap-southeast-1": "1.356",
+      "ap-southeast-2": "1.356",
+      "eu-central-1": "1.35",
       "eu-west-1": "1.248",
+      "eu-west-2": "1.318",
       "us-east-1": "1.116",
+      "us-east-2": "1.116",
       "us-west-1": "1.266",
       "us-west-2": "1.116"
     }
@@ -251,23 +545,38 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 8,
     "memory": 32,
     "pricing": {
+      "af-south-1": "0.508",
+      "ap-east-1": "0.528",
       "ap-northeast-1": "0.496",
       "ap-northeast-2": "0.472",
+      "ap-northeast-3": "0.496",
       "ap-south-1": "0.404",
       "ap-southeast-1": "0.48",
       "ap-southeast-2": "0.48",
       "ca-central-1": "0.428",
       "eu-central-1": "0.46",
+      "eu-north-1": "0.408",
+      "eu-south-1": "0.448",
       "eu-west-1": "0.428",
       "eu-west-2": "0.444",
       "eu-west-3": "0.448",
+      "me-south-1": "0.471",
       "sa-east-1": "0.612",
       "us-east-1": "0.384",
       "us-east-2": "0.384",
       "us-gov-east-1": "0.484",
       "us-gov-west-1": "0.484",
       "us-west-1": "0.448",
-      "us-west-2": "0.384"
+      "us-west-2": "0.461"
+    }
+  },
+  {
+    "instance_type": "inf1.xlarge",
+    "vCPU": 4,
+    "memory": 8,
+    "pricing": {
+      "us-east-1": "0.368",
+      "us-west-2": "0.368"
     }
   },
   {
@@ -275,16 +584,22 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 72,
     "memory": 144,
     "pricing": {
+      "af-south-1": "4.104",
+      "ap-east-1": "3.888",
       "ap-northeast-1": "3.852",
       "ap-northeast-2": "3.456",
+      "ap-northeast-3": "3.852",
       "ap-south-1": "3.06",
       "ap-southeast-1": "3.528",
       "ap-southeast-2": "3.996",
       "ca-central-1": "3.348",
       "eu-central-1": "3.492",
+      "eu-north-1": "3.276",
+      "eu-south-1": "3.636",
       "eu-west-1": "3.456",
       "eu-west-2": "3.636",
       "eu-west-3": "3.636",
+      "me-south-1": "3.802",
       "sa-east-1": "4.716",
       "us-east-1": "3.06",
       "us-east-2": "3.06",
@@ -300,12 +615,33 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 1952,
     "pricing": {
       "ap-northeast-1": "19.344",
+      "ap-northeast-2": "19.344",
+      "ap-south-1": "13.76",
+      "ap-southeast-1": "19.344",
       "ap-southeast-2": "19.344",
+      "ca-central-1": "14.669",
       "eu-central-1": "18.672",
       "eu-west-1": "16",
       "us-east-1": "13.344",
+      "us-east-2": "13.344",
+      "us-gov-east-1": "16",
       "us-gov-west-1": "16",
       "us-west-2": "13.344"
+    }
+  },
+  {
+    "instance_type": "r5n.24xlarge",
+    "vCPU": 96,
+    "memory": 768,
+    "pricing": {
+      "ap-northeast-1": "8.688",
+      "ap-southeast-1": "8.544",
+      "eu-central-1": "8.544",
+      "eu-west-1": "8.016",
+      "us-east-1": "7.152",
+      "us-east-2": "7.152",
+      "us-gov-west-1": "8.592",
+      "us-west-2": "7.152"
     }
   },
   {
@@ -328,6 +664,46 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "r5a.8xlarge",
+    "vCPU": 32,
+    "memory": 256,
+    "pricing": {
+      "ap-northeast-1": "2.192",
+      "ap-northeast-2": "2.176",
+      "ap-south-1": "1.144",
+      "ap-southeast-1": "2.176",
+      "ap-southeast-2": "2.176",
+      "ca-central-1": "1.984",
+      "eu-central-1": "2.192",
+      "eu-west-1": "2.032",
+      "eu-west-2": "2.128",
+      "eu-west-3": "2.128",
+      "sa-east-1": "2.896",
+      "us-east-1": "1.808",
+      "us-east-2": "1.808",
+      "us-gov-east-1": "2.176",
+      "us-gov-west-1": "2.176",
+      "us-west-1": "2.016",
+      "us-west-2": "1.808"
+    }
+  },
+  {
+    "instance_type": "a1.metal",
+    "vCPU": 16,
+    "memory": 32,
+    "pricing": {
+      "ap-northeast-1": "0.514",
+      "ap-south-1": "0.408",
+      "ap-southeast-1": "0.47",
+      "ap-southeast-2": "0.533",
+      "eu-central-1": "0.466",
+      "eu-west-1": "0.461",
+      "us-east-1": "0.408",
+      "us-east-2": "0.408",
+      "us-west-2": "0.408"
+    }
+  },
+  {
     "instance_type": "i2.2xlarge",
     "vCPU": 8,
     "memory": 61,
@@ -347,14 +723,50 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "i3en.2xlarge",
+    "vCPU": 8,
+    "memory": 64,
+    "pricing": {
+      "ap-northeast-1": "1.064",
+      "ap-northeast-2": "1.064",
+      "ap-south-1": "1.028",
+      "ap-southeast-1": "1.084",
+      "ap-southeast-2": "1.084",
+      "ca-central-1": "1",
+      "eu-central-1": "1.08",
+      "eu-west-1": "1",
+      "eu-west-2": "1.052",
+      "eu-west-3": "1.052",
+      "sa-east-1": "1.44",
+      "us-east-1": "0.904",
+      "us-east-2": "0.904",
+      "us-gov-east-1": "1.092",
+      "us-gov-west-1": "1.092",
+      "us-west-1": "1",
+      "us-west-2": "1.085"
+    }
+  },
+  {
     "instance_type": "m5a.xlarge",
     "vCPU": 4,
     "memory": 16,
     "pricing": {
+      "ap-northeast-1": "0.224",
+      "ap-northeast-2": "0.212",
+      "ap-south-1": "0.111",
       "ap-southeast-1": "0.216",
+      "ap-southeast-2": "0.216",
+      "ca-central-1": "0.192",
+      "eu-central-1": "0.208",
       "eu-west-1": "0.192",
+      "eu-west-2": "0.2",
+      "eu-west-3": "0.202",
+      "sa-east-1": "0.276",
       "us-east-1": "0.172",
       "us-east-2": "0.172",
+      "us-gov-east-1": "0.218",
+      "us-gov-west-1": "0.218",
+      "us-west-1": "0.202",
       "us-west-2": "0.172"
     }
   },
@@ -363,10 +775,10 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 8,
     "memory": 61,
     "pricing": {
-      "ap-northeast-1": "5.243",
-      "ap-northeast-2": "4.981",
-      "ap-southeast-1": "4.981",
-      "ap-southeast-2": "4.981",
+      "ap-northeast-1": "4.194",
+      "ap-northeast-2": "4.234",
+      "ap-southeast-1": "4.234",
+      "ap-southeast-2": "4.234",
       "ca-central-1": "3.366",
       "eu-central-1": "3.823",
       "eu-west-1": "3.305",
@@ -417,18 +829,53 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 96,
     "memory": 768,
     "pricing": {
+      "af-south-1": "9.12",
+      "ap-east-1": "8.4",
       "ap-northeast-1": "8.352",
       "ap-northeast-2": "8.304",
+      "ap-northeast-3": "8.352",
+      "ap-south-1": "7.248",
       "ap-southeast-1": "8.352",
       "ap-southeast-2": "8.352",
       "ca-central-1": "7.584",
       "eu-central-1": "8.304",
+      "eu-north-1": "7.296",
+      "eu-south-1": "8.064",
       "eu-west-1": "7.68",
       "eu-west-2": "8.112",
+      "eu-west-3": "8.112",
+      "me-south-1": "8.448",
+      "sa-east-1": "10.944",
       "us-east-1": "6.912",
       "us-east-2": "6.912",
+      "us-gov-east-1": "8.304",
+      "us-gov-west-1": "8.304",
       "us-west-1": "7.776",
-      "us-west-2": "6.912"
+      "us-west-2": "8.294"
+    }
+  },
+  {
+    "instance_type": "i3en.6xlarge",
+    "vCPU": 24,
+    "memory": 192,
+    "pricing": {
+      "ap-northeast-1": "3.192",
+      "ap-northeast-2": "3.192",
+      "ap-south-1": "3.084",
+      "ap-southeast-1": "3.252",
+      "ap-southeast-2": "3.252",
+      "ca-central-1": "3",
+      "eu-central-1": "3.24",
+      "eu-west-1": "3",
+      "eu-west-2": "3.156",
+      "eu-west-3": "3.156",
+      "sa-east-1": "4.32",
+      "us-east-1": "2.712",
+      "us-east-2": "2.712",
+      "us-gov-east-1": "3.276",
+      "us-gov-west-1": "3.276",
+      "us-west-1": "3",
+      "us-west-2": "3.254"
     }
   },
   {
@@ -484,9 +931,10 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 64,
     "memory": 976,
     "pricing": {
+      "ap-east-1": "10.638",
       "ap-northeast-1": "9.671",
       "ap-northeast-2": "9.671",
-      "ap-south-1": "9.187",
+      "ap-south-1": "6.881",
       "ap-southeast-1": "9.671",
       "ap-southeast-2": "9.671",
       "ca-central-1": "7.336",
@@ -497,6 +945,7 @@ const awsInstanceTypeDetailsJSON = `
       "sa-east-1": "13.005",
       "us-east-1": "6.669",
       "us-east-2": "6.669",
+      "us-gov-east-1": "8.003",
       "us-gov-west-1": "8.003",
       "us-west-2": "6.669"
     }
@@ -506,19 +955,83 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 72,
     "memory": 144,
     "pricing": {
+      "af-south-1": "4.68",
+      "ap-east-1": "4.428",
       "ap-northeast-1": "4.392",
       "ap-northeast-2": "3.96",
+      "ap-northeast-3": "4.392",
+      "ap-south-1": "3.564",
       "ap-southeast-1": "4.032",
       "ap-southeast-2": "4.536",
       "ca-central-1": "3.816",
       "eu-central-1": "3.996",
+      "eu-north-1": "3.744",
+      "eu-south-1": "4.104",
       "eu-west-1": "3.924",
       "eu-west-2": "4.14",
+      "eu-west-3": "4.14",
+      "me-south-1": "4.316",
+      "sa-east-1": "5.364",
       "us-east-1": "3.456",
       "us-east-2": "3.456",
+      "us-gov-east-1": "4.176",
       "us-gov-west-1": "4.176",
       "us-west-1": "4.32",
       "us-west-2": "3.456"
+    }
+  },
+  {
+    "instance_type": "m5a.16xlarge",
+    "vCPU": 64,
+    "memory": 256,
+    "pricing": {
+      "ap-northeast-1": "3.584",
+      "ap-northeast-2": "3.392",
+      "ap-south-1": "1.778",
+      "ap-southeast-1": "3.456",
+      "ap-southeast-2": "3.456",
+      "ca-central-1": "3.072",
+      "eu-central-1": "3.328",
+      "eu-west-1": "3.072",
+      "eu-west-2": "3.2",
+      "eu-west-3": "3.232",
+      "sa-east-1": "4.416",
+      "us-east-1": "2.752",
+      "us-east-2": "2.752",
+      "us-gov-east-1": "3.488",
+      "us-gov-west-1": "3.488",
+      "us-west-1": "3.232",
+      "us-west-2": "2.752"
+    }
+  },
+  {
+    "instance_type": "r5.metal",
+    "vCPU": 96,
+    "memory": 768,
+    "pricing": {
+      "af-south-1": "8.064",
+      "ap-east-1": "8.016",
+      "ap-northeast-1": "7.296",
+      "ap-northeast-2": "7.296",
+      "ap-northeast-3": "7.296",
+      "ap-south-1": "6.24",
+      "ap-southeast-1": "7.296",
+      "ap-southeast-2": "7.248",
+      "ca-central-1": "6.624",
+      "eu-central-1": "7.296",
+      "eu-north-1": "6.432",
+      "eu-south-1": "7.104",
+      "eu-west-1": "6.768",
+      "eu-west-2": "7.104",
+      "eu-west-3": "7.104",
+      "me-south-1": "7.445",
+      "sa-east-1": "9.648",
+      "us-east-1": "6.048",
+      "us-east-2": "6.048",
+      "us-gov-east-1": "7.248",
+      "us-gov-west-1": "7.248",
+      "us-west-1": "6.72",
+      "us-west-2": "6.048"
     }
   },
   {
@@ -526,10 +1039,22 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 2,
     "memory": 16,
     "pricing": {
+      "ap-northeast-1": "0.137",
+      "ap-northeast-2": "0.136",
+      "ap-south-1": "0.072",
       "ap-southeast-1": "0.136",
+      "ap-southeast-2": "0.136",
+      "ca-central-1": "0.124",
+      "eu-central-1": "0.137",
       "eu-west-1": "0.127",
+      "eu-west-2": "0.133",
+      "eu-west-3": "0.133",
+      "sa-east-1": "0.181",
       "us-east-1": "0.113",
       "us-east-2": "0.113",
+      "us-gov-east-1": "0.136",
+      "us-gov-west-1": "0.136",
+      "us-west-1": "0.126",
       "us-west-2": "0.113"
     }
   },
@@ -553,14 +1078,35 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "inf1.24xlarge",
+    "vCPU": 96,
+    "memory": 192,
+    "pricing": {
+      "us-east-1": "7.615",
+      "us-west-2": "7.615"
+    }
+  },
+  {
     "instance_type": "r5a.24xlarge",
     "vCPU": 96,
     "memory": 768,
     "pricing": {
+      "ap-northeast-1": "6.576",
+      "ap-northeast-2": "6.528",
+      "ap-south-1": "3.432",
       "ap-southeast-1": "6.528",
+      "ap-southeast-2": "6.528",
+      "ca-central-1": "5.952",
+      "eu-central-1": "6.576",
       "eu-west-1": "6.096",
+      "eu-west-2": "6.384",
+      "eu-west-3": "6.384",
+      "sa-east-1": "8.688",
       "us-east-1": "5.424",
       "us-east-2": "5.424",
+      "us-gov-east-1": "6.528",
+      "us-gov-west-1": "6.528",
+      "us-west-1": "6.048",
       "us-west-2": "5.424"
     }
   },
@@ -570,16 +1116,34 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 488,
     "pricing": {
       "ap-northeast-1": "6.32",
+      "ap-northeast-2": "5.68",
       "ap-southeast-1": "6.68",
       "ap-southeast-2": "7.016",
       "ca-central-1": "5.664",
       "eu-central-1": "5.7",
       "eu-west-1": "4.84",
+      "eu-west-2": "5.716",
       "us-east-1": "4.56",
       "us-east-2": "4.56",
       "us-gov-west-1": "5.28",
       "us-west-1": "6.136",
       "us-west-2": "4.56"
+    }
+  },
+  {
+    "instance_type": "a1.2xlarge",
+    "vCPU": 8,
+    "memory": 16,
+    "pricing": {
+      "ap-northeast-1": "0.2568",
+      "ap-south-1": "0.204",
+      "ap-southeast-1": "0.2352",
+      "ap-southeast-2": "0.2664",
+      "eu-central-1": "0.2328",
+      "eu-west-1": "0.2304",
+      "us-east-1": "0.204",
+      "us-east-2": "0.204",
+      "us-west-2": "0.204"
     }
   },
   {
@@ -611,12 +1175,65 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 488,
     "pricing": {
       "ap-northeast-1": "4.836",
+      "ap-northeast-2": "4.836",
+      "ap-south-1": "3.44",
+      "ap-southeast-1": "4.836",
       "ap-southeast-2": "4.836",
+      "ca-central-1": "3.667",
       "eu-central-1": "4.668",
       "eu-west-1": "4",
       "us-east-1": "3.336",
+      "us-east-2": "3.336",
+      "us-gov-east-1": "4",
       "us-gov-west-1": "4",
       "us-west-2": "3.336"
+    }
+  },
+  {
+    "instance_type": "m5ad.xlarge",
+    "vCPU": 4,
+    "memory": 16,
+    "pricing": {
+      "ap-northeast-1": "0.268",
+      "ap-northeast-2": "0.254",
+      "ap-south-1": "0.134",
+      "ap-southeast-1": "0.258",
+      "ap-southeast-2": "0.26",
+      "ca-central-1": "0.23",
+      "eu-central-1": "0.25",
+      "eu-west-1": "0.23",
+      "eu-west-2": "0.24",
+      "eu-west-3": "0.242",
+      "sa-east-1": "0.33",
+      "us-east-1": "0.206",
+      "us-east-2": "0.206",
+      "us-gov-west-1": "0.262",
+      "us-west-1": "0.244",
+      "us-west-2": "0.206"
+    }
+  },
+  {
+    "instance_type": "i3en.24xlarge",
+    "vCPU": 96,
+    "memory": 768,
+    "pricing": {
+      "ap-northeast-1": "12.768",
+      "ap-northeast-2": "12.768",
+      "ap-south-1": "12.336",
+      "ap-southeast-1": "13.008",
+      "ap-southeast-2": "13.008",
+      "ca-central-1": "12",
+      "eu-central-1": "12.96",
+      "eu-west-1": "12",
+      "eu-west-2": "12.624",
+      "eu-west-3": "12.624",
+      "sa-east-1": "17.28",
+      "us-east-1": "10.848",
+      "us-east-2": "10.848",
+      "us-gov-east-1": "13.104",
+      "us-gov-west-1": "13.104",
+      "us-west-1": "12",
+      "us-west-2": "13.018"
     }
   },
   {
@@ -624,10 +1241,19 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 72,
     "memory": 192,
     "pricing": {
+      "ap-northeast-1": "4.896",
+      "ap-northeast-2": "4.392",
+      "ap-south-1": "3.888",
+      "ap-southeast-1": "4.464",
+      "ap-southeast-2": "5.076",
+      "ca-central-1": "4.248",
+      "eu-central-1": "4.428",
       "eu-west-1": "4.392",
       "us-east-1": "3.888",
       "us-east-2": "3.888",
+      "us-gov-east-1": "4.68",
       "us-gov-west-1": "4.68",
+      "us-west-1": "4.86",
       "us-west-2": "3.888"
     }
   },
@@ -655,6 +1281,36 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "t3.medium",
+    "vCPU": 2,
+    "memory": 4,
+    "pricing": {
+      "af-south-1": "0.0542",
+      "ap-east-1": "0.0584",
+      "ap-northeast-1": "0.0544",
+      "ap-northeast-2": "0.052",
+      "ap-northeast-3": "0.0544",
+      "ap-south-1": "0.0448",
+      "ap-southeast-1": "0.0528",
+      "ap-southeast-2": "0.0528",
+      "ca-central-1": "0.0464",
+      "eu-central-1": "0.048",
+      "eu-north-1": "0.0432",
+      "eu-south-1": "0.0479",
+      "eu-west-1": "0.0456",
+      "eu-west-2": "0.0472",
+      "eu-west-3": "0.0472",
+      "me-south-1": "0.0502",
+      "sa-east-1": "0.0672",
+      "us-east-1": "0.0416",
+      "us-east-2": "0.0416",
+      "us-gov-east-1": "0.0488",
+      "us-gov-west-1": "0.0488",
+      "us-west-1": "0.0496",
+      "us-west-2": "0.0416"
+    }
+  },
+  {
     "instance_type": "h1.4xlarge",
     "vCPU": 16,
     "memory": 64,
@@ -671,12 +1327,60 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 122,
     "pricing": {
       "ap-northeast-1": "1.209",
+      "ap-northeast-2": "1.209",
+      "ap-south-1": "0.86",
+      "ap-southeast-1": "1.209",
       "ap-southeast-2": "1.209",
+      "ca-central-1": "0.917",
       "eu-central-1": "1.167",
       "eu-west-1": "1",
       "us-east-1": "0.834",
+      "us-east-2": "0.834",
+      "us-gov-east-1": "1",
       "us-gov-west-1": "1",
       "us-west-2": "0.834"
+    }
+  },
+  {
+    "instance_type": "g4dn.8xlarge",
+    "vCPU": 32,
+    "memory": 128,
+    "pricing": {
+      "ap-east-1": "3.351",
+      "ap-northeast-1": "2.938",
+      "ap-northeast-2": "2.677",
+      "ap-south-1": "2.395",
+      "ap-southeast-1": "3.045",
+      "ap-southeast-2": "2.83",
+      "ca-central-1": "2.416",
+      "eu-central-1": "2.72",
+      "eu-north-1": "2.308",
+      "eu-west-1": "2.426",
+      "eu-west-2": "2.546",
+      "eu-west-3": "2.544",
+      "me-south-1": "2.669",
+      "sa-east-1": "3.698",
+      "us-east-1": "2.176",
+      "us-east-2": "2.176",
+      "us-gov-east-1": "2.743",
+      "us-gov-west-1": "2.743",
+      "us-west-1": "2.611",
+      "us-west-2": "2.176"
+    }
+  },
+  {
+    "instance_type": "r5n.large",
+    "vCPU": 2,
+    "memory": 16,
+    "pricing": {
+      "ap-northeast-1": "0.181",
+      "ap-southeast-1": "0.178",
+      "eu-central-1": "0.178",
+      "eu-west-1": "0.167",
+      "us-east-1": "0.149",
+      "us-east-2": "0.149",
+      "us-gov-west-1": "0.179",
+      "us-west-2": "0.149"
     }
   },
   {
@@ -684,16 +1388,22 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 2,
     "memory": 8,
     "pricing": {
+      "af-south-1": "0.127",
+      "ap-east-1": "0.132",
       "ap-northeast-1": "0.124",
       "ap-northeast-2": "0.118",
+      "ap-northeast-3": "0.124",
       "ap-south-1": "0.101",
       "ap-southeast-1": "0.12",
       "ap-southeast-2": "0.12",
       "ca-central-1": "0.107",
       "eu-central-1": "0.115",
+      "eu-north-1": "0.102",
+      "eu-south-1": "0.112",
       "eu-west-1": "0.107",
       "eu-west-2": "0.111",
       "eu-west-3": "0.112",
+      "me-south-1": "0.118",
       "sa-east-1": "0.153",
       "us-east-1": "0.096",
       "us-east-2": "0.096",
@@ -708,16 +1418,22 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 16,
     "memory": 32,
     "pricing": {
+      "af-south-1": "0.912",
+      "ap-east-1": "0.864",
       "ap-northeast-1": "0.856",
       "ap-northeast-2": "0.768",
+      "ap-northeast-3": "0.856",
       "ap-south-1": "0.68",
       "ap-southeast-1": "0.784",
       "ap-southeast-2": "0.888",
       "ca-central-1": "0.744",
       "eu-central-1": "0.776",
+      "eu-north-1": "0.728",
+      "eu-south-1": "0.808",
       "eu-west-1": "0.768",
       "eu-west-2": "0.808",
       "eu-west-3": "0.808",
+      "me-south-1": "0.845",
       "sa-east-1": "1.048",
       "us-east-1": "0.68",
       "us-east-2": "0.68",
@@ -732,16 +1448,26 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 96,
     "memory": 384,
     "pricing": {
+      "af-south-1": "7.2",
+      "ap-east-1": "7.44",
       "ap-northeast-1": "7.008",
       "ap-northeast-2": "6.672",
+      "ap-northeast-3": "7.008",
+      "ap-south-1": "5.856",
       "ap-southeast-1": "6.768",
       "ap-southeast-2": "6.816",
       "ca-central-1": "6.048",
       "eu-central-1": "6.528",
+      "eu-north-1": "5.76",
+      "eu-south-1": "6.336",
       "eu-west-1": "6.048",
       "eu-west-2": "6.288",
+      "eu-west-3": "6.336",
+      "me-south-1": "6.653",
+      "sa-east-1": "8.64",
       "us-east-1": "5.424",
       "us-east-2": "5.424",
+      "us-gov-east-1": "6.864",
       "us-gov-west-1": "6.864",
       "us-west-1": "6.384",
       "us-west-2": "5.424"
@@ -766,6 +1492,21 @@ const awsInstanceTypeDetailsJSON = `
       "us-gov-west-1": "0.2",
       "us-west-1": "0.185",
       "us-west-2": "0.166"
+    }
+  },
+  {
+    "instance_type": "r5n.2xlarge",
+    "vCPU": 8,
+    "memory": 64,
+    "pricing": {
+      "ap-northeast-1": "0.724",
+      "ap-southeast-1": "0.712",
+      "eu-central-1": "0.712",
+      "eu-west-1": "0.668",
+      "us-east-1": "0.596",
+      "us-east-2": "0.596",
+      "us-gov-west-1": "0.716",
+      "us-west-2": "0.596"
     }
   },
   {
@@ -796,16 +1537,27 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 4,
     "memory": 32,
     "pricing": {
+      "af-south-1": "0.38",
+      "ap-east-1": "0.35",
       "ap-northeast-1": "0.348",
       "ap-northeast-2": "0.346",
+      "ap-northeast-3": "0.348",
+      "ap-south-1": "0.302",
       "ap-southeast-1": "0.348",
       "ap-southeast-2": "0.348",
       "ca-central-1": "0.316",
       "eu-central-1": "0.346",
+      "eu-north-1": "0.304",
+      "eu-south-1": "0.336",
       "eu-west-1": "0.32",
       "eu-west-2": "0.338",
+      "eu-west-3": "0.338",
+      "me-south-1": "0.352",
+      "sa-east-1": "0.456",
       "us-east-1": "0.288",
       "us-east-2": "0.288",
+      "us-gov-east-1": "0.346",
+      "us-gov-west-1": "0.346",
       "us-west-1": "0.324",
       "us-west-2": "0.288"
     }
@@ -815,16 +1567,26 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 2,
     "memory": 8,
     "pricing": {
+      "af-south-1": "0.15",
+      "ap-east-1": "0.155",
       "ap-northeast-1": "0.146",
       "ap-northeast-2": "0.139",
+      "ap-northeast-3": "0.146",
+      "ap-south-1": "0.122",
       "ap-southeast-1": "0.141",
       "ap-southeast-2": "0.142",
       "ca-central-1": "0.126",
       "eu-central-1": "0.136",
+      "eu-north-1": "0.12",
+      "eu-south-1": "0.132",
       "eu-west-1": "0.126",
       "eu-west-2": "0.131",
+      "eu-west-3": "0.132",
+      "me-south-1": "0.139",
+      "sa-east-1": "0.18",
       "us-east-1": "0.113",
       "us-east-2": "0.113",
+      "us-gov-east-1": "0.143",
       "us-gov-west-1": "0.143",
       "us-west-1": "0.133",
       "us-west-2": "0.113"
@@ -835,15 +1597,23 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 8,
     "memory": 64,
     "pricing": {
+      "af-south-1": "0.672",
+      "ap-east-1": "0.668",
       "ap-northeast-1": "0.608",
       "ap-northeast-2": "0.608",
+      "ap-northeast-3": "0.608",
+      "ap-south-1": "0.52",
       "ap-southeast-1": "0.608",
       "ap-southeast-2": "0.604",
       "ca-central-1": "0.552",
       "eu-central-1": "0.608",
+      "eu-north-1": "0.536",
+      "eu-south-1": "0.592",
       "eu-west-1": "0.564",
       "eu-west-2": "0.592",
       "eu-west-3": "0.592",
+      "me-south-1": "0.62",
+      "sa-east-1": "0.804",
       "us-east-1": "0.504",
       "us-east-2": "0.504",
       "us-gov-east-1": "0.604",
@@ -872,20 +1642,45 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "m5n.12xlarge",
+    "vCPU": 48,
+    "memory": 192,
+    "pricing": {
+      "ap-northeast-1": "3.672",
+      "ap-southeast-1": "3.504",
+      "eu-central-1": "3.384",
+      "eu-west-1": "3.192",
+      "us-east-1": "2.856",
+      "us-east-2": "2.856",
+      "us-gov-west-1": "3.576",
+      "us-west-2": "2.856"
+    }
+  },
+  {
     "instance_type": "m5d.2xlarge",
     "vCPU": 8,
     "memory": 32,
     "pricing": {
+      "af-south-1": "0.6",
+      "ap-east-1": "0.62",
       "ap-northeast-1": "0.584",
       "ap-northeast-2": "0.556",
+      "ap-northeast-3": "0.584",
+      "ap-south-1": "0.488",
       "ap-southeast-1": "0.564",
       "ap-southeast-2": "0.568",
       "ca-central-1": "0.504",
       "eu-central-1": "0.544",
+      "eu-north-1": "0.48",
+      "eu-south-1": "0.528",
       "eu-west-1": "0.504",
       "eu-west-2": "0.524",
+      "eu-west-3": "0.528",
+      "me-south-1": "0.554",
+      "sa-east-1": "0.72",
       "us-east-1": "0.452",
       "us-east-2": "0.452",
+      "us-gov-east-1": "0.572",
       "us-gov-west-1": "0.572",
       "us-west-1": "0.532",
       "us-west-2": "0.452"
@@ -915,23 +1710,154 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "m5ad.large",
+    "vCPU": 2,
+    "memory": 8,
+    "pricing": {
+      "ap-northeast-1": "0.134",
+      "ap-northeast-2": "0.127",
+      "ap-south-1": "0.067",
+      "ap-southeast-1": "0.129",
+      "ap-southeast-2": "0.13",
+      "ca-central-1": "0.115",
+      "eu-central-1": "0.125",
+      "eu-west-1": "0.115",
+      "eu-west-2": "0.12",
+      "eu-west-3": "0.121",
+      "sa-east-1": "0.165",
+      "us-east-1": "0.103",
+      "us-east-2": "0.103",
+      "us-gov-west-1": "0.131",
+      "us-west-1": "0.122",
+      "us-west-2": "0.103"
+    }
+  },
+  {
     "instance_type": "c5d.large",
     "vCPU": 2,
     "memory": 4,
     "pricing": {
+      "af-south-1": "0.13",
+      "ap-east-1": "0.123",
       "ap-northeast-1": "0.122",
       "ap-northeast-2": "0.11",
+      "ap-northeast-3": "0.122",
+      "ap-south-1": "0.099",
       "ap-southeast-1": "0.112",
       "ap-southeast-2": "0.126",
       "ca-central-1": "0.106",
       "eu-central-1": "0.111",
+      "eu-north-1": "0.104",
+      "eu-south-1": "0.114",
       "eu-west-1": "0.109",
       "eu-west-2": "0.115",
+      "eu-west-3": "0.115",
+      "me-south-1": "0.12",
+      "sa-east-1": "0.149",
       "us-east-1": "0.096",
       "us-east-2": "0.096",
+      "us-gov-east-1": "0.116",
       "us-gov-west-1": "0.116",
       "us-west-1": "0.12",
       "us-west-2": "0.096"
+    }
+  },
+  {
+    "instance_type": "r5dn.8xlarge",
+    "vCPU": 32,
+    "memory": 256,
+    "pricing": {
+      "ap-northeast-1": "3.248",
+      "ap-southeast-1": "3.2",
+      "eu-central-1": "3.184",
+      "eu-west-1": "2.976",
+      "us-east-1": "2.672",
+      "us-east-2": "2.672",
+      "us-gov-west-1": "3.216",
+      "us-west-2": "2.672"
+    }
+  },
+  {
+    "instance_type": "m6g.2xlarge",
+    "vCPU": 8,
+    "memory": 32,
+    "pricing": {
+      "ap-northeast-1": "0.396",
+      "eu-central-1": "0.368",
+      "eu-west-1": "0.344",
+      "us-east-1": "0.308",
+      "us-east-2": "0.308",
+      "us-west-2": "0.308"
+    }
+  },
+  {
+    "instance_type": "c5d.24xlarge",
+    "vCPU": 96,
+    "memory": 192,
+    "pricing": {
+      "af-south-1": "6.24",
+      "ap-northeast-1": "5.856",
+      "ap-northeast-2": "5.28",
+      "ap-southeast-1": "5.376",
+      "ap-southeast-2": "6.048",
+      "ca-central-1": "5.088",
+      "eu-central-1": "5.328",
+      "eu-north-1": "4.992",
+      "eu-south-1": "5.472",
+      "eu-west-1": "5.232",
+      "eu-west-2": "5.52",
+      "me-south-1": "5.755",
+      "sa-east-1": "7.152",
+      "us-east-1": "4.608",
+      "us-east-2": "4.608",
+      "us-gov-west-1": "5.568",
+      "us-west-1": "5.76",
+      "us-west-2": "4.608"
+    }
+  },
+  {
+    "instance_type": "r5n.16xlarge",
+    "vCPU": 64,
+    "memory": 512,
+    "pricing": {
+      "ap-northeast-1": "5.792",
+      "ap-southeast-1": "5.696",
+      "eu-central-1": "5.696",
+      "eu-west-1": "5.344",
+      "us-east-1": "4.768",
+      "us-east-2": "4.768",
+      "us-gov-west-1": "5.728",
+      "us-west-2": "4.768"
+    }
+  },
+  {
+    "instance_type": "r5d.metal",
+    "vCPU": 96,
+    "memory": 768,
+    "pricing": {
+      "af-south-1": "9.12",
+      "ap-east-1": "8.4",
+      "ap-northeast-1": "8.352",
+      "ap-northeast-2": "8.304",
+      "ap-northeast-3": "8.352",
+      "ap-south-1": "7.248",
+      "ap-southeast-1": "8.352",
+      "ap-southeast-2": "8.352",
+      "ca-central-1": "7.584",
+      "eu-central-1": "8.304",
+      "eu-north-1": "7.296",
+      "eu-south-1": "8.064",
+      "eu-west-1": "7.68",
+      "eu-west-2": "8.112",
+      "eu-west-3": "8.112",
+      "me-south-1": "8.448",
+      "sa-east-1": "10.944",
+      "us-east-1": "6.912",
+      "us-east-2": "6.912",
+      "us-gov-east-1": "8.304",
+      "us-gov-west-1": "8.304",
+      "us-west-1": "7.776",
+      "us-west-2": "6.912"
     }
   },
   {
@@ -939,9 +1865,10 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 128,
     "memory": 1952,
     "pricing": {
+      "ap-east-1": "21.276",
       "ap-northeast-1": "19.341",
       "ap-northeast-2": "19.341",
-      "ap-south-1": "18.374",
+      "ap-south-1": "13.762",
       "ap-southeast-1": "19.341",
       "ap-southeast-2": "19.341",
       "ca-central-1": "14.672",
@@ -952,6 +1879,7 @@ const awsInstanceTypeDetailsJSON = `
       "sa-east-1": "26.01",
       "us-east-1": "13.338",
       "us-east-2": "13.338",
+      "us-gov-east-1": "16.006",
       "us-gov-west-1": "16.006",
       "us-west-2": "13.338"
     }
@@ -961,11 +1889,35 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 8,
     "memory": 21,
     "pricing": {
+      "ap-northeast-1": "0.544",
+      "ap-northeast-2": "0.488",
+      "ap-south-1": "0.432",
+      "ap-southeast-1": "0.496",
+      "ap-southeast-2": "0.564",
+      "ca-central-1": "0.472",
+      "eu-central-1": "0.492",
       "eu-west-1": "0.488",
       "us-east-1": "0.432",
       "us-east-2": "0.432",
+      "us-gov-east-1": "0.52",
       "us-gov-west-1": "0.52",
+      "us-west-1": "0.54",
       "us-west-2": "0.432"
+    }
+  },
+  {
+    "instance_type": "r5n.8xlarge",
+    "vCPU": 32,
+    "memory": 256,
+    "pricing": {
+      "ap-northeast-1": "2.896",
+      "ap-southeast-1": "2.848",
+      "eu-central-1": "2.848",
+      "eu-west-1": "2.672",
+      "us-east-1": "2.384",
+      "us-east-2": "2.384",
+      "us-gov-west-1": "2.864",
+      "us-west-2": "2.384"
     }
   },
   {
@@ -973,19 +1925,74 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 4,
     "memory": 16,
     "pricing": {
+      "af-south-1": "0.3",
+      "ap-east-1": "0.31",
       "ap-northeast-1": "0.292",
       "ap-northeast-2": "0.278",
+      "ap-northeast-3": "0.292",
+      "ap-south-1": "0.244",
       "ap-southeast-1": "0.282",
       "ap-southeast-2": "0.284",
       "ca-central-1": "0.252",
       "eu-central-1": "0.272",
+      "eu-north-1": "0.24",
+      "eu-south-1": "0.264",
       "eu-west-1": "0.252",
       "eu-west-2": "0.262",
+      "eu-west-3": "0.264",
+      "me-south-1": "0.277",
+      "sa-east-1": "0.36",
       "us-east-1": "0.226",
       "us-east-2": "0.226",
+      "us-gov-east-1": "0.286",
       "us-gov-west-1": "0.286",
       "us-west-1": "0.266",
       "us-west-2": "0.226"
+    }
+  },
+  {
+    "instance_type": "m5.metal",
+    "vCPU": 96,
+    "memory": 384,
+    "pricing": {
+      "af-south-1": "6.096",
+      "ap-east-1": "6.336",
+      "ap-northeast-1": "5.952",
+      "ap-northeast-2": "5.664",
+      "ap-northeast-3": "5.952",
+      "ap-south-1": "4.848",
+      "ap-southeast-1": "5.76",
+      "ap-southeast-2": "5.76",
+      "ca-central-1": "5.136",
+      "eu-central-1": "5.52",
+      "eu-north-1": "4.896",
+      "eu-south-1": "5.376",
+      "eu-west-1": "5.136",
+      "eu-west-2": "5.328",
+      "eu-west-3": "5.376",
+      "me-south-1": "5.65",
+      "sa-east-1": "7.344",
+      "us-east-1": "4.608",
+      "us-east-2": "4.608",
+      "us-gov-east-1": "5.808",
+      "us-gov-west-1": "5.808",
+      "us-west-1": "5.376",
+      "us-west-2": "4.608"
+    }
+  },
+  {
+    "instance_type": "m5dn.large",
+    "vCPU": 2,
+    "memory": 8,
+    "pricing": {
+      "ap-northeast-1": "0.175",
+      "ap-southeast-1": "0.167",
+      "eu-central-1": "0.162",
+      "eu-west-1": "0.152",
+      "us-east-1": "0.136",
+      "us-east-2": "0.136",
+      "us-gov-west-1": "0.171",
+      "us-west-2": "0.136"
     }
   },
   {
@@ -993,16 +2000,22 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 48,
     "memory": 192,
     "pricing": {
+      "af-south-1": "3.048",
+      "ap-east-1": "3.168",
       "ap-northeast-1": "2.976",
       "ap-northeast-2": "2.832",
+      "ap-northeast-3": "2.976",
       "ap-south-1": "2.424",
       "ap-southeast-1": "2.88",
       "ap-southeast-2": "2.88",
       "ca-central-1": "2.568",
       "eu-central-1": "2.76",
+      "eu-north-1": "2.448",
+      "eu-south-1": "2.688",
       "eu-west-1": "2.568",
       "eu-west-2": "2.664",
       "eu-west-3": "2.688",
+      "me-south-1": "2.825",
       "sa-east-1": "3.672",
       "us-east-1": "2.304",
       "us-east-2": "2.304",
@@ -1017,10 +2030,10 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 64,
     "memory": 488,
     "pricing": {
-      "ap-northeast-1": "41.944",
-      "ap-northeast-2": "39.848",
-      "ap-southeast-1": "39.848",
-      "ap-southeast-2": "39.848",
+      "ap-northeast-1": "33.552",
+      "ap-northeast-2": "33.872",
+      "ap-southeast-1": "33.872",
+      "ap-southeast-2": "33.872",
       "ca-central-1": "26.928",
       "eu-central-1": "30.584",
       "eu-west-1": "26.44",
@@ -1055,19 +2068,44 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 16,
     "memory": 32,
     "pricing": {
+      "af-south-1": "1.04",
+      "ap-east-1": "0.984",
       "ap-northeast-1": "0.976",
       "ap-northeast-2": "0.88",
+      "ap-northeast-3": "0.976",
+      "ap-south-1": "0.792",
       "ap-southeast-1": "0.896",
       "ap-southeast-2": "1.008",
       "ca-central-1": "0.848",
       "eu-central-1": "0.888",
+      "eu-north-1": "0.832",
+      "eu-south-1": "0.912",
       "eu-west-1": "0.872",
       "eu-west-2": "0.92",
+      "eu-west-3": "0.92",
+      "me-south-1": "0.959",
+      "sa-east-1": "1.192",
       "us-east-1": "0.768",
       "us-east-2": "0.768",
+      "us-gov-east-1": "0.928",
       "us-gov-west-1": "0.928",
       "us-west-1": "0.96",
       "us-west-2": "0.768"
+    }
+  },
+  {
+    "instance_type": "m5n.2xlarge",
+    "vCPU": 8,
+    "memory": 32,
+    "pricing": {
+      "ap-northeast-1": "0.612",
+      "ap-southeast-1": "0.584",
+      "eu-central-1": "0.564",
+      "eu-west-1": "0.532",
+      "us-east-1": "0.476",
+      "us-east-2": "0.476",
+      "us-gov-west-1": "0.596",
+      "us-west-2": "0.476"
     }
   },
   {
@@ -1075,21 +2113,59 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 96,
     "memory": 768,
     "pricing": {
+      "af-south-1": "8.064",
+      "ap-east-1": "8.016",
       "ap-northeast-1": "7.296",
       "ap-northeast-2": "7.296",
+      "ap-northeast-3": "7.296",
+      "ap-south-1": "6.24",
       "ap-southeast-1": "7.296",
       "ap-southeast-2": "7.248",
       "ca-central-1": "6.624",
       "eu-central-1": "7.296",
+      "eu-north-1": "6.432",
+      "eu-south-1": "7.104",
       "eu-west-1": "6.768",
       "eu-west-2": "7.104",
       "eu-west-3": "7.104",
+      "me-south-1": "7.445",
+      "sa-east-1": "9.648",
       "us-east-1": "6.048",
       "us-east-2": "6.048",
       "us-gov-east-1": "7.248",
       "us-gov-west-1": "7.248",
       "us-west-1": "6.72",
-      "us-west-2": "6.048"
+      "us-west-2": "7.258"
+    }
+  },
+  {
+    "instance_type": "m5dn.12xlarge",
+    "vCPU": 48,
+    "memory": 192,
+    "pricing": {
+      "ap-northeast-1": "4.2",
+      "ap-southeast-1": "4.008",
+      "eu-central-1": "3.888",
+      "eu-west-1": "3.648",
+      "us-east-1": "3.264",
+      "us-east-2": "3.264",
+      "us-gov-west-1": "4.104",
+      "us-west-2": "3.264"
+    }
+  },
+  {
+    "instance_type": "r5dn.16xlarge",
+    "vCPU": 64,
+    "memory": 512,
+    "pricing": {
+      "ap-northeast-1": "6.496",
+      "ap-southeast-1": "6.4",
+      "eu-central-1": "6.368",
+      "eu-west-1": "5.952",
+      "us-east-1": "5.344",
+      "us-east-2": "5.344",
+      "us-gov-west-1": "6.432",
+      "us-west-2": "5.344"
     }
   },
   {
@@ -1131,7 +2207,7 @@ const awsInstanceTypeDetailsJSON = `
       "eu-west-1": "0.371",
       "sa-east-1": "0.7",
       "us-east-1": "0.333",
-      "us-east-2": "0.333",
+      "us-east-2": "0.332",
       "us-gov-west-1": "0.399",
       "us-west-1": "0.371",
       "us-west-2": "0.333"
@@ -1143,10 +2219,17 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 3904,
     "pricing": {
       "ap-northeast-1": "38.688",
+      "ap-northeast-2": "38.688",
+      "ap-south-1": "27.52",
+      "ap-southeast-1": "38.688",
       "ap-southeast-2": "38.688",
+      "ca-central-1": "29.338",
       "eu-central-1": "37.344",
       "eu-west-1": "32",
+      "sa-east-1": "52.019",
       "us-east-1": "26.688",
+      "us-east-2": "26.688",
+      "us-gov-east-1": "32",
       "us-gov-west-1": "32",
       "us-west-2": "26.688"
     }
@@ -1156,10 +2239,19 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 4,
     "memory": 10.5,
     "pricing": {
+      "ap-northeast-1": "0.272",
+      "ap-northeast-2": "0.244",
+      "ap-south-1": "0.216",
+      "ap-southeast-1": "0.248",
+      "ap-southeast-2": "0.282",
+      "ca-central-1": "0.236",
+      "eu-central-1": "0.246",
       "eu-west-1": "0.244",
       "us-east-1": "0.216",
       "us-east-2": "0.216",
+      "us-gov-east-1": "0.26",
       "us-gov-west-1": "0.26",
+      "us-west-1": "0.27",
       "us-west-2": "0.216"
     }
   },
@@ -1168,11 +2260,46 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 16,
     "memory": 64,
     "pricing": {
+      "ap-northeast-1": "0.896",
+      "ap-northeast-2": "0.848",
+      "ap-south-1": "0.444",
       "ap-southeast-1": "0.864",
+      "ap-southeast-2": "0.864",
+      "ca-central-1": "0.768",
+      "eu-central-1": "0.832",
       "eu-west-1": "0.768",
+      "eu-west-2": "0.8",
+      "eu-west-3": "0.808",
+      "sa-east-1": "1.104",
       "us-east-1": "0.688",
       "us-east-2": "0.688",
+      "us-gov-east-1": "0.872",
+      "us-gov-west-1": "0.872",
+      "us-west-1": "0.808",
       "us-west-2": "0.688"
+    }
+  },
+  {
+    "instance_type": "r5ad.2xlarge",
+    "vCPU": 8,
+    "memory": 64,
+    "pricing": {
+      "ap-northeast-1": "0.636",
+      "ap-northeast-2": "0.632",
+      "ap-south-1": "0.332",
+      "ap-southeast-1": "0.636",
+      "ap-southeast-2": "0.636",
+      "ca-central-1": "0.576",
+      "eu-central-1": "0.632",
+      "eu-west-1": "0.584",
+      "eu-west-2": "0.616",
+      "eu-west-3": "0.612",
+      "sa-east-1": "0.832",
+      "us-east-1": "0.524",
+      "us-east-2": "0.524",
+      "us-gov-west-1": "0.632",
+      "us-west-1": "0.592",
+      "us-west-2": "0.524"
     }
   },
   {
@@ -1200,9 +2327,22 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "p3dn.24xlarge",
+    "vCPU": 96,
+    "memory": 768,
+    "pricing": {
+      "ap-northeast-1": "42.783",
+      "eu-west-1": "33.711",
+      "us-east-1": "31.212",
+      "us-gov-east-1": "37.454",
+      "us-gov-west-1": "37.454",
+      "us-west-2": "31.212"
+    }
+  },
+  {
     "instance_type": "p2.16xlarge",
     "vCPU": 64,
-    "memory": 768,
+    "memory": 732,
     "pricing": {
       "ap-northeast-1": "24.672",
       "ap-northeast-2": "23.44",
@@ -1215,6 +2355,21 @@ const awsInstanceTypeDetailsJSON = `
       "us-east-2": "14.4",
       "us-gov-west-1": "17.28",
       "us-west-2": "14.4"
+    }
+  },
+  {
+    "instance_type": "m5dn.16xlarge",
+    "vCPU": 64,
+    "memory": 256,
+    "pricing": {
+      "ap-northeast-1": "5.6",
+      "ap-southeast-1": "5.344",
+      "eu-central-1": "5.184",
+      "eu-west-1": "4.864",
+      "us-east-1": "4.352",
+      "us-east-2": "4.352",
+      "us-gov-west-1": "5.472",
+      "us-west-2": "4.352"
     }
   },
   {
@@ -1261,12 +2416,80 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 244,
     "pricing": {
       "ap-northeast-1": "2.418",
+      "ap-northeast-2": "2.418",
+      "ap-south-1": "1.72",
+      "ap-southeast-1": "2.418",
       "ap-southeast-2": "2.418",
+      "ca-central-1": "1.834",
       "eu-central-1": "2.334",
       "eu-west-1": "2",
       "us-east-1": "1.668",
+      "us-east-2": "1.668",
+      "us-gov-east-1": "2",
       "us-gov-west-1": "2",
       "us-west-2": "1.668"
+    }
+  },
+  {
+    "instance_type": "m5dn.24xlarge",
+    "vCPU": 96,
+    "memory": 384,
+    "pricing": {
+      "ap-northeast-1": "8.4",
+      "ap-southeast-1": "8.016",
+      "eu-central-1": "7.776",
+      "eu-west-1": "7.296",
+      "us-east-1": "6.528",
+      "us-east-2": "6.528",
+      "us-gov-west-1": "8.208",
+      "us-west-2": "6.528"
+    }
+  },
+  {
+    "instance_type": "m5a.8xlarge",
+    "vCPU": 32,
+    "memory": 128,
+    "pricing": {
+      "ap-northeast-1": "1.792",
+      "ap-northeast-2": "1.696",
+      "ap-south-1": "0.889",
+      "ap-southeast-1": "1.728",
+      "ap-southeast-2": "1.728",
+      "ca-central-1": "1.536",
+      "eu-central-1": "1.664",
+      "eu-west-1": "1.536",
+      "eu-west-2": "1.6",
+      "eu-west-3": "1.616",
+      "sa-east-1": "2.208",
+      "us-east-1": "1.376",
+      "us-east-2": "1.376",
+      "us-gov-east-1": "1.744",
+      "us-gov-west-1": "1.744",
+      "us-west-1": "1.616",
+      "us-west-2": "1.376"
+    }
+  },
+  {
+    "instance_type": "m5ad.2xlarge",
+    "vCPU": 8,
+    "memory": 32,
+    "pricing": {
+      "ap-northeast-1": "0.536",
+      "ap-northeast-2": "0.508",
+      "ap-south-1": "0.268",
+      "ap-southeast-1": "0.516",
+      "ap-southeast-2": "0.52",
+      "ca-central-1": "0.46",
+      "eu-central-1": "0.5",
+      "eu-west-1": "0.46",
+      "eu-west-2": "0.48",
+      "eu-west-3": "0.484",
+      "sa-east-1": "0.66",
+      "us-east-1": "0.412",
+      "us-east-2": "0.412",
+      "us-gov-west-1": "0.524",
+      "us-west-1": "0.488",
+      "us-west-2": "0.412"
     }
   },
   {
@@ -1274,11 +2497,48 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 8,
     "memory": 64,
     "pricing": {
+      "ap-northeast-1": "0.548",
+      "ap-northeast-2": "0.544",
+      "ap-south-1": "0.286",
       "ap-southeast-1": "0.544",
+      "ap-southeast-2": "0.544",
+      "ca-central-1": "0.496",
+      "eu-central-1": "0.548",
       "eu-west-1": "0.508",
+      "eu-west-2": "0.532",
+      "eu-west-3": "0.532",
+      "sa-east-1": "0.724",
       "us-east-1": "0.452",
       "us-east-2": "0.452",
+      "us-gov-east-1": "0.544",
+      "us-gov-west-1": "0.544",
+      "us-west-1": "0.504",
       "us-west-2": "0.452"
+    }
+  },
+  {
+    "instance_type": "c5d.metal",
+    "vCPU": 96,
+    "memory": 192,
+    "pricing": {
+      "af-south-1": "6.24",
+      "ap-northeast-1": "5.856",
+      "ap-northeast-2": "5.28",
+      "ap-southeast-1": "5.376",
+      "ap-southeast-2": "6.048",
+      "ca-central-1": "5.088",
+      "eu-central-1": "5.328",
+      "eu-north-1": "4.992",
+      "eu-south-1": "5.472",
+      "eu-west-1": "5.232",
+      "eu-west-2": "5.52",
+      "me-south-1": "5.755",
+      "sa-east-1": "7.152",
+      "us-east-1": "4.608",
+      "us-east-2": "4.608",
+      "us-gov-west-1": "5.568",
+      "us-west-1": "5.76",
+      "us-west-2": "4.608"
     }
   },
   {
@@ -1286,10 +2546,22 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 48,
     "memory": 192,
     "pricing": {
+      "ap-northeast-1": "2.688",
+      "ap-northeast-2": "2.544",
+      "ap-south-1": "1.333",
       "ap-southeast-1": "2.592",
+      "ap-southeast-2": "2.592",
+      "ca-central-1": "2.304",
+      "eu-central-1": "2.496",
       "eu-west-1": "2.304",
+      "eu-west-2": "2.4",
+      "eu-west-3": "2.424",
+      "sa-east-1": "3.312",
       "us-east-1": "2.064",
       "us-east-2": "2.064",
+      "us-gov-east-1": "2.616",
+      "us-gov-west-1": "2.616",
+      "us-west-1": "2.424",
       "us-west-2": "2.064"
     }
   },
@@ -1318,10 +2590,42 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "m5d.16xlarge",
+    "vCPU": 64,
+    "memory": 256,
+    "pricing": {
+      "af-south-1": "4.8",
+      "ap-east-1": "4.96",
+      "ap-northeast-1": "4.672",
+      "ap-northeast-2": "4.448",
+      "ap-northeast-3": "4.672",
+      "ap-south-1": "3.904",
+      "ap-southeast-1": "4.512",
+      "ap-southeast-2": "4.544",
+      "ca-central-1": "4.032",
+      "eu-central-1": "4.352",
+      "eu-north-1": "3.84",
+      "eu-south-1": "4.224",
+      "eu-west-1": "4.032",
+      "eu-west-2": "4.192",
+      "eu-west-3": "4.224",
+      "me-south-1": "4.435",
+      "sa-east-1": "5.76",
+      "us-east-1": "3.616",
+      "us-east-2": "3.616",
+      "us-gov-east-1": "4.576",
+      "us-gov-west-1": "4.576",
+      "us-west-1": "4.256",
+      "us-west-2": "3.616"
+    }
+  },
+  {
     "instance_type": "d2.xlarge",
     "vCPU": 4,
     "memory": 30.5,
     "pricing": {
+      "af-south-1": "0.875",
+      "ap-east-1": "0.957",
       "ap-northeast-1": "0.844",
       "ap-northeast-2": "0.844",
       "ap-northeast-3": "0.844",
@@ -1330,11 +2634,15 @@ const awsInstanceTypeDetailsJSON = `
       "ap-southeast-2": "0.87",
       "ca-central-1": "0.759",
       "eu-central-1": "0.794",
+      "eu-north-1": "0.698",
+      "eu-south-1": "0.772",
       "eu-west-1": "0.735",
       "eu-west-2": "0.772",
       "eu-west-3": "0.772",
+      "me-south-1": "0.809",
       "us-east-1": "0.69",
       "us-east-2": "0.69",
+      "us-gov-east-1": "0.828",
       "us-gov-west-1": "0.828",
       "us-west-1": "0.781",
       "us-west-2": "0.69"
@@ -1345,46 +2653,69 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 8,
     "memory": 16,
     "pricing": {
+      "af-south-1": "0.456",
+      "ap-east-1": "0.432",
       "ap-northeast-1": "0.428",
       "ap-northeast-2": "0.384",
+      "ap-northeast-3": "0.428",
       "ap-south-1": "0.34",
       "ap-southeast-1": "0.392",
       "ap-southeast-2": "0.444",
       "ca-central-1": "0.372",
       "eu-central-1": "0.388",
+      "eu-north-1": "0.364",
+      "eu-south-1": "0.404",
       "eu-west-1": "0.384",
       "eu-west-2": "0.404",
       "eu-west-3": "0.404",
+      "me-south-1": "0.422",
       "sa-east-1": "0.524",
       "us-east-1": "0.34",
       "us-east-2": "0.34",
       "us-gov-east-1": "0.408",
       "us-gov-west-1": "0.408",
       "us-west-1": "0.424",
-      "us-west-2": "0.34"
+      "us-west-2": "0.408"
     }
   },
   {
-    "instance_type": "t3.medium",
-    "vCPU": 2,
+    "instance_type": "g4dn.16xlarge",
+    "vCPU": 64,
+    "memory": 256,
+    "pricing": {
+      "ap-east-1": "6.702",
+      "ap-northeast-1": "5.875",
+      "ap-northeast-2": "5.353",
+      "ap-south-1": "4.791",
+      "ap-southeast-1": "6.089",
+      "ap-southeast-2": "5.659",
+      "ca-central-1": "4.832",
+      "eu-central-1": "5.44",
+      "eu-north-1": "4.617",
+      "eu-west-1": "4.853",
+      "eu-west-2": "5.092",
+      "eu-west-3": "5.088",
+      "me-south-1": "5.338",
+      "sa-east-1": "7.397",
+      "us-east-1": "4.352",
+      "us-east-2": "4.352",
+      "us-gov-east-1": "5.486",
+      "us-gov-west-1": "5.486",
+      "us-west-1": "5.222",
+      "us-west-2": "5.222"
+    }
+  },
+  {
+    "instance_type": "m6g.medium",
+    "vCPU": 1,
     "memory": 4,
     "pricing": {
-      "ap-northeast-1": "0.0544",
-      "ap-northeast-2": "0.052",
-      "ap-southeast-1": "0.0528",
-      "ap-southeast-2": "0.0528",
-      "ca-central-1": "0.0464",
-      "eu-central-1": "0.048",
-      "eu-west-1": "0.0456",
-      "eu-west-2": "0.0472",
-      "eu-west-3": "0.0472",
-      "sa-east-1": "0.0672",
-      "us-east-1": "0.0416",
-      "us-east-2": "0.0416",
-      "us-gov-east-1": "0.0488",
-      "us-gov-west-1": "0.0488",
-      "us-west-1": "0.0496",
-      "us-west-2": "0.0416"
+      "ap-northeast-1": "0.0495",
+      "eu-central-1": "0.046",
+      "eu-west-1": "0.043",
+      "us-east-1": "0.0385",
+      "us-east-2": "0.0385",
+      "us-west-2": "0.0385"
     }
   },
   {
@@ -1404,20 +2735,58 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "m5n.xlarge",
+    "vCPU": 4,
+    "memory": 16,
+    "pricing": {
+      "ap-northeast-1": "0.306",
+      "ap-southeast-1": "0.292",
+      "eu-central-1": "0.282",
+      "eu-west-1": "0.266",
+      "us-east-1": "0.238",
+      "us-east-2": "0.238",
+      "us-gov-west-1": "0.298",
+      "us-west-2": "0.238"
+    }
+  },
+  {
+    "instance_type": "m6g.16xlarge",
+    "vCPU": 64,
+    "memory": 256,
+    "pricing": {
+      "ap-northeast-1": "3.168",
+      "eu-central-1": "2.944",
+      "eu-west-1": "2.752",
+      "us-east-1": "2.464",
+      "us-east-2": "2.464",
+      "us-west-2": "2.464"
+    }
+  },
+  {
     "instance_type": "c5d.2xlarge",
     "vCPU": 8,
     "memory": 16,
     "pricing": {
+      "af-south-1": "0.52",
+      "ap-east-1": "0.492",
       "ap-northeast-1": "0.488",
       "ap-northeast-2": "0.44",
+      "ap-northeast-3": "0.488",
+      "ap-south-1": "0.396",
       "ap-southeast-1": "0.448",
       "ap-southeast-2": "0.504",
       "ca-central-1": "0.424",
       "eu-central-1": "0.444",
+      "eu-north-1": "0.416",
+      "eu-south-1": "0.456",
       "eu-west-1": "0.436",
       "eu-west-2": "0.46",
+      "eu-west-3": "0.46",
+      "me-south-1": "0.48",
+      "sa-east-1": "0.596",
       "us-east-1": "0.384",
       "us-east-2": "0.384",
+      "us-gov-east-1": "0.464",
       "us-gov-west-1": "0.464",
       "us-west-1": "0.48",
       "us-west-2": "0.384"
@@ -1459,6 +2828,30 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "t3a.medium",
+    "vCPU": 2,
+    "memory": 4,
+    "pricing": {
+      "ap-northeast-1": "0.049",
+      "ap-northeast-2": "0.0468",
+      "ap-south-1": "0.0246",
+      "ap-southeast-1": "0.0472",
+      "ap-southeast-2": "0.0475",
+      "ca-central-1": "0.0418",
+      "eu-central-1": "0.0432",
+      "eu-west-1": "0.0408",
+      "eu-west-2": "0.0425",
+      "eu-west-3": "0.0425",
+      "sa-east-1": "0.0605",
+      "us-east-1": "0.0376",
+      "us-east-2": "0.0376",
+      "us-gov-east-1": "0.0439",
+      "us-gov-west-1": "0.0439",
+      "us-west-1": "0.0446",
+      "us-west-2": "0.0376"
+    }
+  },
+  {
     "instance_type": "r4.16xlarge",
     "vCPU": 64,
     "memory": 488,
@@ -1487,6 +2880,8 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 4,
     "memory": 30.5,
     "pricing": {
+      "af-south-1": "0.41",
+      "ap-east-1": "0.412",
       "ap-northeast-1": "0.366",
       "ap-northeast-2": "0.366",
       "ap-northeast-3": "0.366",
@@ -1495,10 +2890,13 @@ const awsInstanceTypeDetailsJSON = `
       "ap-southeast-2": "0.374",
       "ca-central-1": "0.344",
       "eu-central-1": "0.372",
+      "eu-north-1": "0.326",
+      "eu-south-1": "0.362",
       "eu-west-1": "0.344",
       "eu-west-2": "0.362",
       "eu-west-3": "0.362",
-      "sa-east-1": "0.572",
+      "me-south-1": "0.378",
+      "sa-east-1": "0.498",
       "us-east-1": "0.312",
       "us-east-2": "0.312",
       "us-gov-east-1": "0.376",
@@ -1513,9 +2911,15 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 64,
     "pricing": {
       "ap-northeast-1": "0.908",
+      "ap-northeast-2": "0.9",
+      "ap-south-1": "0.784",
       "ap-southeast-1": "0.904",
+      "ap-southeast-2": "0.904",
+      "eu-central-1": "0.9",
       "eu-west-1": "0.832",
+      "eu-west-2": "0.879",
       "us-east-1": "0.744",
+      "us-east-2": "0.744",
       "us-west-1": "0.844",
       "us-west-2": "0.744"
     }
@@ -1537,6 +2941,36 @@ const awsInstanceTypeDetailsJSON = `
       "us-gov-west-1": "0.252",
       "us-west-1": "0.239",
       "us-west-2": "0.21"
+    }
+  },
+  {
+    "instance_type": "r5.8xlarge",
+    "vCPU": 32,
+    "memory": 256,
+    "pricing": {
+      "af-south-1": "2.688",
+      "ap-east-1": "2.672",
+      "ap-northeast-1": "2.432",
+      "ap-northeast-2": "2.432",
+      "ap-northeast-3": "2.432",
+      "ap-south-1": "2.08",
+      "ap-southeast-1": "2.432",
+      "ap-southeast-2": "2.416",
+      "ca-central-1": "2.208",
+      "eu-central-1": "2.432",
+      "eu-north-1": "2.144",
+      "eu-south-1": "2.368",
+      "eu-west-1": "2.256",
+      "eu-west-2": "2.368",
+      "eu-west-3": "2.368",
+      "me-south-1": "2.482",
+      "sa-east-1": "3.216",
+      "us-east-1": "2.016",
+      "us-east-2": "2.016",
+      "us-gov-east-1": "2.416",
+      "us-gov-west-1": "2.416",
+      "us-west-1": "2.24",
+      "us-west-2": "2.016"
     }
   },
   {
@@ -1573,7 +3007,7 @@ const awsInstanceTypeDetailsJSON = `
       "eu-west-1": "0.741",
       "sa-east-1": "1.399",
       "us-east-1": "0.665",
-      "us-east-2": "0.665",
+      "us-east-2": "0.664",
       "us-gov-west-1": "0.798",
       "us-west-1": "0.741",
       "us-west-2": "0.665"
@@ -1626,16 +3060,22 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 4,
     "memory": 16,
     "pricing": {
+      "af-south-1": "0.254",
+      "ap-east-1": "0.264",
       "ap-northeast-1": "0.248",
       "ap-northeast-2": "0.236",
+      "ap-northeast-3": "0.248",
       "ap-south-1": "0.202",
       "ap-southeast-1": "0.24",
       "ap-southeast-2": "0.24",
       "ca-central-1": "0.214",
       "eu-central-1": "0.23",
+      "eu-north-1": "0.204",
+      "eu-south-1": "0.224",
       "eu-west-1": "0.214",
       "eu-west-2": "0.222",
       "eu-west-3": "0.224",
+      "me-south-1": "0.235",
       "sa-east-1": "0.306",
       "us-east-1": "0.192",
       "us-east-2": "0.192",
@@ -1673,10 +3113,19 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 36,
     "memory": 96,
     "pricing": {
+      "ap-northeast-1": "2.448",
+      "ap-northeast-2": "2.196",
+      "ap-south-1": "1.944",
+      "ap-southeast-1": "2.232",
+      "ap-southeast-2": "2.538",
+      "ca-central-1": "2.124",
+      "eu-central-1": "2.214",
       "eu-west-1": "2.196",
       "us-east-1": "1.944",
       "us-east-2": "1.944",
+      "us-gov-east-1": "2.34",
       "us-gov-west-1": "2.34",
+      "us-west-1": "2.43",
       "us-west-2": "1.944"
     }
   },
@@ -1685,6 +3134,8 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 8,
     "memory": 61,
     "pricing": {
+      "af-south-1": "1.75",
+      "ap-east-1": "1.914",
       "ap-northeast-1": "1.688",
       "ap-northeast-2": "1.688",
       "ap-northeast-3": "1.688",
@@ -1693,11 +3144,15 @@ const awsInstanceTypeDetailsJSON = `
       "ap-southeast-2": "1.74",
       "ca-central-1": "1.518",
       "eu-central-1": "1.588",
+      "eu-north-1": "1.396",
+      "eu-south-1": "1.544",
       "eu-west-1": "1.47",
       "eu-west-2": "1.544",
       "eu-west-3": "1.544",
+      "me-south-1": "1.617",
       "us-east-1": "1.38",
       "us-east-2": "1.38",
+      "us-gov-east-1": "1.656",
       "us-gov-west-1": "1.656",
       "us-west-1": "1.563",
       "us-west-2": "1.38"
@@ -1708,6 +3163,8 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 16,
     "memory": 122,
     "pricing": {
+      "af-south-1": "3.5",
+      "ap-east-1": "3.828",
       "ap-northeast-1": "3.376",
       "ap-northeast-2": "3.376",
       "ap-northeast-3": "3.376",
@@ -1716,14 +3173,41 @@ const awsInstanceTypeDetailsJSON = `
       "ap-southeast-2": "3.48",
       "ca-central-1": "3.036",
       "eu-central-1": "3.176",
+      "eu-north-1": "2.792",
+      "eu-south-1": "3.088",
       "eu-west-1": "2.94",
       "eu-west-2": "3.087",
       "eu-west-3": "3.088",
+      "me-south-1": "3.234",
       "us-east-1": "2.76",
       "us-east-2": "2.76",
+      "us-gov-east-1": "3.312",
       "us-gov-west-1": "3.312",
       "us-west-1": "3.125",
       "us-west-2": "2.76"
+    }
+  },
+  {
+    "instance_type": "m5ad.4xlarge",
+    "vCPU": 16,
+    "memory": 64,
+    "pricing": {
+      "ap-northeast-1": "1.072",
+      "ap-northeast-2": "1.016",
+      "ap-south-1": "0.537",
+      "ap-southeast-1": "1.032",
+      "ap-southeast-2": "1.04",
+      "ca-central-1": "0.92",
+      "eu-central-1": "1",
+      "eu-west-1": "0.92",
+      "eu-west-2": "0.96",
+      "eu-west-3": "0.968",
+      "sa-east-1": "1.32",
+      "us-east-1": "0.824",
+      "us-east-2": "0.824",
+      "us-gov-west-1": "1.048",
+      "us-west-1": "0.976",
+      "us-west-2": "0.824"
     }
   },
   {
@@ -1731,23 +3215,53 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 4,
     "memory": 8,
     "pricing": {
+      "af-south-1": "0.228",
+      "ap-east-1": "0.216",
       "ap-northeast-1": "0.214",
       "ap-northeast-2": "0.192",
+      "ap-northeast-3": "0.214",
       "ap-south-1": "0.17",
       "ap-southeast-1": "0.196",
       "ap-southeast-2": "0.222",
       "ca-central-1": "0.186",
       "eu-central-1": "0.194",
+      "eu-north-1": "0.182",
+      "eu-south-1": "0.202",
       "eu-west-1": "0.192",
       "eu-west-2": "0.202",
       "eu-west-3": "0.202",
+      "me-south-1": "0.211",
       "sa-east-1": "0.262",
       "us-east-1": "0.17",
       "us-east-2": "0.17",
       "us-gov-east-1": "0.204",
       "us-gov-west-1": "0.204",
       "us-west-1": "0.212",
-      "us-west-2": "0.17"
+      "us-west-2": "0.204"
+    }
+  },
+  {
+    "instance_type": "m5dn.4xlarge",
+    "vCPU": 16,
+    "memory": 64,
+    "pricing": {
+      "ap-northeast-1": "1.4",
+      "ap-southeast-1": "1.336",
+      "eu-central-1": "1.296",
+      "eu-west-1": "1.216",
+      "us-east-1": "1.088",
+      "us-east-2": "1.088",
+      "us-gov-west-1": "1.368",
+      "us-west-2": "1.088"
+    }
+  },
+  {
+    "instance_type": "inf1.6xlarge",
+    "vCPU": 24,
+    "memory": 48,
+    "pricing": {
+      "us-east-1": "1.904",
+      "us-west-2": "1.904"
     }
   },
   {
@@ -1755,19 +3269,74 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 16,
     "memory": 64,
     "pricing": {
+      "af-south-1": "1.2",
+      "ap-east-1": "1.24",
       "ap-northeast-1": "1.168",
       "ap-northeast-2": "1.112",
+      "ap-northeast-3": "1.168",
+      "ap-south-1": "0.976",
       "ap-southeast-1": "1.128",
       "ap-southeast-2": "1.136",
       "ca-central-1": "1.008",
       "eu-central-1": "1.088",
+      "eu-north-1": "0.96",
+      "eu-south-1": "1.056",
       "eu-west-1": "1.008",
       "eu-west-2": "1.048",
+      "eu-west-3": "1.056",
+      "me-south-1": "1.109",
+      "sa-east-1": "1.44",
       "us-east-1": "0.904",
       "us-east-2": "0.904",
+      "us-gov-east-1": "1.144",
       "us-gov-west-1": "1.144",
       "us-west-1": "1.064",
       "us-west-2": "0.904"
+    }
+  },
+  {
+    "instance_type": "r5.16xlarge",
+    "vCPU": 64,
+    "memory": 512,
+    "pricing": {
+      "af-south-1": "5.376",
+      "ap-east-1": "5.344",
+      "ap-northeast-1": "4.864",
+      "ap-northeast-2": "4.864",
+      "ap-northeast-3": "4.864",
+      "ap-south-1": "4.16",
+      "ap-southeast-1": "4.864",
+      "ap-southeast-2": "4.832",
+      "ca-central-1": "4.416",
+      "eu-central-1": "4.864",
+      "eu-north-1": "4.288",
+      "eu-south-1": "4.736",
+      "eu-west-1": "4.512",
+      "eu-west-2": "4.736",
+      "eu-west-3": "4.736",
+      "me-south-1": "4.963",
+      "sa-east-1": "6.432",
+      "us-east-1": "4.032",
+      "us-east-2": "4.032",
+      "us-gov-east-1": "4.832",
+      "us-gov-west-1": "4.832",
+      "us-west-1": "4.48",
+      "us-west-2": "4.838"
+    }
+  },
+  {
+    "instance_type": "m5n.24xlarge",
+    "vCPU": 96,
+    "memory": 384,
+    "pricing": {
+      "ap-northeast-1": "7.344",
+      "ap-southeast-1": "7.008",
+      "eu-central-1": "6.768",
+      "eu-west-1": "6.384",
+      "us-east-1": "5.712",
+      "us-east-2": "5.712",
+      "us-gov-west-1": "7.152",
+      "us-west-2": "5.712"
     }
   },
   {
@@ -1798,10 +3367,22 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 16,
     "memory": 128,
     "pricing": {
+      "ap-northeast-1": "1.096",
+      "ap-northeast-2": "1.088",
+      "ap-south-1": "0.572",
       "ap-southeast-1": "1.088",
+      "ap-southeast-2": "1.088",
+      "ca-central-1": "0.992",
+      "eu-central-1": "1.096",
       "eu-west-1": "1.016",
+      "eu-west-2": "1.064",
+      "eu-west-3": "1.064",
+      "sa-east-1": "1.448",
       "us-east-1": "0.904",
       "us-east-2": "0.904",
+      "us-gov-east-1": "1.088",
+      "us-gov-west-1": "1.088",
+      "us-west-1": "1.008",
       "us-west-2": "0.904"
     }
   },
@@ -1810,22 +3391,29 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 4,
     "memory": 16,
     "pricing": {
+      "af-south-1": "0.217",
+      "ap-east-1": "0.2336",
       "ap-northeast-1": "0.2176",
       "ap-northeast-2": "0.208",
+      "ap-northeast-3": "0.2176",
+      "ap-south-1": "0.1792",
       "ap-southeast-1": "0.2112",
       "ap-southeast-2": "0.2112",
       "ca-central-1": "0.1856",
       "eu-central-1": "0.192",
+      "eu-north-1": "0.1728",
+      "eu-south-1": "0.1917",
       "eu-west-1": "0.1824",
       "eu-west-2": "0.1888",
       "eu-west-3": "0.1888",
+      "me-south-1": "0.2006",
       "sa-east-1": "0.2688",
       "us-east-1": "0.1664",
       "us-east-2": "0.1664",
       "us-gov-east-1": "0.1952",
       "us-gov-west-1": "0.1952",
       "us-west-1": "0.1984",
-      "us-west-2": "0.1664"
+      "us-west-2": "0.1997"
     }
   },
   {
@@ -1834,9 +3422,15 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 384,
     "pricing": {
       "ap-northeast-1": "5.448",
+      "ap-northeast-2": "5.4",
+      "ap-south-1": "4.704",
       "ap-southeast-1": "5.424",
+      "ap-southeast-2": "5.424",
+      "eu-central-1": "5.4",
       "eu-west-1": "4.992",
+      "eu-west-2": "5.273",
       "us-east-1": "4.464",
+      "us-east-2": "4.464",
       "us-west-1": "5.064",
       "us-west-2": "4.464"
     }
@@ -1869,21 +3463,29 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 48,
     "memory": 384,
     "pricing": {
+      "af-south-1": "4.032",
+      "ap-east-1": "4.008",
       "ap-northeast-1": "3.648",
       "ap-northeast-2": "3.648",
+      "ap-northeast-3": "3.648",
+      "ap-south-1": "3.12",
       "ap-southeast-1": "3.648",
       "ap-southeast-2": "3.624",
       "ca-central-1": "3.312",
       "eu-central-1": "3.648",
+      "eu-north-1": "3.216",
+      "eu-south-1": "3.552",
       "eu-west-1": "3.384",
       "eu-west-2": "3.552",
       "eu-west-3": "3.552",
+      "me-south-1": "3.722",
+      "sa-east-1": "4.824",
       "us-east-1": "3.024",
       "us-east-2": "3.024",
       "us-gov-east-1": "3.624",
       "us-gov-west-1": "3.624",
       "us-west-1": "3.36",
-      "us-west-2": "3.024"
+      "us-west-2": "3.629"
     }
   },
   {
@@ -1954,6 +3556,11 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 4,
     "memory": 8,
     "pricing": {
+      "ap-northeast-1": "0.1284",
+      "ap-south-1": "0.102",
+      "ap-southeast-1": "0.1176",
+      "ap-southeast-2": "0.1332",
+      "eu-central-1": "0.1164",
       "eu-west-1": "0.1152",
       "us-east-1": "0.102",
       "us-east-2": "0.102",
@@ -1966,9 +3573,15 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 192,
     "pricing": {
       "ap-northeast-1": "2.724",
+      "ap-northeast-2": "2.7",
+      "ap-south-1": "2.352",
       "ap-southeast-1": "2.712",
+      "ap-southeast-2": "2.712",
+      "eu-central-1": "2.7",
       "eu-west-1": "2.496",
+      "eu-west-2": "2.636",
       "us-east-1": "2.232",
+      "us-east-2": "2.232",
       "us-west-1": "2.532",
       "us-west-2": "2.232"
     }
@@ -1978,18 +3591,91 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 16,
     "memory": 128,
     "pricing": {
+      "af-south-1": "1.52",
+      "ap-east-1": "1.4",
       "ap-northeast-1": "1.392",
       "ap-northeast-2": "1.384",
+      "ap-northeast-3": "1.392",
+      "ap-south-1": "1.208",
       "ap-southeast-1": "1.392",
       "ap-southeast-2": "1.392",
       "ca-central-1": "1.264",
       "eu-central-1": "1.384",
+      "eu-north-1": "1.216",
+      "eu-south-1": "1.344",
       "eu-west-1": "1.28",
       "eu-west-2": "1.352",
+      "eu-west-3": "1.352",
+      "me-south-1": "1.408",
+      "sa-east-1": "1.824",
       "us-east-1": "1.152",
       "us-east-2": "1.152",
+      "us-gov-east-1": "1.384",
+      "us-gov-west-1": "1.384",
       "us-west-1": "1.296",
-      "us-west-2": "1.152"
+      "us-west-2": "1.382"
+    }
+  },
+  {
+    "instance_type": "m5dn.metal",
+    "vCPU": 96,
+    "memory": 384,
+    "pricing": {
+      "us-gov-west-1": "8.208"
+    }
+  },
+  {
+    "instance_type": "r5a.16xlarge",
+    "vCPU": 64,
+    "memory": 512,
+    "pricing": {
+      "ap-northeast-1": "4.384",
+      "ap-northeast-2": "4.352",
+      "ap-south-1": "2.288",
+      "ap-southeast-1": "4.352",
+      "ap-southeast-2": "4.352",
+      "ca-central-1": "3.968",
+      "eu-central-1": "4.384",
+      "eu-west-1": "4.064",
+      "eu-west-2": "4.256",
+      "eu-west-3": "4.256",
+      "sa-east-1": "5.792",
+      "us-east-1": "3.616",
+      "us-east-2": "3.616",
+      "us-gov-east-1": "4.352",
+      "us-gov-west-1": "4.352",
+      "us-west-1": "4.032",
+      "us-west-2": "3.616"
+    }
+  },
+  {
+    "instance_type": "m5n.large",
+    "vCPU": 2,
+    "memory": 8,
+    "pricing": {
+      "ap-northeast-1": "0.153",
+      "ap-southeast-1": "0.146",
+      "eu-central-1": "0.141",
+      "eu-west-1": "0.133",
+      "us-east-1": "0.119",
+      "us-east-2": "0.119",
+      "us-gov-west-1": "0.149",
+      "us-west-2": "0.119"
+    }
+  },
+  {
+    "instance_type": "m5dn.8xlarge",
+    "vCPU": 32,
+    "memory": 128,
+    "pricing": {
+      "ap-northeast-1": "2.8",
+      "ap-southeast-1": "2.672",
+      "eu-central-1": "2.592",
+      "eu-west-1": "2.432",
+      "us-east-1": "2.176",
+      "us-east-2": "2.176",
+      "us-gov-west-1": "2.736",
+      "us-west-2": "2.176"
     }
   },
   {
@@ -2058,11 +3744,38 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 4,
     "memory": 32,
     "pricing": {
+      "ap-northeast-1": "0.274",
+      "ap-northeast-2": "0.272",
+      "ap-south-1": "0.143",
       "ap-southeast-1": "0.272",
+      "ap-southeast-2": "0.272",
+      "ca-central-1": "0.248",
+      "eu-central-1": "0.274",
       "eu-west-1": "0.254",
+      "eu-west-2": "0.266",
+      "eu-west-3": "0.266",
+      "sa-east-1": "0.362",
       "us-east-1": "0.226",
       "us-east-2": "0.226",
+      "us-gov-east-1": "0.272",
+      "us-gov-west-1": "0.272",
+      "us-west-1": "0.252",
       "us-west-2": "0.226"
+    }
+  },
+  {
+    "instance_type": "m5n.4xlarge",
+    "vCPU": 16,
+    "memory": 64,
+    "pricing": {
+      "ap-northeast-1": "1.224",
+      "ap-southeast-1": "1.168",
+      "eu-central-1": "1.128",
+      "eu-west-1": "1.064",
+      "us-east-1": "0.952",
+      "us-east-2": "0.952",
+      "us-gov-west-1": "1.192",
+      "us-west-2": "0.952"
     }
   },
   {
@@ -2077,10 +3790,47 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "m5ad.24xlarge",
+    "vCPU": 96,
+    "memory": 384,
+    "pricing": {
+      "ap-northeast-1": "6.432",
+      "ap-northeast-2": "6.096",
+      "ap-south-1": "3.221",
+      "ap-southeast-1": "6.192",
+      "ap-southeast-2": "6.24",
+      "ca-central-1": "5.52",
+      "eu-central-1": "6",
+      "eu-west-1": "5.52",
+      "eu-west-2": "5.76",
+      "eu-west-3": "5.808",
+      "sa-east-1": "7.92",
+      "us-east-1": "4.944",
+      "us-east-2": "4.944",
+      "us-gov-west-1": "6.288",
+      "us-west-1": "5.856",
+      "us-west-2": "4.944"
+    }
+  },
+  {
+    "instance_type": "m6g.metal",
+    "vCPU": 64,
+    "memory": 256,
+    "pricing": {
+      "ap-northeast-1": "3.168",
+      "eu-central-1": "2.944",
+      "eu-west-1": "2.752",
+      "us-east-1": "2.464",
+      "us-east-2": "2.464",
+      "us-west-2": "2.464"
+    }
+  },
+  {
     "instance_type": "f1.4xlarge",
     "vCPU": 16,
     "memory": 244,
     "pricing": {
+      "ap-southeast-2": "3.962",
       "eu-west-1": "3.63",
       "us-east-1": "3.3",
       "us-gov-west-1": "3.96",
@@ -2089,15 +3839,110 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "i3en.xlarge",
+    "vCPU": 4,
+    "memory": 32,
+    "pricing": {
+      "ap-northeast-1": "0.532",
+      "ap-northeast-2": "0.532",
+      "ap-south-1": "0.514",
+      "ap-southeast-1": "0.542",
+      "ap-southeast-2": "0.542",
+      "ca-central-1": "0.5",
+      "eu-central-1": "0.54",
+      "eu-west-1": "0.5",
+      "eu-west-2": "0.526",
+      "eu-west-3": "0.526",
+      "sa-east-1": "0.72",
+      "us-east-1": "0.452",
+      "us-east-2": "0.452",
+      "us-gov-east-1": "0.546",
+      "us-gov-west-1": "0.546",
+      "us-west-1": "0.5",
+      "us-west-2": "0.452"
+    }
+  },
+  {
     "instance_type": "r5a.12xlarge",
     "vCPU": 48,
     "memory": 384,
     "pricing": {
+      "ap-northeast-1": "3.288",
+      "ap-northeast-2": "3.264",
+      "ap-south-1": "1.716",
       "ap-southeast-1": "3.264",
+      "ap-southeast-2": "3.264",
+      "ca-central-1": "2.976",
+      "eu-central-1": "3.288",
       "eu-west-1": "3.048",
+      "eu-west-2": "3.192",
+      "eu-west-3": "3.192",
+      "sa-east-1": "4.344",
       "us-east-1": "2.712",
       "us-east-2": "2.712",
+      "us-gov-east-1": "3.264",
+      "us-gov-west-1": "3.264",
+      "us-west-1": "3.024",
       "us-west-2": "2.712"
+    }
+  },
+  {
+    "instance_type": "u-12tb1.metal",
+    "vCPU": 448,
+    "memory": 12288,
+    "pricing": {}
+  },
+  {
+    "instance_type": "r5ad.24xlarge",
+    "vCPU": 96,
+    "memory": 768,
+    "pricing": {
+      "ap-northeast-1": "7.632",
+      "ap-northeast-2": "7.584",
+      "ap-south-1": "3.986",
+      "ap-southeast-1": "7.632",
+      "ap-southeast-2": "7.632",
+      "ca-central-1": "6.912",
+      "eu-central-1": "7.584",
+      "eu-west-1": "7.008",
+      "eu-west-2": "7.392",
+      "eu-west-3": "7.344",
+      "sa-east-1": "9.984",
+      "us-east-1": "6.288",
+      "us-east-2": "6.288",
+      "us-gov-west-1": "7.584",
+      "us-west-1": "7.104",
+      "us-west-2": "6.288"
+    }
+  },
+  {
+    "instance_type": "m5d.metal",
+    "vCPU": 96,
+    "memory": 384,
+    "pricing": {
+      "af-south-1": "7.2",
+      "ap-east-1": "7.44",
+      "ap-northeast-1": "7.008",
+      "ap-northeast-2": "6.672",
+      "ap-northeast-3": "7.008",
+      "ap-south-1": "5.856",
+      "ap-southeast-1": "6.768",
+      "ap-southeast-2": "6.816",
+      "ca-central-1": "6.048",
+      "eu-central-1": "6.528",
+      "eu-north-1": "5.76",
+      "eu-south-1": "6.336",
+      "eu-west-1": "6.048",
+      "eu-west-2": "6.288",
+      "eu-west-3": "6.336",
+      "me-south-1": "6.653",
+      "sa-east-1": "8.64",
+      "us-east-1": "5.424",
+      "us-east-2": "5.424",
+      "us-gov-east-1": "6.864",
+      "us-gov-west-1": "6.864",
+      "us-west-1": "6.384",
+      "us-west-2": "5.424"
     }
   },
   {
@@ -2145,12 +3990,33 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 976,
     "pricing": {
       "ap-northeast-1": "9.672",
+      "ap-northeast-2": "9.672",
+      "ap-south-1": "6.88",
+      "ap-southeast-1": "9.672",
       "ap-southeast-2": "9.672",
+      "ca-central-1": "7.334",
       "eu-central-1": "9.336",
       "eu-west-1": "8",
       "us-east-1": "6.672",
+      "us-east-2": "6.672",
+      "us-gov-east-1": "8",
       "us-gov-west-1": "8",
       "us-west-2": "6.672"
+    }
+  },
+  {
+    "instance_type": "r5dn.large",
+    "vCPU": 2,
+    "memory": 16,
+    "pricing": {
+      "ap-northeast-1": "0.203",
+      "ap-southeast-1": "0.2",
+      "eu-central-1": "0.199",
+      "eu-west-1": "0.186",
+      "us-east-1": "0.167",
+      "us-east-2": "0.167",
+      "us-gov-west-1": "0.201",
+      "us-west-2": "0.167"
     }
   },
   {
@@ -2158,23 +4024,59 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 16,
     "memory": 64,
     "pricing": {
+      "af-south-1": "1.016",
+      "ap-east-1": "1.056",
       "ap-northeast-1": "0.992",
       "ap-northeast-2": "0.944",
+      "ap-northeast-3": "0.992",
       "ap-south-1": "0.808",
       "ap-southeast-1": "0.96",
       "ap-southeast-2": "0.96",
       "ca-central-1": "0.856",
       "eu-central-1": "0.92",
+      "eu-north-1": "0.816",
+      "eu-south-1": "0.896",
       "eu-west-1": "0.856",
       "eu-west-2": "0.888",
       "eu-west-3": "0.896",
+      "me-south-1": "0.942",
       "sa-east-1": "1.224",
       "us-east-1": "0.768",
       "us-east-2": "0.768",
       "us-gov-east-1": "0.968",
       "us-gov-west-1": "0.968",
       "us-west-1": "0.896",
-      "us-west-2": "0.768"
+      "us-west-2": "0.922"
+    }
+  },
+  {
+    "instance_type": "r5dn.12xlarge",
+    "vCPU": 48,
+    "memory": 384,
+    "pricing": {
+      "ap-northeast-1": "4.872",
+      "ap-southeast-1": "4.8",
+      "eu-central-1": "4.776",
+      "eu-west-1": "4.464",
+      "us-east-1": "4.008",
+      "us-east-2": "4.008",
+      "us-gov-west-1": "4.824",
+      "us-west-2": "4.008"
+    }
+  },
+  {
+    "instance_type": "r5n.4xlarge",
+    "vCPU": 16,
+    "memory": 128,
+    "pricing": {
+      "ap-northeast-1": "1.448",
+      "ap-southeast-1": "1.424",
+      "eu-central-1": "1.424",
+      "eu-west-1": "1.336",
+      "us-east-1": "1.192",
+      "us-east-2": "1.192",
+      "us-gov-west-1": "1.432",
+      "us-west-2": "1.192"
     }
   },
   {
@@ -2194,22 +4096,87 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 32,
     "pricing": {
       "ap-northeast-1": "0.454",
+      "ap-northeast-2": "0.45",
+      "ap-south-1": "0.392",
       "ap-southeast-1": "0.452",
+      "ap-southeast-2": "0.452",
+      "eu-central-1": "0.45",
       "eu-west-1": "0.416",
+      "eu-west-2": "0.439",
       "us-east-1": "0.372",
+      "us-east-2": "0.372",
       "us-west-1": "0.422",
       "us-west-2": "0.372"
     }
   },
   {
-    "instance_type": "a1.2xlarge",
-    "vCPU": 8,
-    "memory": 16,
+    "instance_type": "r5dn.4xlarge",
+    "vCPU": 16,
+    "memory": 128,
     "pricing": {
-      "eu-west-1": "0.2304",
-      "us-east-1": "0.204",
-      "us-east-2": "0.204",
-      "us-west-2": "0.204"
+      "ap-northeast-1": "1.624",
+      "ap-southeast-1": "1.6",
+      "eu-central-1": "1.592",
+      "eu-west-1": "1.488",
+      "us-east-1": "1.336",
+      "us-east-2": "1.336",
+      "us-gov-west-1": "1.608",
+      "us-west-2": "1.336"
+    }
+  },
+  {
+    "instance_type": "c5d.12xlarge",
+    "vCPU": 48,
+    "memory": 96,
+    "pricing": {
+      "af-south-1": "3.12",
+      "ap-northeast-1": "2.928",
+      "ap-northeast-2": "2.64",
+      "ap-southeast-1": "2.688",
+      "ap-southeast-2": "3.024",
+      "ca-central-1": "2.544",
+      "eu-central-1": "2.664",
+      "eu-north-1": "2.496",
+      "eu-south-1": "2.736",
+      "eu-west-1": "2.616",
+      "eu-west-2": "2.76",
+      "me-south-1": "2.878",
+      "sa-east-1": "3.576",
+      "us-east-1": "2.304",
+      "us-east-2": "2.304",
+      "us-gov-west-1": "2.784",
+      "us-west-1": "2.88",
+      "us-west-2": "2.304"
+    }
+  },
+  {
+    "instance_type": "r5d.8xlarge",
+    "vCPU": 32,
+    "memory": 256,
+    "pricing": {
+      "af-south-1": "3.04",
+      "ap-east-1": "2.8",
+      "ap-northeast-1": "2.784",
+      "ap-northeast-2": "2.768",
+      "ap-northeast-3": "2.784",
+      "ap-south-1": "2.416",
+      "ap-southeast-1": "2.784",
+      "ap-southeast-2": "2.784",
+      "ca-central-1": "2.528",
+      "eu-central-1": "2.768",
+      "eu-north-1": "2.432",
+      "eu-south-1": "2.688",
+      "eu-west-1": "2.56",
+      "eu-west-2": "2.704",
+      "eu-west-3": "2.704",
+      "me-south-1": "2.816",
+      "sa-east-1": "3.648",
+      "us-east-1": "2.304",
+      "us-east-2": "2.304",
+      "us-gov-east-1": "2.768",
+      "us-gov-west-1": "2.768",
+      "us-west-1": "2.592",
+      "us-west-2": "2.765"
     }
   },
   {
@@ -2217,22 +4184,29 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 8,
     "memory": 32,
     "pricing": {
+      "af-south-1": "0.4339",
+      "ap-east-1": "0.4672",
       "ap-northeast-1": "0.4352",
       "ap-northeast-2": "0.416",
+      "ap-northeast-3": "0.4352",
+      "ap-south-1": "0.3584",
       "ap-southeast-1": "0.4224",
       "ap-southeast-2": "0.4224",
       "ca-central-1": "0.3712",
       "eu-central-1": "0.384",
+      "eu-north-1": "0.3456",
+      "eu-south-1": "0.3834",
       "eu-west-1": "0.3648",
       "eu-west-2": "0.3776",
       "eu-west-3": "0.3776",
+      "me-south-1": "0.4013",
       "sa-east-1": "0.5376",
       "us-east-1": "0.3328",
       "us-east-2": "0.3328",
       "us-gov-east-1": "0.3904",
       "us-gov-west-1": "0.3904",
       "us-west-1": "0.3968",
-      "us-west-2": "0.3328"
+      "us-west-2": "0.3994"
     }
   },
   {
@@ -2241,11 +4215,13 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 244,
     "pricing": {
       "ap-northeast-1": "3.16",
+      "ap-northeast-2": "2.84",
       "ap-southeast-1": "3.34",
       "ap-southeast-2": "3.508",
       "ca-central-1": "2.832",
       "eu-central-1": "2.85",
       "eu-west-1": "2.42",
+      "eu-west-2": "2.858",
       "us-east-1": "2.28",
       "us-east-2": "2.28",
       "us-gov-west-1": "2.64",
@@ -2254,16 +4230,80 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "m5d.8xlarge",
+    "vCPU": 32,
+    "memory": 128,
+    "pricing": {
+      "af-south-1": "2.4",
+      "ap-east-1": "2.48",
+      "ap-northeast-1": "2.336",
+      "ap-northeast-2": "2.224",
+      "ap-northeast-3": "2.336",
+      "ap-south-1": "1.952",
+      "ap-southeast-1": "2.256",
+      "ap-southeast-2": "2.272",
+      "ca-central-1": "2.016",
+      "eu-central-1": "2.176",
+      "eu-north-1": "1.92",
+      "eu-south-1": "2.112",
+      "eu-west-1": "2.016",
+      "eu-west-2": "2.096",
+      "eu-west-3": "2.112",
+      "me-south-1": "2.218",
+      "sa-east-1": "2.88",
+      "us-east-1": "1.808",
+      "us-east-2": "1.808",
+      "us-gov-east-1": "2.288",
+      "us-gov-west-1": "2.288",
+      "us-west-1": "2.128",
+      "us-west-2": "1.808"
+    }
+  },
+  {
     "instance_type": "i3.metal",
-    "vCPU": 72,
+    "vCPU": 64,
     "memory": 512,
     "pricing": {
+      "af-south-1": "6.56",
+      "ap-northeast-1": "5.856",
       "eu-central-1": "5.952",
+      "eu-south-1": "5.792",
       "eu-west-1": "5.504",
-      "eu-west-2": "5.792",
       "us-east-1": "4.992",
       "us-east-2": "4.992",
+      "us-gov-west-1": "6.016",
+      "us-west-1": "5.504",
       "us-west-2": "4.992"
+    }
+  },
+  {
+    "instance_type": "m5.16xlarge",
+    "vCPU": 64,
+    "memory": 256,
+    "pricing": {
+      "af-south-1": "4.064",
+      "ap-east-1": "4.224",
+      "ap-northeast-1": "3.968",
+      "ap-northeast-2": "3.776",
+      "ap-northeast-3": "3.968",
+      "ap-south-1": "3.232",
+      "ap-southeast-1": "3.84",
+      "ap-southeast-2": "3.84",
+      "ca-central-1": "3.424",
+      "eu-central-1": "3.68",
+      "eu-north-1": "3.264",
+      "eu-south-1": "3.584",
+      "eu-west-1": "3.424",
+      "eu-west-2": "3.552",
+      "eu-west-3": "3.584",
+      "me-south-1": "3.766",
+      "sa-east-1": "4.896",
+      "us-east-1": "3.072",
+      "us-east-2": "3.072",
+      "us-gov-east-1": "3.872",
+      "us-gov-west-1": "3.872",
+      "us-west-1": "3.584",
+      "us-west-2": "3.072"
     }
   },
   {
@@ -2290,19 +4330,96 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "z1d.metal",
+    "vCPU": 48,
+    "memory": 384,
+    "pricing": {
+      "ap-northeast-1": "5.448",
+      "ap-northeast-2": "5.4",
+      "ap-south-1": "4.704",
+      "ap-southeast-1": "5.424",
+      "ap-southeast-2": "5.424",
+      "eu-central-1": "5.4",
+      "eu-west-1": "4.992",
+      "eu-west-2": "5.273",
+      "us-east-1": "4.464",
+      "us-east-2": "4.464",
+      "us-west-1": "5.064",
+      "us-west-2": "4.464"
+    }
+  },
+  {
+    "instance_type": "g4dn.12xlarge",
+    "vCPU": 48,
+    "memory": 192,
+    "pricing": {
+      "ap-east-1": "6.024",
+      "ap-northeast-1": "5.281",
+      "ap-northeast-2": "4.812",
+      "ap-south-1": "4.306",
+      "ap-southeast-1": "5.474",
+      "ap-southeast-2": "5.087",
+      "ca-central-1": "4.343",
+      "eu-central-1": "4.89",
+      "eu-north-1": "4.15",
+      "eu-west-1": "4.362",
+      "eu-west-2": "4.577",
+      "eu-west-3": "4.574",
+      "me-south-1": "4.798",
+      "sa-east-1": "6.649",
+      "us-east-1": "3.912",
+      "us-east-2": "3.912",
+      "us-gov-east-1": "4.931",
+      "us-gov-west-1": "4.931",
+      "us-west-1": "4.694",
+      "us-west-2": "3.912"
+    }
+  },
+  {
+    "instance_type": "r5ad.large",
+    "vCPU": 2,
+    "memory": 16,
+    "pricing": {
+      "ap-northeast-1": "0.159",
+      "ap-northeast-2": "0.158",
+      "ap-south-1": "0.083",
+      "ap-southeast-1": "0.159",
+      "ap-southeast-2": "0.159",
+      "ca-central-1": "0.144",
+      "eu-central-1": "0.158",
+      "eu-west-1": "0.146",
+      "eu-west-2": "0.154",
+      "eu-west-3": "0.153",
+      "sa-east-1": "0.208",
+      "us-east-1": "0.131",
+      "us-east-2": "0.131",
+      "us-gov-west-1": "0.158",
+      "us-west-1": "0.148",
+      "us-west-2": "0.131"
+    }
+  },
+  {
     "instance_type": "r5.4xlarge",
     "vCPU": 16,
     "memory": 128,
     "pricing": {
+      "af-south-1": "1.344",
+      "ap-east-1": "1.336",
       "ap-northeast-1": "1.216",
       "ap-northeast-2": "1.216",
+      "ap-northeast-3": "1.216",
+      "ap-south-1": "1.04",
       "ap-southeast-1": "1.216",
       "ap-southeast-2": "1.208",
       "ca-central-1": "1.104",
       "eu-central-1": "1.216",
+      "eu-north-1": "1.072",
+      "eu-south-1": "1.184",
       "eu-west-1": "1.128",
       "eu-west-2": "1.184",
       "eu-west-3": "1.184",
+      "me-south-1": "1.241",
+      "sa-east-1": "1.608",
       "us-east-1": "1.008",
       "us-east-2": "1.008",
       "us-gov-east-1": "1.208",
@@ -2316,16 +4433,27 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 8,
     "memory": 64,
     "pricing": {
+      "af-south-1": "0.76",
+      "ap-east-1": "0.7",
       "ap-northeast-1": "0.696",
       "ap-northeast-2": "0.692",
+      "ap-northeast-3": "0.696",
+      "ap-south-1": "0.604",
       "ap-southeast-1": "0.696",
       "ap-southeast-2": "0.696",
       "ca-central-1": "0.632",
       "eu-central-1": "0.692",
+      "eu-north-1": "0.608",
+      "eu-south-1": "0.672",
       "eu-west-1": "0.64",
       "eu-west-2": "0.676",
+      "eu-west-3": "0.676",
+      "me-south-1": "0.704",
+      "sa-east-1": "0.912",
       "us-east-1": "0.576",
       "us-east-2": "0.576",
+      "us-gov-east-1": "0.692",
+      "us-gov-west-1": "0.692",
       "us-west-1": "0.648",
       "us-west-2": "0.576"
     }
@@ -2335,21 +4463,29 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 2,
     "memory": 16,
     "pricing": {
+      "af-south-1": "0.168",
+      "ap-east-1": "0.167",
       "ap-northeast-1": "0.152",
       "ap-northeast-2": "0.152",
+      "ap-northeast-3": "0.152",
+      "ap-south-1": "0.13",
       "ap-southeast-1": "0.152",
       "ap-southeast-2": "0.151",
       "ca-central-1": "0.138",
       "eu-central-1": "0.152",
+      "eu-north-1": "0.134",
+      "eu-south-1": "0.148",
       "eu-west-1": "0.141",
       "eu-west-2": "0.148",
       "eu-west-3": "0.148",
+      "me-south-1": "0.155",
+      "sa-east-1": "0.201",
       "us-east-1": "0.126",
       "us-east-2": "0.126",
       "us-gov-east-1": "0.151",
       "us-gov-west-1": "0.151",
       "us-west-1": "0.14",
-      "us-west-2": "0.126"
+      "us-west-2": "0.151"
     }
   },
   {
@@ -2357,6 +4493,8 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 2,
     "memory": 15.25,
     "pricing": {
+      "af-south-1": "0.205",
+      "ap-east-1": "0.206",
       "ap-northeast-1": "0.183",
       "ap-northeast-2": "0.183",
       "ap-northeast-3": "0.183",
@@ -2365,10 +4503,13 @@ const awsInstanceTypeDetailsJSON = `
       "ap-southeast-2": "0.187",
       "ca-central-1": "0.172",
       "eu-central-1": "0.186",
+      "eu-north-1": "0.163",
+      "eu-south-1": "0.181",
       "eu-west-1": "0.172",
       "eu-west-2": "0.181",
       "eu-west-3": "0.181",
-      "sa-east-1": "0.286",
+      "me-south-1": "0.189",
+      "sa-east-1": "0.249",
       "us-east-1": "0.156",
       "us-east-2": "0.156",
       "us-gov-east-1": "0.188",
@@ -2383,11 +4524,30 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 16,
     "pricing": {
       "ap-northeast-1": "0.227",
+      "ap-northeast-2": "0.225",
+      "ap-south-1": "0.196",
       "ap-southeast-1": "0.226",
+      "ap-southeast-2": "0.226",
+      "eu-central-1": "0.225",
       "eu-west-1": "0.208",
+      "eu-west-2": "0.22",
       "us-east-1": "0.186",
+      "us-east-2": "0.186",
       "us-west-1": "0.211",
       "us-west-2": "0.186"
+    }
+  },
+  {
+    "instance_type": "m6g.4xlarge",
+    "vCPU": 16,
+    "memory": 64,
+    "pricing": {
+      "ap-northeast-1": "0.792",
+      "eu-central-1": "0.736",
+      "eu-west-1": "0.688",
+      "us-east-1": "0.616",
+      "us-east-2": "0.616",
+      "us-west-2": "0.616"
     }
   },
   {
@@ -2395,6 +4555,8 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 64,
     "memory": 488,
     "pricing": {
+      "af-south-1": "6.56",
+      "ap-east-1": "6.592",
       "ap-northeast-1": "5.856",
       "ap-northeast-2": "5.856",
       "ap-northeast-3": "5.856",
@@ -2403,16 +4565,87 @@ const awsInstanceTypeDetailsJSON = `
       "ap-southeast-2": "5.984",
       "ca-central-1": "5.504",
       "eu-central-1": "5.952",
+      "eu-north-1": "5.216",
+      "eu-south-1": "5.792",
       "eu-west-1": "5.504",
       "eu-west-2": "5.792",
       "eu-west-3": "5.792",
-      "sa-east-1": "9.152",
+      "me-south-1": "6.054",
+      "sa-east-1": "7.968",
       "us-east-1": "4.992",
       "us-east-2": "4.992",
       "us-gov-east-1": "6.016",
       "us-gov-west-1": "6.016",
       "us-west-1": "5.504",
       "us-west-2": "4.992"
+    }
+  },
+  {
+    "instance_type": "m5ad.12xlarge",
+    "vCPU": 48,
+    "memory": 192,
+    "pricing": {
+      "ap-northeast-1": "3.216",
+      "ap-northeast-2": "3.048",
+      "ap-south-1": "1.61",
+      "ap-southeast-1": "3.096",
+      "ap-southeast-2": "3.12",
+      "ca-central-1": "2.76",
+      "eu-central-1": "3",
+      "eu-west-1": "2.76",
+      "eu-west-2": "2.88",
+      "eu-west-3": "2.904",
+      "sa-east-1": "3.96",
+      "us-east-1": "2.472",
+      "us-east-2": "2.472",
+      "us-gov-west-1": "3.144",
+      "us-west-1": "2.928",
+      "us-west-2": "2.472"
+    }
+  },
+  {
+    "instance_type": "i3en.large",
+    "vCPU": 2,
+    "memory": 16,
+    "pricing": {
+      "ap-northeast-1": "0.266",
+      "ap-northeast-2": "0.266",
+      "ap-south-1": "0.257",
+      "ap-southeast-1": "0.271",
+      "ap-southeast-2": "0.271",
+      "ca-central-1": "0.25",
+      "eu-central-1": "0.27",
+      "eu-west-1": "0.25",
+      "eu-west-2": "0.263",
+      "eu-west-3": "0.263",
+      "sa-east-1": "0.36",
+      "us-east-1": "0.226",
+      "us-east-2": "0.226",
+      "us-gov-east-1": "0.273",
+      "us-gov-west-1": "0.273",
+      "us-west-1": "0.25",
+      "us-west-2": "0.226"
+    }
+  },
+  {
+    "instance_type": "c5n.metal",
+    "vCPU": 72,
+    "memory": 192,
+    "pricing": {
+      "ap-northeast-1": "4.896",
+      "ap-northeast-2": "4.392",
+      "ap-south-1": "3.888",
+      "ap-southeast-1": "4.464",
+      "ap-southeast-2": "5.076",
+      "ca-central-1": "4.248",
+      "eu-central-1": "4.428",
+      "eu-west-1": "4.392",
+      "us-east-1": "3.888",
+      "us-east-2": "3.888",
+      "us-gov-east-1": "4.68",
+      "us-gov-west-1": "4.68",
+      "us-west-1": "4.86",
+      "us-west-2": "3.888"
     }
   },
   {
@@ -2435,20 +4668,45 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "m5dn.2xlarge",
+    "vCPU": 8,
+    "memory": 32,
+    "pricing": {
+      "ap-northeast-1": "0.7",
+      "ap-southeast-1": "0.668",
+      "eu-central-1": "0.648",
+      "eu-west-1": "0.608",
+      "us-east-1": "0.544",
+      "us-east-2": "0.544",
+      "us-gov-west-1": "0.684",
+      "us-west-2": "0.544"
+    }
+  },
+  {
     "instance_type": "c5d.9xlarge",
     "vCPU": 36,
     "memory": 72,
     "pricing": {
+      "af-south-1": "2.34",
+      "ap-east-1": "2.214",
       "ap-northeast-1": "2.196",
       "ap-northeast-2": "1.98",
+      "ap-northeast-3": "2.196",
+      "ap-south-1": "1.782",
       "ap-southeast-1": "2.016",
       "ap-southeast-2": "2.268",
       "ca-central-1": "1.908",
       "eu-central-1": "1.998",
+      "eu-north-1": "1.872",
+      "eu-south-1": "2.052",
       "eu-west-1": "1.962",
       "eu-west-2": "2.07",
+      "eu-west-3": "2.07",
+      "me-south-1": "2.158",
+      "sa-east-1": "2.682",
       "us-east-1": "1.728",
       "us-east-2": "1.728",
+      "us-gov-east-1": "2.088",
       "us-gov-west-1": "2.088",
       "us-west-1": "2.16",
       "us-west-2": "1.728"
@@ -2459,15 +4717,23 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 4,
     "memory": 32,
     "pricing": {
+      "af-south-1": "0.336",
+      "ap-east-1": "0.334",
       "ap-northeast-1": "0.304",
       "ap-northeast-2": "0.304",
+      "ap-northeast-3": "0.304",
+      "ap-south-1": "0.26",
       "ap-southeast-1": "0.304",
       "ap-southeast-2": "0.302",
       "ca-central-1": "0.276",
       "eu-central-1": "0.304",
+      "eu-north-1": "0.268",
+      "eu-south-1": "0.296",
       "eu-west-1": "0.282",
       "eu-west-2": "0.296",
       "eu-west-3": "0.296",
+      "me-south-1": "0.31",
+      "sa-east-1": "0.402",
       "us-east-1": "0.252",
       "us-east-2": "0.252",
       "us-gov-east-1": "0.302",
@@ -2481,6 +4747,8 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 8,
     "memory": 61,
     "pricing": {
+      "af-south-1": "0.82",
+      "ap-east-1": "0.824",
       "ap-northeast-1": "0.732",
       "ap-northeast-2": "0.732",
       "ap-northeast-3": "0.732",
@@ -2489,10 +4757,13 @@ const awsInstanceTypeDetailsJSON = `
       "ap-southeast-2": "0.748",
       "ca-central-1": "0.688",
       "eu-central-1": "0.744",
+      "eu-north-1": "0.652",
+      "eu-south-1": "0.724",
       "eu-west-1": "0.688",
       "eu-west-2": "0.724",
       "eu-west-3": "0.724",
-      "sa-east-1": "1.144",
+      "me-south-1": "0.757",
+      "sa-east-1": "0.996",
       "us-east-1": "0.624",
       "us-east-2": "0.624",
       "us-gov-east-1": "0.752",
@@ -2502,20 +4773,58 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "g4dn.xlarge",
+    "vCPU": 4,
+    "memory": 16,
+    "pricing": {
+      "ap-east-1": "0.81",
+      "ap-northeast-1": "0.71",
+      "ap-northeast-2": "0.647",
+      "ap-south-1": "0.579",
+      "ap-southeast-1": "0.736",
+      "ap-southeast-2": "0.684",
+      "ca-central-1": "0.584",
+      "eu-central-1": "0.658",
+      "eu-north-1": "0.558",
+      "eu-west-1": "0.587",
+      "eu-west-2": "0.615",
+      "eu-west-3": "0.615",
+      "me-south-1": "0.645",
+      "sa-east-1": "0.894",
+      "us-east-1": "0.526",
+      "us-east-2": "0.526",
+      "us-gov-east-1": "0.663",
+      "us-gov-west-1": "0.663",
+      "us-west-1": "0.631",
+      "us-west-2": "0.526"
+    }
+  },
+  {
     "instance_type": "r5d.large",
     "vCPU": 2,
     "memory": 16,
     "pricing": {
+      "af-south-1": "0.19",
+      "ap-east-1": "0.175",
       "ap-northeast-1": "0.174",
       "ap-northeast-2": "0.173",
+      "ap-northeast-3": "0.174",
+      "ap-south-1": "0.151",
       "ap-southeast-1": "0.174",
       "ap-southeast-2": "0.174",
       "ca-central-1": "0.158",
       "eu-central-1": "0.173",
+      "eu-north-1": "0.152",
+      "eu-south-1": "0.168",
       "eu-west-1": "0.16",
       "eu-west-2": "0.169",
+      "eu-west-3": "0.169",
+      "me-south-1": "0.176",
+      "sa-east-1": "0.228",
       "us-east-1": "0.144",
       "us-east-2": "0.144",
+      "us-gov-east-1": "0.173",
+      "us-gov-west-1": "0.173",
       "us-west-1": "0.162",
       "us-west-2": "0.144"
     }
@@ -2526,11 +4835,13 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 122,
     "pricing": {
       "ap-northeast-1": "1.58",
+      "ap-northeast-2": "1.42",
       "ap-southeast-1": "1.67",
       "ap-southeast-2": "1.754",
       "ca-central-1": "1.416",
       "eu-central-1": "1.425",
       "eu-west-1": "1.21",
+      "eu-west-2": "1.429",
       "us-east-1": "1.14",
       "us-east-2": "1.14",
       "us-gov-west-1": "1.32",
@@ -2539,22 +4850,63 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "r5dn.24xlarge",
+    "vCPU": 96,
+    "memory": 768,
+    "pricing": {
+      "ap-northeast-1": "9.744",
+      "ap-southeast-1": "9.6",
+      "eu-central-1": "9.552",
+      "eu-west-1": "8.928",
+      "us-east-1": "8.016",
+      "us-east-2": "8.016",
+      "us-gov-west-1": "9.648",
+      "us-west-2": "8.016"
+    }
+  },
+  {
     "instance_type": "r5d.12xlarge",
     "vCPU": 48,
     "memory": 384,
     "pricing": {
+      "af-south-1": "4.56",
+      "ap-east-1": "4.2",
       "ap-northeast-1": "4.176",
       "ap-northeast-2": "4.152",
+      "ap-northeast-3": "4.176",
+      "ap-south-1": "3.624",
       "ap-southeast-1": "4.176",
       "ap-southeast-2": "4.176",
       "ca-central-1": "3.792",
       "eu-central-1": "4.152",
+      "eu-north-1": "3.648",
+      "eu-south-1": "4.032",
       "eu-west-1": "3.84",
       "eu-west-2": "4.056",
+      "eu-west-3": "4.056",
+      "me-south-1": "4.224",
+      "sa-east-1": "5.472",
       "us-east-1": "3.456",
       "us-east-2": "3.456",
+      "us-gov-east-1": "4.152",
+      "us-gov-west-1": "4.152",
       "us-west-1": "3.888",
-      "us-west-2": "3.456"
+      "us-west-2": "4.147"
+    }
+  },
+  {
+    "instance_type": "r5dn.2xlarge",
+    "vCPU": 8,
+    "memory": 64,
+    "pricing": {
+      "ap-northeast-1": "0.812",
+      "ap-southeast-1": "0.8",
+      "eu-central-1": "0.796",
+      "eu-west-1": "0.744",
+      "us-east-1": "0.668",
+      "us-east-2": "0.668",
+      "us-gov-west-1": "0.804",
+      "us-west-2": "0.668"
     }
   },
   {
@@ -2578,6 +4930,8 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 16,
     "memory": 122,
     "pricing": {
+      "af-south-1": "1.64",
+      "ap-east-1": "1.648",
       "ap-northeast-1": "1.464",
       "ap-northeast-2": "1.464",
       "ap-northeast-3": "1.464",
@@ -2586,10 +4940,13 @@ const awsInstanceTypeDetailsJSON = `
       "ap-southeast-2": "1.496",
       "ca-central-1": "1.376",
       "eu-central-1": "1.488",
+      "eu-north-1": "1.304",
+      "eu-south-1": "1.448",
       "eu-west-1": "1.376",
       "eu-west-2": "1.448",
       "eu-west-3": "1.448",
-      "sa-east-1": "2.288",
+      "me-south-1": "1.514",
+      "sa-east-1": "1.992",
       "us-east-1": "1.248",
       "us-east-2": "1.248",
       "us-gov-east-1": "1.504",
@@ -2599,15 +4956,102 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "g4dn.4xlarge",
+    "vCPU": 16,
+    "memory": 64,
+    "pricing": {
+      "ap-east-1": "1.854",
+      "ap-northeast-1": "1.625",
+      "ap-northeast-2": "1.481",
+      "ap-south-1": "1.325",
+      "ap-southeast-1": "1.685",
+      "ap-southeast-2": "1.566",
+      "ca-central-1": "1.337",
+      "eu-central-1": "1.505",
+      "eu-north-1": "1.277",
+      "eu-west-1": "1.342",
+      "eu-west-2": "1.409",
+      "eu-west-3": "1.408",
+      "me-south-1": "1.477",
+      "sa-east-1": "2.046",
+      "us-east-1": "1.204",
+      "us-east-2": "1.204",
+      "us-gov-east-1": "1.518",
+      "us-gov-west-1": "1.518",
+      "us-west-1": "1.445",
+      "us-west-2": "1.445"
+    }
+  },
+  {
+    "instance_type": "c5.12xlarge",
+    "vCPU": 48,
+    "memory": 96,
+    "pricing": {
+      "af-south-1": "2.736",
+      "ap-northeast-1": "2.568",
+      "ap-northeast-2": "2.304",
+      "ap-south-1": "2.04",
+      "ap-southeast-1": "2.352",
+      "ap-southeast-2": "2.664",
+      "ca-central-1": "2.232",
+      "eu-central-1": "2.328",
+      "eu-north-1": "2.184",
+      "eu-south-1": "2.424",
+      "eu-west-1": "2.304",
+      "eu-west-2": "2.424",
+      "eu-west-3": "2.424",
+      "sa-east-1": "3.144",
+      "us-east-1": "2.04",
+      "us-east-2": "2.04",
+      "us-gov-east-1": "2.448",
+      "us-gov-west-1": "2.448",
+      "us-west-1": "2.544",
+      "us-west-2": "2.04"
+    }
+  },
+  {
     "instance_type": "c5n.4xlarge",
     "vCPU": 16,
     "memory": 42,
     "pricing": {
+      "ap-northeast-1": "1.088",
+      "ap-northeast-2": "0.976",
+      "ap-south-1": "0.864",
+      "ap-southeast-1": "0.992",
+      "ap-southeast-2": "1.128",
+      "ca-central-1": "0.944",
+      "eu-central-1": "0.984",
       "eu-west-1": "0.976",
       "us-east-1": "0.864",
       "us-east-2": "0.864",
+      "us-gov-east-1": "1.04",
       "us-gov-west-1": "1.04",
+      "us-west-1": "1.08",
       "us-west-2": "0.864"
+    }
+  },
+  {
+    "instance_type": "t3a.small",
+    "vCPU": 2,
+    "memory": 2,
+    "pricing": {
+      "ap-northeast-1": "0.0245",
+      "ap-northeast-2": "0.0234",
+      "ap-south-1": "0.0123",
+      "ap-southeast-1": "0.0236",
+      "ap-southeast-2": "0.0238",
+      "ca-central-1": "0.0209",
+      "eu-central-1": "0.0216",
+      "eu-west-1": "0.0204",
+      "eu-west-2": "0.0212",
+      "eu-west-3": "0.0212",
+      "sa-east-1": "0.0302",
+      "us-east-1": "0.0188",
+      "us-east-2": "0.0188",
+      "us-gov-east-1": "0.022",
+      "us-gov-west-1": "0.022",
+      "us-west-1": "0.0223",
+      "us-west-2": "0.0188"
     }
   },
   {
@@ -2625,7 +5069,7 @@ const awsInstanceTypeDetailsJSON = `
       "eu-west-1": "1.482",
       "sa-east-1": "2.799",
       "us-east-1": "1.33",
-      "us-east-2": "1.33",
+      "us-east-2": "1.328",
       "us-gov-west-1": "1.596",
       "us-west-1": "1.482",
       "us-west-2": "1.33"
@@ -2664,6 +5108,15 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "inf1.2xlarge",
+    "vCPU": 8,
+    "memory": 16,
+    "pricing": {
+      "us-east-1": "0.584",
+      "us-west-2": "0.584"
+    }
+  },
+  {
     "instance_type": "r3.8xlarge",
     "vCPU": 32,
     "memory": 244,
@@ -2678,7 +5131,7 @@ const awsInstanceTypeDetailsJSON = `
       "eu-west-1": "2.964",
       "sa-east-1": "5.597",
       "us-east-1": "2.66",
-      "us-east-2": "2.66",
+      "us-east-2": "2.656",
       "us-gov-west-1": "3.192",
       "us-west-1": "2.964",
       "us-west-2": "2.66"
@@ -2689,10 +5142,10 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 32,
     "memory": 244,
     "pricing": {
-      "ap-northeast-1": "20.972",
-      "ap-northeast-2": "19.924",
-      "ap-southeast-1": "19.924",
-      "ap-southeast-2": "19.924",
+      "ap-northeast-1": "16.776",
+      "ap-northeast-2": "16.936",
+      "ap-southeast-1": "16.936",
+      "ap-southeast-2": "16.936",
       "ca-central-1": "13.464",
       "eu-central-1": "15.292",
       "eu-west-1": "13.22",
@@ -2736,6 +5189,19 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "m6g.8xlarge",
+    "vCPU": 32,
+    "memory": 128,
+    "pricing": {
+      "ap-northeast-1": "1.584",
+      "eu-central-1": "1.472",
+      "eu-west-1": "1.376",
+      "us-east-1": "1.232",
+      "us-east-2": "1.232",
+      "us-west-2": "1.232"
+    }
+  },
+  {
     "instance_type": "cc2.8xlarge",
     "vCPU": 32,
     "memory": 60.5,
@@ -2745,6 +5211,30 @@ const awsInstanceTypeDetailsJSON = `
       "us-east-1": "2",
       "us-gov-west-1": "2.25",
       "us-west-2": "2"
+    }
+  },
+  {
+    "instance_type": "t3a.2xlarge",
+    "vCPU": 8,
+    "memory": 32,
+    "pricing": {
+      "ap-northeast-1": "0.3917",
+      "ap-northeast-2": "0.3744",
+      "ap-south-1": "0.1971",
+      "ap-southeast-1": "0.3776",
+      "ap-southeast-2": "0.3802",
+      "ca-central-1": "0.3341",
+      "eu-central-1": "0.3456",
+      "eu-west-1": "0.3264",
+      "eu-west-2": "0.3398",
+      "eu-west-3": "0.3398",
+      "sa-east-1": "0.4838",
+      "us-east-1": "0.3008",
+      "us-east-2": "0.3008",
+      "us-gov-east-1": "0.3514",
+      "us-gov-west-1": "0.3514",
+      "us-west-1": "0.3571",
+      "us-west-2": "0.3008"
     }
   },
   {
@@ -2764,6 +5254,66 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "r5d.16xlarge",
+    "vCPU": 64,
+    "memory": 512,
+    "pricing": {
+      "af-south-1": "6.08",
+      "ap-east-1": "5.6",
+      "ap-northeast-1": "5.568",
+      "ap-northeast-2": "5.536",
+      "ap-northeast-3": "5.568",
+      "ap-south-1": "4.832",
+      "ap-southeast-1": "5.568",
+      "ap-southeast-2": "5.568",
+      "ca-central-1": "5.056",
+      "eu-central-1": "5.536",
+      "eu-north-1": "4.864",
+      "eu-south-1": "5.376",
+      "eu-west-1": "5.12",
+      "eu-west-2": "5.408",
+      "eu-west-3": "5.408",
+      "me-south-1": "5.632",
+      "sa-east-1": "7.296",
+      "us-east-1": "4.608",
+      "us-east-2": "4.608",
+      "us-gov-east-1": "5.536",
+      "us-gov-west-1": "5.536",
+      "us-west-1": "5.184",
+      "us-west-2": "4.608"
+    }
+  },
+  {
+    "instance_type": "m5.8xlarge",
+    "vCPU": 32,
+    "memory": 128,
+    "pricing": {
+      "af-south-1": "2.032",
+      "ap-east-1": "2.112",
+      "ap-northeast-1": "1.984",
+      "ap-northeast-2": "1.888",
+      "ap-northeast-3": "1.984",
+      "ap-south-1": "1.616",
+      "ap-southeast-1": "1.92",
+      "ap-southeast-2": "1.92",
+      "ca-central-1": "1.712",
+      "eu-central-1": "1.84",
+      "eu-north-1": "1.632",
+      "eu-south-1": "1.792",
+      "eu-west-1": "1.712",
+      "eu-west-2": "1.776",
+      "eu-west-3": "1.792",
+      "me-south-1": "1.883",
+      "sa-east-1": "2.448",
+      "us-east-1": "1.536",
+      "us-east-2": "1.536",
+      "us-gov-east-1": "1.936",
+      "us-gov-west-1": "1.936",
+      "us-west-1": "1.792",
+      "us-west-2": "1.536"
+    }
+  },
+  {
     "instance_type": "m2.2xlarge",
     "vCPU": 4,
     "memory": 34.2,
@@ -2780,14 +5330,104 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "r5ad.4xlarge",
+    "vCPU": 16,
+    "memory": 128,
+    "pricing": {
+      "ap-northeast-1": "1.272",
+      "ap-northeast-2": "1.264",
+      "ap-south-1": "0.664",
+      "ap-southeast-1": "1.272",
+      "ap-southeast-2": "1.272",
+      "ca-central-1": "1.152",
+      "eu-central-1": "1.264",
+      "eu-west-1": "1.168",
+      "eu-west-2": "1.232",
+      "eu-west-3": "1.224",
+      "sa-east-1": "1.664",
+      "us-east-1": "1.048",
+      "us-east-2": "1.048",
+      "us-gov-west-1": "1.264",
+      "us-west-1": "1.184",
+      "us-west-2": "1.048"
+    }
+  },
+  {
+    "instance_type": "t3a.nano",
+    "vCPU": 2,
+    "memory": 0.5,
+    "pricing": {
+      "ap-northeast-1": "0.0061",
+      "ap-northeast-2": "0.0059",
+      "ap-south-1": "0.0031",
+      "ap-southeast-1": "0.0059",
+      "ap-southeast-2": "0.0059",
+      "ca-central-1": "0.0052",
+      "eu-central-1": "0.0054",
+      "eu-west-1": "0.0051",
+      "eu-west-2": "0.0053",
+      "eu-west-3": "0.0053",
+      "sa-east-1": "0.0076",
+      "us-east-1": "0.0047",
+      "us-east-2": "0.0047",
+      "us-gov-east-1": "0.0055",
+      "us-gov-west-1": "0.0055",
+      "us-west-1": "0.0056",
+      "us-west-2": "0.0047"
+    }
+  },
+  {
+    "instance_type": "m5n.metal",
+    "vCPU": 96,
+    "memory": 384,
+    "pricing": {
+      "us-gov-west-1": "7.152"
+    }
+  },
+  {
+    "instance_type": "r5ad.12xlarge",
+    "vCPU": 48,
+    "memory": 384,
+    "pricing": {
+      "ap-northeast-1": "3.816",
+      "ap-northeast-2": "3.792",
+      "ap-south-1": "1.993",
+      "ap-southeast-1": "3.816",
+      "ap-southeast-2": "3.816",
+      "ca-central-1": "3.456",
+      "eu-central-1": "3.792",
+      "eu-west-1": "3.504",
+      "eu-west-2": "3.696",
+      "eu-west-3": "3.672",
+      "sa-east-1": "4.992",
+      "us-east-1": "3.144",
+      "us-east-2": "3.144",
+      "us-gov-west-1": "3.792",
+      "us-west-1": "3.552",
+      "us-west-2": "3.144"
+    }
+  },
+  {
     "instance_type": "m5a.large",
     "vCPU": 2,
     "memory": 8,
     "pricing": {
+      "ap-northeast-1": "0.112",
+      "ap-northeast-2": "0.106",
+      "ap-south-1": "0.056",
       "ap-southeast-1": "0.108",
+      "ap-southeast-2": "0.108",
+      "ca-central-1": "0.096",
+      "eu-central-1": "0.104",
       "eu-west-1": "0.096",
+      "eu-west-2": "0.1",
+      "eu-west-3": "0.101",
+      "sa-east-1": "0.138",
       "us-east-1": "0.086",
       "us-east-2": "0.086",
+      "us-gov-east-1": "0.109",
+      "us-gov-west-1": "0.109",
+      "us-west-1": "0.101",
       "us-west-2": "0.086"
     }
   },
@@ -2796,6 +5436,8 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 32,
     "memory": 244,
     "pricing": {
+      "af-south-1": "3.28",
+      "ap-east-1": "3.296",
       "ap-northeast-1": "2.928",
       "ap-northeast-2": "2.928",
       "ap-northeast-3": "2.928",
@@ -2804,10 +5446,13 @@ const awsInstanceTypeDetailsJSON = `
       "ap-southeast-2": "2.992",
       "ca-central-1": "2.752",
       "eu-central-1": "2.976",
+      "eu-north-1": "2.608",
+      "eu-south-1": "2.896",
       "eu-west-1": "2.752",
       "eu-west-2": "2.896",
       "eu-west-3": "2.896",
-      "sa-east-1": "4.576",
+      "me-south-1": "3.027",
+      "sa-east-1": "3.984",
       "us-east-1": "2.496",
       "us-east-2": "2.496",
       "us-gov-east-1": "3.008",
@@ -2828,15 +5473,107 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "m5n.8xlarge",
+    "vCPU": 32,
+    "memory": 128,
+    "pricing": {
+      "ap-northeast-1": "2.448",
+      "ap-southeast-1": "2.336",
+      "eu-central-1": "2.256",
+      "eu-west-1": "2.128",
+      "us-east-1": "1.904",
+      "us-east-2": "1.904",
+      "us-gov-west-1": "2.384",
+      "us-west-2": "1.904"
+    }
+  },
+  {
     "instance_type": "m5a.24xlarge",
     "vCPU": 96,
     "memory": 384,
     "pricing": {
+      "ap-northeast-1": "5.376",
+      "ap-northeast-2": "5.088",
+      "ap-south-1": "2.666",
       "ap-southeast-1": "5.184",
+      "ap-southeast-2": "5.184",
+      "ca-central-1": "4.608",
+      "eu-central-1": "4.992",
       "eu-west-1": "4.608",
+      "eu-west-2": "4.8",
+      "eu-west-3": "4.848",
+      "sa-east-1": "6.624",
       "us-east-1": "4.128",
       "us-east-2": "4.128",
+      "us-gov-east-1": "5.232",
+      "us-gov-west-1": "5.232",
+      "us-west-1": "4.848",
       "us-west-2": "4.128"
+    }
+  },
+  {
+    "instance_type": "t3.nano",
+    "vCPU": 2,
+    "memory": 0.5,
+    "pricing": {
+      "af-south-1": "0.0068",
+      "ap-east-1": "0.0073",
+      "ap-northeast-1": "0.0068",
+      "ap-northeast-2": "0.0065",
+      "ap-northeast-3": "0.0068",
+      "ap-south-1": "0.0056",
+      "ap-southeast-1": "0.0066",
+      "ap-southeast-2": "0.0066",
+      "ca-central-1": "0.0058",
+      "eu-central-1": "0.006",
+      "eu-north-1": "0.0054",
+      "eu-south-1": "0.006",
+      "eu-west-1": "0.0057",
+      "eu-west-2": "0.0059",
+      "eu-west-3": "0.0059",
+      "me-south-1": "0.0063",
+      "sa-east-1": "0.0084",
+      "us-east-1": "0.0052",
+      "us-east-2": "0.0052",
+      "us-gov-east-1": "0.0061",
+      "us-gov-west-1": "0.0061",
+      "us-west-1": "0.0062",
+      "us-west-2": "0.0052"
+    }
+  },
+  {
+    "instance_type": "g4dn.2xlarge",
+    "vCPU": 8,
+    "memory": 32,
+    "pricing": {
+      "ap-east-1": "1.158",
+      "ap-northeast-1": "1.015",
+      "ap-northeast-2": "0.925",
+      "ap-south-1": "0.828",
+      "ap-southeast-1": "1.052",
+      "ap-southeast-2": "0.978",
+      "ca-central-1": "0.835",
+      "eu-central-1": "0.94",
+      "eu-north-1": "0.798",
+      "eu-west-1": "0.838",
+      "eu-west-2": "0.88",
+      "eu-west-3": "0.879",
+      "me-south-1": "0.922",
+      "sa-east-1": "1.278",
+      "us-east-1": "0.752",
+      "us-east-2": "0.752",
+      "us-gov-east-1": "0.948",
+      "us-gov-west-1": "0.948",
+      "us-west-1": "0.902",
+      "us-west-2": "0.902"
+    }
+  },
+  {
+    "instance_type": "g4dn.metal",
+    "vCPU": 96,
+    "memory": 384,
+    "pricing": {
+      "us-gov-west-1": "9.862"
     }
   },
   {
@@ -2863,54 +5600,26 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
-    "instance_type": "t3.small",
-    "vCPU": 2,
-    "memory": 2,
-    "pricing": {
-      "ap-northeast-1": "0.0272",
-      "ap-northeast-2": "0.026",
-      "ap-southeast-1": "0.0264",
-      "ap-southeast-2": "0.0264",
-      "ca-central-1": "0.0232",
-      "eu-central-1": "0.024",
-      "eu-west-1": "0.0228",
-      "eu-west-2": "0.0236",
-      "eu-west-3": "0.0236",
-      "sa-east-1": "0.0336",
-      "us-east-1": "0.0208",
-      "us-east-2": "0.0208",
-      "us-gov-east-1": "0.0244",
-      "us-gov-west-1": "0.0244",
-      "us-west-1": "0.0248",
-      "us-west-2": "0.0208"
-    }
-  },
-  {
-    "instance_type": "f1.16xlarge",
-    "vCPU": 64,
-    "memory": 976,
-    "pricing": {
-      "eu-west-1": "14.52",
-      "us-east-1": "13.2",
-      "us-gov-west-1": "15.84",
-      "us-west-1": "15.304",
-      "us-west-2": "13.2"
-    }
-  },
-  {
     "instance_type": "t3.micro",
     "vCPU": 2,
     "memory": 1,
     "pricing": {
+      "af-south-1": "0.0136",
+      "ap-east-1": "0.0146",
       "ap-northeast-1": "0.0136",
       "ap-northeast-2": "0.013",
+      "ap-northeast-3": "0.0136",
+      "ap-south-1": "0.0112",
       "ap-southeast-1": "0.0132",
       "ap-southeast-2": "0.0132",
       "ca-central-1": "0.0116",
       "eu-central-1": "0.012",
+      "eu-north-1": "0.0108",
+      "eu-south-1": "0.012",
       "eu-west-1": "0.0114",
       "eu-west-2": "0.0118",
       "eu-west-3": "0.0118",
+      "me-south-1": "0.0125",
       "sa-east-1": "0.0168",
       "us-east-1": "0.0104",
       "us-east-2": "0.0104",
@@ -2921,27 +5630,113 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
+    "instance_type": "u-6tb1.metal",
+    "vCPU": 448,
+    "memory": 6144,
+    "pricing": {}
+  },
+  {
+    "instance_type": "t3.small",
+    "vCPU": 2,
+    "memory": 2,
+    "pricing": {
+      "af-south-1": "0.0271",
+      "ap-east-1": "0.0292",
+      "ap-northeast-1": "0.0272",
+      "ap-northeast-2": "0.026",
+      "ap-northeast-3": "0.0272",
+      "ap-south-1": "0.0224",
+      "ap-southeast-1": "0.0264",
+      "ap-southeast-2": "0.0264",
+      "ca-central-1": "0.0232",
+      "eu-central-1": "0.024",
+      "eu-north-1": "0.0216",
+      "eu-south-1": "0.024",
+      "eu-west-1": "0.0228",
+      "eu-west-2": "0.0236",
+      "eu-west-3": "0.0236",
+      "me-south-1": "0.0251",
+      "sa-east-1": "0.0336",
+      "us-east-1": "0.0208",
+      "us-east-2": "0.0208",
+      "us-gov-east-1": "0.0244",
+      "us-gov-west-1": "0.0244",
+      "us-west-1": "0.0248",
+      "us-west-2": "0.025"
+    }
+  },
+  {
+    "instance_type": "f1.16xlarge",
+    "vCPU": 64,
+    "memory": 976,
+    "pricing": {
+      "ap-southeast-2": "15.848",
+      "eu-west-1": "14.52",
+      "us-east-1": "13.2",
+      "us-gov-west-1": "15.84",
+      "us-west-1": "15.304",
+      "us-west-2": "13.2"
+    }
+  },
+  {
     "instance_type": "t3.large",
     "vCPU": 2,
     "memory": 8,
     "pricing": {
+      "af-south-1": "0.1085",
+      "ap-east-1": "0.1168",
       "ap-northeast-1": "0.1088",
       "ap-northeast-2": "0.104",
+      "ap-northeast-3": "0.1088",
+      "ap-south-1": "0.0896",
       "ap-southeast-1": "0.1056",
       "ap-southeast-2": "0.1056",
       "ca-central-1": "0.0928",
       "eu-central-1": "0.096",
+      "eu-north-1": "0.0864",
+      "eu-south-1": "0.0958",
       "eu-west-1": "0.0912",
       "eu-west-2": "0.0944",
       "eu-west-3": "0.0944",
+      "me-south-1": "0.1003",
       "sa-east-1": "0.1344",
       "us-east-1": "0.0832",
       "us-east-2": "0.0832",
       "us-gov-east-1": "0.0976",
       "us-gov-west-1": "0.0976",
       "us-west-1": "0.0992",
-      "us-west-2": "0.0832"
+      "us-west-2": "0.0998"
     }
+  },
+  {
+    "instance_type": "t3a.micro",
+    "vCPU": 2,
+    "memory": 1,
+    "pricing": {
+      "ap-northeast-1": "0.0122",
+      "ap-northeast-2": "0.0117",
+      "ap-south-1": "0.0062",
+      "ap-southeast-1": "0.0118",
+      "ap-southeast-2": "0.0119",
+      "ca-central-1": "0.0104",
+      "eu-central-1": "0.0108",
+      "eu-west-1": "0.0102",
+      "eu-west-2": "0.0106",
+      "eu-west-3": "0.0106",
+      "sa-east-1": "0.0151",
+      "us-east-1": "0.0094",
+      "us-east-2": "0.0094",
+      "us-gov-east-1": "0.011",
+      "us-gov-west-1": "0.011",
+      "us-west-1": "0.0112",
+      "us-west-2": "0.0094"
+    }
+  },
+  {
+    "instance_type": "u-9tb1.metal",
+    "vCPU": 448,
+    "memory": 9216,
+    "pricing": {}
   },
   {
     "instance_type": "g3s.xlarge",
@@ -2949,13 +5744,32 @@ const awsInstanceTypeDetailsJSON = `
     "memory": 30.5,
     "pricing": {
       "ap-northeast-1": "1.04",
+      "ap-northeast-2": "0.934",
       "ap-southeast-2": "1.154",
       "eu-central-1": "0.938",
       "eu-west-1": "0.796",
+      "eu-west-2": "0.94",
       "us-east-1": "0.75",
       "us-east-2": "0.75",
+      "us-gov-west-1": "0.868",
       "us-west-1": "1.009",
       "us-west-2": "0.75"
+    }
+  },
+  {
+    "instance_type": "a1.4xlarge",
+    "vCPU": 16,
+    "memory": 32,
+    "pricing": {
+      "ap-northeast-1": "0.5136",
+      "ap-south-1": "0.408",
+      "ap-southeast-1": "0.4704",
+      "ap-southeast-2": "0.5328",
+      "eu-central-1": "0.4656",
+      "eu-west-1": "0.4608",
+      "us-east-1": "0.408",
+      "us-east-2": "0.408",
+      "us-west-2": "0.408"
     }
   },
   {
@@ -2963,6 +5777,7 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 8,
     "memory": 122,
     "pricing": {
+      "ap-southeast-2": "1.981",
       "eu-west-1": "1.815",
       "us-east-1": "1.65",
       "us-gov-west-1": "1.98",
@@ -2975,6 +5790,11 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 1,
     "memory": 2,
     "pricing": {
+      "ap-northeast-1": "0.0321",
+      "ap-south-1": "0.0255",
+      "ap-southeast-1": "0.0294",
+      "ap-southeast-2": "0.0333",
+      "eu-central-1": "0.0291",
       "eu-west-1": "0.0288",
       "us-east-1": "0.0255",
       "us-east-2": "0.0255",
@@ -3010,6 +5830,11 @@ const awsInstanceTypeDetailsJSON = `
     "vCPU": 2,
     "memory": 4,
     "pricing": {
+      "ap-northeast-1": "0.0642",
+      "ap-south-1": "0.051",
+      "ap-southeast-1": "0.0588",
+      "ap-southeast-2": "0.0666",
+      "eu-central-1": "0.0582",
       "eu-west-1": "0.0576",
       "us-east-1": "0.051",
       "us-east-2": "0.051",
@@ -3018,7 +5843,7 @@ const awsInstanceTypeDetailsJSON = `
   },
   {
     "instance_type": "hs1.8xlarge",
-    "vCPU": 17,
+    "vCPU": 16,
     "memory": 117,
     "pricing": {
       "ap-northeast-1": "5.4",
@@ -3028,6 +5853,36 @@ const awsInstanceTypeDetailsJSON = `
       "us-east-1": "4.6",
       "us-gov-west-1": "5.52",
       "us-west-2": "4.6"
+    }
+  },
+  {
+    "instance_type": "u-18tb1.metal",
+    "vCPU": 448,
+    "memory": 18432,
+    "pricing": {}
+  },
+  {
+    "instance_type": "t3a.xlarge",
+    "vCPU": 4,
+    "memory": 16,
+    "pricing": {
+      "ap-northeast-1": "0.1958",
+      "ap-northeast-2": "0.1872",
+      "ap-south-1": "0.0986",
+      "ap-southeast-1": "0.1888",
+      "ap-southeast-2": "0.1901",
+      "ca-central-1": "0.167",
+      "eu-central-1": "0.1728",
+      "eu-west-1": "0.1632",
+      "eu-west-2": "0.1699",
+      "eu-west-3": "0.1699",
+      "sa-east-1": "0.2419",
+      "us-east-1": "0.1504",
+      "us-east-2": "0.1504",
+      "us-gov-east-1": "0.1757",
+      "us-gov-west-1": "0.1757",
+      "us-west-1": "0.1786",
+      "us-west-2": "0.1504"
     }
   },
   {
@@ -3047,44 +5902,65 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
-    "instance_type": "u-6tb1.metal",
-    "vCPU": 448,
-    "memory": 6144,
-    "pricing": {}
-  },
-  {
-    "instance_type": "a1.4xlarge",
-    "vCPU": 16,
-    "memory": 32,
+    "instance_type": "m6g.xlarge",
+    "vCPU": 4,
+    "memory": 16,
     "pricing": {
-      "eu-west-1": "0.4608",
-      "us-east-1": "0.408",
-      "us-east-2": "0.408",
-      "us-west-2": "0.408"
+      "ap-northeast-1": "0.198",
+      "eu-central-1": "0.184",
+      "eu-west-1": "0.172",
+      "us-east-1": "0.154",
+      "us-east-2": "0.154",
+      "us-west-2": "0.154"
     }
   },
   {
-    "instance_type": "t3.nano",
+    "instance_type": "m6g.12xlarge",
+    "vCPU": 48,
+    "memory": 192,
+    "pricing": {
+      "ap-northeast-1": "2.376",
+      "eu-central-1": "2.208",
+      "eu-west-1": "2.064",
+      "us-east-1": "1.848",
+      "us-east-2": "1.848",
+      "us-west-2": "1.848"
+    }
+  },
+  {
+    "instance_type": "r5dn.metal",
+    "vCPU": 96,
+    "memory": 768,
+    "pricing": {
+      "us-gov-west-1": "9.648"
+    }
+  },
+  {
+    "instance_type": "m6g.large",
     "vCPU": 2,
-    "memory": 0.5,
+    "memory": 8,
     "pricing": {
-      "ap-northeast-1": "0.0068",
-      "ap-northeast-2": "0.0065",
-      "ap-southeast-1": "0.0066",
-      "ap-southeast-2": "0.0066",
-      "ca-central-1": "0.0058",
-      "eu-central-1": "0.006",
-      "eu-west-1": "0.0057",
-      "eu-west-2": "0.0059",
-      "eu-west-3": "0.0059",
-      "sa-east-1": "0.0084",
-      "us-east-1": "0.0052",
-      "us-east-2": "0.0052",
-      "us-gov-east-1": "0.0061",
-      "us-gov-west-1": "0.0061",
-      "us-west-1": "0.0062",
-      "us-west-2": "0.0052"
+      "ap-northeast-1": "0.099",
+      "eu-central-1": "0.092",
+      "eu-west-1": "0.086",
+      "us-east-1": "0.077",
+      "us-east-2": "0.077",
+      "us-west-2": "0.077"
     }
+  },
+  {
+    "instance_type": "r5n.metal",
+    "vCPU": 96,
+    "memory": 768,
+    "pricing": {
+      "us-gov-west-1": "8.592"
+    }
+  },
+  {
+    "instance_type": "u-24tb1.metal",
+    "vCPU": 448,
+    "memory": 24576,
+    "pricing": {}
   },
   {
     "instance_type": "t2.nano",
@@ -3111,16 +5987,28 @@ const awsInstanceTypeDetailsJSON = `
     }
   },
   {
-    "instance_type": "u-9tb1.metal",
-    "vCPU": 448,
-    "memory": 9216,
-    "pricing": {}
-  },
-  {
-    "instance_type": "u-12tb1.metal",
-    "vCPU": 448,
-    "memory": 12288,
-    "pricing": {}
+    "instance_type": "t3a.large",
+    "vCPU": 2,
+    "memory": 8,
+    "pricing": {
+      "ap-northeast-1": "0.0979",
+      "ap-northeast-2": "0.0936",
+      "ap-south-1": "0.0493",
+      "ap-southeast-1": "0.0944",
+      "ap-southeast-2": "0.095",
+      "ca-central-1": "0.0835",
+      "eu-central-1": "0.0864",
+      "eu-west-1": "0.0816",
+      "eu-west-2": "0.085",
+      "eu-west-3": "0.085",
+      "sa-east-1": "0.121",
+      "us-east-1": "0.0752",
+      "us-east-2": "0.0752",
+      "us-gov-east-1": "0.0878",
+      "us-gov-west-1": "0.0878",
+      "us-west-1": "0.0893",
+      "us-west-2": "0.0752"
+    }
   }
 ]
 `

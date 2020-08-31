@@ -9,7 +9,6 @@ import * as getters from './getters';
 Vue.use(VTooltip);
 Vue.use(Vuex);
 
-
 const store = new Vuex.Store({
   state: {
     environments: [],

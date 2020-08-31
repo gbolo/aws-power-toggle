@@ -27,7 +27,7 @@ func StartBackendDeamon(cfgFile string) {
 		log.Fatalf("failed to load config, %v", err)
 	}
 
-	awsClients = make(map[string]*ec2.EC2, len(awsRegions))
+	awsClients = make(map[string]*ec2.Client, len(awsRegions))
 	for _, region := range awsRegions {
 		if region != "" {
 			cfg.Region = region
