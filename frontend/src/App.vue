@@ -3,9 +3,9 @@
     <div class="appbody">
       <Header v-bind:version="version"/>
       <button class="refresh-btn" @click="refresh">
-        <clr-icon 
-          v-bind:class="[shouldSpinIcon ? 'spin-icon' : '']" 
-          shape="sync" 
+        <clr-icon
+          v-bind:class="[shouldSpinIcon ? 'spin-icon' : '']"
+          shape="sync"
           size="16">
         </clr-icon>
       </button>
