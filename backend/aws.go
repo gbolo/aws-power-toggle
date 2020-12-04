@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/service/autoscaling"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/liip/sheriff"
 	"github.com/spf13/viper"
@@ -30,6 +32,8 @@ const (
 var (
 	// global aws clients (based on regions)
 	awsClients map[string]*ec2.Client
+	// global autoscaling clients (based on regions)
+	awsASGClients map[string]*autoscaling.Client
 	// global cached env list
 	cachedTable envList
 	// lock to prevent concurrent refreshes
@@ -82,6 +86,12 @@ type virtualMachine struct {
 	VCPU          int     `json:"vcpu" groups:"summary,details"`
 	MemoryGB      float32 `json:"memory_gb" groups:"summary,details"`
 	PricingHourly float64 `json:"pricing" groups:"summary,details"`
+
+	// ASG values
+	ASGName         string `json:"asg_name" groups:"summary,details"`
+	MinSize         int64  `json:"min_size" groups:"summary,details"`
+	MaxSize         int64  `json:"max_size" groups:"summary,details"`
+	DesiredCapacity int64  `json:"desired_capacity" groups:"summary,details"`
 }
 
 type environment struct {
@@ -246,7 +256,8 @@ func addInstance(instance *virtualMachine) {
 	// check if we should ignore instance based on:
 	//  - configured ignored instance types
 	//  - instance state is "terminated"
-	if !checkInstanceType(instance.InstanceType) || instance.State == "terminated" {
+	//  - instance part of an ASG
+	if instance.ASGName == "" && (!checkInstanceType(instance.InstanceType) || instance.State == "terminated") {
 		log.Debugf("instance is being ignored: name='%s' [%s](%s)\n", instance.Name, instance.InstanceType, instance.State)
 		return
 	}
@@ -277,6 +288,90 @@ func refreshTable() (err error) {
 		return mockRefreshTable()
 	}
 
+	// calculate billing information before old table is ditched
+	if experimentalEnabled {
+		calculateEnvBills()
+	}
+
+	// At the beginning polling ASG before EC2 was for a reason, now does't matter too much.
+
+	paramsasg := &autoscaling.DescribeAutoScalingGroupsInput{}
+
+	for regionasg, awsASvcClient := range awsASGClients {
+
+		req := awsASvcClient.DescribeAutoScalingGroupsRequest(paramsasg)
+		resp, respErr := req.Send(context.Background())
+		if respErr != nil {
+			log.Errorf("failed to describe AutoScalingGroups, %s, %v", regionasg, respErr)
+			err = respErr
+			return
+		}
+		log.Infof("aws poll was successful, clearing old cached table for region: %s", regionasg)
+		var newcachedTable envList
+		for _, env := range cachedTable {
+			if env.Region != regionasg {
+				newcachedTable = append(newcachedTable, env)
+			}
+		}
+		cachedTable = newcachedTable
+		for _, asg := range resp.AutoScalingGroups {
+			instanceObj := virtualMachine{
+				InstanceID:   "",
+				InstanceType: "",
+				Region:       regionasg,
+			}
+			asgfound := false
+			for _, tag := range asg.Tags {
+				if *tag.Key == "power-toggle-enabled" && *tag.Value == "true" {
+					asgfound = true
+					// The main difference between a EC2 and ASG.
+					// ASG has it's name as InstanceID while EC2 use it's InstanceID
+					// It's a problem if the ASG begins as "i-" as we use that prefix to diff both.
+					instanceObj.InstanceID = *asg.AutoScalingGroupName
+					if len(asg.Instances) > 0 && *asg.DesiredCapacity > 0 {
+						instanceObj.State = "running"
+						for _, i := range asg.Instances {
+							// instance type is the last one in the list of Instances of an ASG.
+							// Ideally it should follow a model like { instance_type1: {Memory : x , VCPU: y, nInstances: 1}, instance_type2: {Memory : x , VCPU: y, nInstances: 2} ... }
+							// But it will need changes in the frontend I suppose.
+							// We sum the memory and vcpu of all the instances in an ASG (they appear as a single entry)
+							instanceObj.InstanceType = *i.InstanceType
+							if details, found := getInstanceTypeDetails(*i.InstanceType); found {
+								instanceObj.MemoryGB += details.MemoryGB
+								instanceObj.VCPU += details.VCPU
+								if pricingstr, ok := details.PricingHourlyByRegion[regionasg]; ok {
+									pricing, err := strconv.ParseFloat(pricingstr, 64)
+									if err != nil {
+										log.Errorf("failed to parse pricing info to float: %s", pricingstr)
+									}
+									instanceObj.PricingHourly = pricing
+								}
+							}
+						}
+					} else {
+						instanceObj.State = "stopped"
+					}
+				}
+				if *tag.Key == environmentTagKey && *tag.Value != "" {
+					instanceObj.Environment = *tag.Value
+				}
+				if *tag.Key == "Name" {
+					instanceObj.Name = *tag.Value
+				}
+			}
+			if asgfound {
+				// if the ASG matches tags we add it like if it was a EC2.
+				instanceObj.DesiredCapacity = *asg.DesiredCapacity
+				instanceObj.MinSize = *asg.MinSize
+				instanceObj.MaxSize = *asg.MaxSize
+				instanceObj.ASGName = *asg.AutoScalingGroupName
+				if validateEnvName(instanceObj.Environment) {
+					addInstance(&instanceObj)
+				}
+			}
+		}
+	}
+
 	params := &ec2.DescribeInstancesInput{
 		Filters: []ec2.Filter{
 			{
@@ -288,11 +383,6 @@ func refreshTable() (err error) {
 		},
 	}
 
-	// calculate billing information before old table is ditched
-	if experimentalEnabled {
-		calculateEnvBills()
-	}
-
 	for region, awsSvcClient := range awsClients {
 		req := awsSvcClient.DescribeInstancesRequest(params)
 		resp, respErr := req.Send(context.Background())
@@ -301,14 +391,6 @@ func refreshTable() (err error) {
 			err = respErr
 			return
 		}
-		log.Infof("aws poll was successful, clearing old cached table for region: %s", region)
-		var newcachedTable envList
-		for _, env := range cachedTable {
-			if env.Region != region {
-				newcachedTable = append(newcachedTable, env)
-			}
-		}
-		cachedTable = newcachedTable
 
 		for _, reservation := range resp.Reservations {
 			for _, instance := range reservation.Instances {
@@ -318,6 +400,7 @@ func refreshTable() (err error) {
 					Region:       region,
 				}
 				// populate info from tags
+				isasg := false
 				for _, tag := range instance.Tags {
 					if *tag.Key == environmentTagKey && *tag.Value != "" {
 						instanceObj.Environment = *tag.Value
@@ -325,6 +408,13 @@ func refreshTable() (err error) {
 					if *tag.Key == "Name" {
 						instanceObj.Name = *tag.Value
 					}
+					if *tag.Key == "aws:autoscaling:groupName" {
+						isasg = true
+					}
+				}
+				// if true Instance is part of ASG. bypass this instance
+				if isasg {
+					continue // goto next instance
 				}
 				// determine instance cpu and memory
 				if details, found := getInstanceTypeDetails(instanceObj.InstanceType); found {
@@ -342,6 +432,7 @@ func refreshTable() (err error) {
 					addInstance(&instanceObj)
 				}
 			}
+
 		}
 		updateEnvDetails()
 		log.Debugf("valid environment(s) in cache: %d", len(cachedTable))
@@ -406,6 +497,58 @@ func toggleInstances(instanceIDs []string, desiredState string, awsClient *ec2.C
 		}
 		return
 
+	default:
+		err = fmt.Errorf("unsupported desiredState specified")
+		return
+	}
+}
+
+// toggleInstances can start or stop a list of ASGs
+func toggleASGs(instanceIDs []string, desiredState string, awsASGClient *autoscaling.Client) (response []byte, err error) {
+	if len(instanceIDs) < 1 {
+		err = fmt.Errorf("no ASG IDs have been provided")
+		return
+	}
+
+	// supported states are: start, stop
+	switch desiredState {
+	case "start":
+		for _, asg := range instanceIDs {
+			// Must: DesiredCapacity >= MinSize , need to set both
+			// At start setting ASG to 1 as we haven't cached the original value.
+			input := &autoscaling.UpdateAutoScalingGroupInput{
+				AutoScalingGroupName: aws.String(asg),
+				DesiredCapacity:      aws.Int64(1),
+				MinSize:              aws.Int64(1),
+			}
+			req := awsASGClient.UpdateAutoScalingGroupRequest(input)
+			awsResponse, reqErr := req.Send(context.Background())
+			response, _ = json.MarshalIndent(awsResponse, "", "  ")
+			err = reqErr
+			if experimentalEnabled && err == nil {
+				// BILLING: update toggled off instances map
+				putToggledOffInstanceIDs(instanceIDs)
+			}
+		}
+		return
+	case "stop":
+		for _, asg := range instanceIDs {
+			// Must: DesiredCapacity >= MinSize , need to set both
+			input := &autoscaling.UpdateAutoScalingGroupInput{
+				AutoScalingGroupName: aws.String(asg),
+				DesiredCapacity:      aws.Int64(0),
+				MinSize:              aws.Int64(0),
+			}
+			req := awsASGClient.UpdateAutoScalingGroupRequest(input)
+			awsResponse, reqErr := req.Send(context.Background())
+			response, _ = json.MarshalIndent(awsResponse, "", "  ")
+			err = reqErr
+			if experimentalEnabled && err == nil {
+				// BILLING: update toggled off instances map
+				putToggledOffInstanceIDs(instanceIDs)
+			}
+		}
+		return
 	default:
 		err = fmt.Errorf("unsupported desiredState specified")
 		return
@@ -527,12 +670,20 @@ func toggleInstance(id, desiredState string) (response []byte, err error) {
 	}
 	// get the AWS instance id
 	awsInstanceID := getAWSInstanceID(id)
-	if awsInstanceID != "" {
+	// Here is where we diff between EC2 and ASG, don't name ASG beggining with "i-"
+	if strings.HasPrefix(awsInstanceID, "i-") {
 		response, err = toggleInstances([]string{awsInstanceID}, desiredState, getInstanceAwsClient(id))
 		if err != nil {
 			log.Errorf("error trying to %s instance %s: %v", desiredState, id, err)
 		} else {
 			log.Infof("successfully toggled instance state (%s): %s", desiredState, id)
+		}
+	} else if awsInstanceID != "" {
+		response, err = toggleASGs([]string{awsInstanceID}, desiredState, getInstanceAwsASGClient(id))
+		if err != nil {
+			log.Errorf("error trying to %s instance %s: %v", desiredState, id, err)
+		} else {
+			log.Debugf("successfully toggled ASG (%s): %s %s", desiredState, id, awsInstanceID)
 		}
 	} else {
 		err = fmt.Errorf("no mapping found between internal id (%s) and aws instance id", id)
@@ -566,6 +717,18 @@ func getInstanceAwsClient(instanceID string) *ec2.Client {
 		for _, instance := range env.Instances {
 			if instance.ID == instanceID {
 				return awsClients[instance.Region]
+			}
+		}
+	}
+	return nil
+}
+
+// returns awsASGClient for the specific instanceID
+func getInstanceAwsASGClient(instanceID string) *autoscaling.Client {
+	for _, env := range cachedTable {
+		for _, instance := range env.Instances {
+			if instance.ID == instanceID {
+				return awsASGClients[instance.Region]
 			}
 		}
 	}
