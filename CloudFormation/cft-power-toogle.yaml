@@ -1,0 +1,234 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS CloudFormation temp
+Metadata:
+  'AWS::CloudFormation::Interface':
+    ParameterGroups:
+      - Label:
+          default: ECS Configuration
+        Parameters:
+          - ClusterName
+          - ContainerName
+          - DockerImage
+      - Label:
+          default: Network Configuration
+        Parameters:
+          - VPC
+          - SubnetIds
+          - LBSubnetIds
+          - CertificateArn
+    ParameterLabels:
+      ClusterName:
+        default: ECS ClusterName
+      VPC:
+        default: VPC ID
+      SubnetIds:
+        default: List of SubnetsID
+      LBSubnetIds:
+        default: List of SubnetsID for ALB
+      CertificateArn:
+        default: CertificateArn for ALB
+Parameters:
+  ClusterName:
+    Description: The name of the application
+    Type: String
+    Default: aws-power-toggle
+  ContainerName:
+    Description: The name of the application
+    Type: String
+    Default: aws-power-toggle
+  CertificateArn:
+    Description: CertificateArn for ALB
+    Type: String
+  DockerImage:
+    Description: The name of the application
+    Type: String
+    Default: gbolo/aws-power-toggle:3.3
+  VPC:
+    Description: VPC ID
+    Type: AWS::EC2::VPC::Id
+  SubnetIds:
+    Description: List of SubnetsID
+    Type: List<AWS::EC2::Subnet::Id>
+  LBSubnetIds:
+    Description: List of SubnetsID
+    Type: List<AWS::EC2::Subnet::Id>
+Resources:
+  ECSServiceRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                -  ecs-tasks.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: !Sub "${ClusterName}-ecs-service-policy"
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ec2:Describe*
+                  - ec2:StartInstances
+                  - ec2:StopInstances
+                  - autoscaling:SetDesiredCapacity
+                  - autoscaling:UpdateAutoScalingGroup
+                Resource: '*'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
+  ExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${ClusterName}-ecs-execrole"
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: !Sub "${ClusterName}-ecs-execsvc-policy"
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                Resource: '*'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
+  ECSCluster:
+    Type: 'AWS::ECS::Cluster'
+    Properties:
+      ClusterName: !Ref ClusterName
+  ECSService:
+    Type: 'AWS::ECS::Service'
+    DependsOn:
+      - ListenerHTTPS
+    Properties:
+      Cluster: !Ref ECSCluster
+      CapacityProviderStrategy:
+        - CapacityProvider: FARGATE_SPOT
+          Weight: 1
+      DesiredCount: 1
+      LoadBalancers:
+        - TargetGroupArn: !Ref ECSTargetGroup
+          ContainerName: !Ref ContainerName
+          ContainerPort: 8080
+      TaskDefinition: !Ref ECSTD
+      # LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          Subnets: !Ref SubnetIds
+          SecurityGroups:
+            - !Ref ContainerSecurityGroup
+      Tags:
+        - Key: Name
+          Value: aws-power-toggle
+  ECSTD:
+    Type: 'AWS::ECS::TaskDefinition'
+    Properties:
+      ContainerDefinitions:
+        - Name: !Ref ContainerName
+          Image: !Ref DockerImage
+          PortMappings:
+            - ContainerPort: 8080
+          Environment:
+            - Name: POWER_TOGGLE_AWS_REGIONS
+              Value: eu-west-1 eu-central-1
+            - Name: POWER_TOGGLE_AWS_ENVIRONMENT_TAG_KEY
+              Value: AppEnv
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: !Ref "AWS::Region"
+              awslogs-group: !Sub "awslogs-${ClusterName}-${ContainerName}"
+              awslogs-create-group: "true"
+              awslogs-stream-prefix: !Sub "awslogs-${ContainerName}-ecs"
+      Cpu: 256
+      Memory: 512
+      Family: !Ref ContainerName
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - FARGATE
+      TaskRoleArn: !Ref ECSServiceRole
+      ExecutionRoleArn: !Ref ExecutionRole
+      Volumes: []
+  ContainerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: !Sub "${ClusterName}-ecs-sg"
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
+      Tags:
+        - Key: Name
+          Value: aws-power-toggle
+  LoadBalancerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: !Sub "${ClusterName}-alb-sg"
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 10.0.0.0/8
+          # CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: aws-power-toggle
+  ECSTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckIntervalSeconds: 10
+      # will look for a 200 status code by default unless specified otherwise
+      HealthCheckPath: "/"
+      HealthCheckTimeoutSeconds: 5
+      UnhealthyThresholdCount: 2
+      HealthyThresholdCount: 2
+      Name: !Sub "${ClusterName}-alb-tg"
+      Port: 8080
+      Protocol: HTTP
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: "60" # default is 300
+      TargetType: ip
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: aws-power-toggle
+  ListenerHTTPS:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - TargetGroupArn: !Ref ECSTargetGroup
+          Type: forward
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      Certificates:
+        - CertificateArn: !Ref CertificateArn
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      LoadBalancerAttributes:
+        # this is the default, but is specified here in case it needs to be changed
+        - Key: idle_timeout.timeout_seconds
+          Value: "60"
+      Name: !Sub "${ClusterName}-alb"
+      # "internal" is also an option
+      Scheme: internal
+      Subnets: !Ref LBSubnetIds
+      SecurityGroups:
+        - !Ref LoadBalancerSecurityGroup
+      Tags:
+        - Key: Name
+          Value: aws-power-toggle
