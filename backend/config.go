@@ -33,6 +33,7 @@ func ConfigInit(cfgFile string, printConfig bool) {
 	slackWebHooks = viper.GetStringSlice("slack.webhook_urls")
 	mockEnabled = viper.GetBool("mock.enabled")
 	experimentalEnabled = viper.GetBool("experimental.enabled")
+	asgEnabled = viper.GetBool("aws.enable_asg_support")
 
 	return
 }
