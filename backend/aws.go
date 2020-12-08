@@ -297,19 +297,23 @@ func pollForASG() (instances []virtualMachine, err error) {
 		}
 		for _, asg := range resp.AutoScalingGroups {
 			instanceObj := virtualMachine{
-				IsASG:            true,
+				IsASG: true,
+				// by default we use the asg name for the "instance" name.
+				// We will ignore the Name tag
+				Name:             *asg.AutoScalingGroupName,
 				InstanceID:       ASGLabel,
 				InstanceType:     ASGLabel,
 				Region:           region,
 				ASGInstanceCount: len(asg.Instances),
-				// by default we use the asg name for the "instance" name.
-				// We will ignore the Name tag
-				Name: *asg.AutoScalingGroupName,
+				MinSize:          *asg.MinSize,
+				MaxSize:          *asg.MaxSize,
+				DesiredCapacity:  *asg.DesiredCapacity,
 			}
-			asgfound := false
+
+			isValidASG := false
 			for _, tag := range asg.Tags {
 				if *tag.Key == "power-toggle-enabled" && *tag.Value == "true" {
-					asgfound = true
+					isValidASG = true
 					// gather some additional information about this ASG
 					if len(asg.Instances) > 0 && *asg.DesiredCapacity > 0 {
 						instanceObj.State = "running"
@@ -335,14 +339,9 @@ func pollForASG() (instances []virtualMachine, err error) {
 					instanceObj.Environment = *tag.Value
 				}
 			}
-			if asgfound {
+			if isValidASG && validateEnvName(instanceObj.Environment) {
 				// if the ASG matches tags we add it like if it was a EC2.
-				instanceObj.DesiredCapacity = *asg.DesiredCapacity
-				instanceObj.MinSize = *asg.MinSize
-				instanceObj.MaxSize = *asg.MaxSize
-				if validateEnvName(instanceObj.Environment) {
-					instances = append(instances, instanceObj)
-				}
+				instances = append(instances, instanceObj)
 			}
 		}
 		elapsed := time.Since(pollASGStartTime)
@@ -382,7 +381,7 @@ func pollForEC2() (instances []virtualMachine, err error) {
 					Region:       region,
 				}
 				// populate info from tags
-				isasg := false
+				isASG := false
 				for _, tag := range instance.Tags {
 					if *tag.Key == environmentTagKey && *tag.Value != "" {
 						instanceObj.Environment = *tag.Value
@@ -391,11 +390,11 @@ func pollForEC2() (instances []virtualMachine, err error) {
 						instanceObj.Name = *tag.Value
 					}
 					if *tag.Key == "aws:autoscaling:groupName" {
-						isasg = true
+						isASG = true
 					}
 				}
 				// if true Instance is part of ASG. bypass this instance
-				if isasg {
+				if isASG {
 					continue // goto next instance
 				}
 				// determine instance cpu and memory
