@@ -91,6 +91,7 @@ func printConfigSummary() {
 		"aws.required_tag_value",
 		"aws.environment_tag_key",
 		"aws.max_instances_to_shutdown",
+		"aws.enable_asg_support",
 		"slack.enabled",
 		"mock.enabled",
 		"mock.delay",

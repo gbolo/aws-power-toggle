@@ -256,12 +256,11 @@ func validateEnvName(envName string) (ok bool) {
 	return
 }
 
-// adds and instance to cachedTable
+// adds and instance to the global cachedTable
 func addInstance(instance *virtualMachine) {
 	// check if we should ignore instance based on:
-	//  - instance part of an ASG
-	//  - configured ignored instance types
-	//  - instance state is "terminated"
+	//  - instance is not part of an ASG
+	//  - instance type is not on ignore list or in terminated state
 	if !instance.IsASG && (!checkInstanceType(instance.InstanceType) || instance.State == "terminated") {
 		log.Debugf("instance is being ignored: name='%s' [%s](%s)\n", instance.Name, instance.InstanceType, instance.State)
 		return
@@ -283,100 +282,77 @@ func addInstance(instance *virtualMachine) {
 	}
 }
 
-// polls aws for updates to cachedTable
-func refreshTable() (err error) {
-	cachedTableLock.Lock()
-	defer cachedTableLock.Unlock()
-
-	// use the mock function if enabled
-	if mockEnabled {
-		return mockRefreshTable()
-	}
-
-	// calculate billing information before old table is ditched
-	if experimentalEnabled {
-		calculateEnvBills()
-	}
-
-	// used to calculate the time it took to poll aws
-	pollStartTime := time.Now()
-
-	// discover ASGs (Auto Scaling Groups) if enabled
-	if asgEnabled {
-		paramsasg := &autoscaling.DescribeAutoScalingGroupsInput{}
-		for regionasg, awsASvcClient := range awsASGClients {
-			pollASGStartTime := time.Now()
-			req := awsASvcClient.DescribeAutoScalingGroupsRequest(paramsasg)
-			resp, respErr := req.Send(context.Background())
-			if respErr != nil {
-				log.Errorf("failed to describe AutoScalingGroups, %s, %v", regionasg, respErr)
-				err = respErr
-				return
+// returns a list of discovered ASGs. Each instance returned will be a single ASG
+// with a cumulative total given for instance vCPU and memory
+func pollForASG() (instances []virtualMachine, err error) {
+	param := &autoscaling.DescribeAutoScalingGroupsInput{}
+	for region, awsASvcClient := range awsASGClients {
+		pollASGStartTime := time.Now()
+		req := awsASvcClient.DescribeAutoScalingGroupsRequest(param)
+		resp, respErr := req.Send(context.Background())
+		if respErr != nil {
+			log.Errorf("failed to describe AutoScalingGroups, %s, %v", region, respErr)
+			err = respErr
+			return
+		}
+		for _, asg := range resp.AutoScalingGroups {
+			instanceObj := virtualMachine{
+				IsASG:            true,
+				InstanceID:       ASGLabel,
+				InstanceType:     ASGLabel,
+				Region:           region,
+				ASGInstanceCount: len(asg.Instances),
+				// by default we use the asg name for the "instance" name.
+				// We will ignore the Name tag
+				Name: *asg.AutoScalingGroupName,
 			}
-			log.Infof("aws poll was successful, clearing old cached table for region: %s", regionasg)
-			var newcachedTable envList
-			for _, env := range cachedTable {
-				if env.Region != regionasg {
-					newcachedTable = append(newcachedTable, env)
-				}
-			}
-			cachedTable = newcachedTable
-			for _, asg := range resp.AutoScalingGroups {
-				instanceObj := virtualMachine{
-					IsASG:            true,
-					InstanceID:       ASGLabel,
-					InstanceType:     ASGLabel,
-					Region:           regionasg,
-					ASGInstanceCount: len(asg.Instances),
-					// by default we use the asg name for the "instance" name.
-					// We will ignore the Name tag
-					Name: *asg.AutoScalingGroupName,
-				}
-				asgfound := false
-				for _, tag := range asg.Tags {
-					if *tag.Key == "power-toggle-enabled" && *tag.Value == "true" {
-						asgfound = true
-						// gather some additional information about this ASG
-						if len(asg.Instances) > 0 && *asg.DesiredCapacity > 0 {
-							instanceObj.State = "running"
-							for _, i := range asg.Instances {
-								// We sum the memory and vcpu of all the instances in an ASG (they appear as a single entry)
-								if details, found := getInstanceTypeDetails(*i.InstanceType); found {
-									instanceObj.MemoryGB += details.MemoryGB
-									instanceObj.VCPU += details.VCPU
-									if pricingstr, ok := details.PricingHourlyByRegion[regionasg]; ok {
-										pricing, err := strconv.ParseFloat(pricingstr, 64)
-										if err != nil {
-											log.Errorf("failed to parse pricing info to float: %s", pricingstr)
-										}
-										instanceObj.PricingHourly = pricing
+			asgfound := false
+			for _, tag := range asg.Tags {
+				if *tag.Key == "power-toggle-enabled" && *tag.Value == "true" {
+					asgfound = true
+					// gather some additional information about this ASG
+					if len(asg.Instances) > 0 && *asg.DesiredCapacity > 0 {
+						instanceObj.State = "running"
+						for _, i := range asg.Instances {
+							// We sum the memory and vcpu of all the instances in an ASG (they appear as a single entry)
+							if details, found := getInstanceTypeDetails(*i.InstanceType); found {
+								instanceObj.MemoryGB += details.MemoryGB
+								instanceObj.VCPU += details.VCPU
+								if pricingStr, ok := details.PricingHourlyByRegion[region]; ok {
+									pricing, errPrice := strconv.ParseFloat(pricingStr, 64)
+									if errPrice != nil {
+										log.Errorf("failed to parse pricing info to float: %s", pricingStr)
 									}
+									instanceObj.PricingHourly = pricing
 								}
 							}
-						} else {
-							instanceObj.State = "stopped"
 						}
-					}
-					if *tag.Key == environmentTagKey && *tag.Value != "" {
-						instanceObj.Environment = *tag.Value
+					} else {
+						instanceObj.State = "stopped"
 					}
 				}
-				if asgfound {
-					// if the ASG matches tags we add it like if it was a EC2.
-					instanceObj.DesiredCapacity = *asg.DesiredCapacity
-					instanceObj.MinSize = *asg.MinSize
-					instanceObj.MaxSize = *asg.MaxSize
-					if validateEnvName(instanceObj.Environment) {
-						addInstance(&instanceObj)
-					}
+				if *tag.Key == environmentTagKey && *tag.Value != "" {
+					instanceObj.Environment = *tag.Value
 				}
 			}
-
-			elapsed := time.Since(pollASGStartTime)
-			log.Debugf("polling for EC2 in region %s took %s", regionasg, elapsed)
+			if asgfound {
+				// if the ASG matches tags we add it like if it was a EC2.
+				instanceObj.DesiredCapacity = *asg.DesiredCapacity
+				instanceObj.MinSize = *asg.MinSize
+				instanceObj.MaxSize = *asg.MaxSize
+				if validateEnvName(instanceObj.Environment) {
+					instances = append(instances, instanceObj)
+				}
+			}
 		}
+		elapsed := time.Since(pollASGStartTime)
+		log.Debugf("polling for ASGs in region %s took %s", region, elapsed)
 	}
+	return
+}
 
+// returns a list of discovered EC2 instances.
+func pollForEC2() (instances []virtualMachine, err error) {
 	params := &ec2.DescribeInstancesInput{
 		Filters: []ec2.Filter{
 			{
@@ -435,15 +411,60 @@ func refreshTable() (err error) {
 					}
 				}
 				if validateEnvName(instanceObj.Environment) {
-					addInstance(&instanceObj)
+					instances = append(instances, instanceObj)
 				}
 			}
 
 		}
-		updateEnvDetails()
 		elapsed := time.Since(pollEC2StartTime)
-		log.Debugf("polling for ASG in region %s took %s", region, elapsed)
+		log.Debugf("polling for EC2s in region %s took %s", region, elapsed)
 	}
+	return
+}
+
+// polls aws for updates to cachedTable
+func refreshTable() (err error) {
+	cachedTableLock.Lock()
+	defer cachedTableLock.Unlock()
+
+	// use the mock function if enabled
+	if mockEnabled {
+		return mockRefreshTable()
+	}
+
+	// calculate billing information before old table is ditched
+	if experimentalEnabled {
+		calculateEnvBills()
+	}
+
+	// used to calculate the time it took to poll aws
+	pollStartTime := time.Now()
+
+	// keeps track of everything we discovered during this poll
+	var discoveredInstances []virtualMachine
+
+	// discover ASGs (Auto Scaling Groups) if enabled
+	if asgEnabled {
+		if discoveredASGs, err := pollForASG(); err != nil {
+			return fmt.Errorf("error polling ASG: %v", err)
+		} else {
+			discoveredInstances = append(discoveredInstances, discoveredASGs...)
+		}
+	}
+
+	// discover EC2 Instances
+	if discoveredEC2Instances, err := pollForEC2(); err != nil {
+		return fmt.Errorf("error polling EC2: %v", err)
+	} else {
+		discoveredInstances = append(discoveredInstances, discoveredEC2Instances...)
+	}
+
+	// polling was successful, now we rebuild the cache
+	cachedTable = cachedTable[:0]
+	for _, discoveredInstance := range discoveredInstances {
+		addInstance(&discoveredInstance)
+	}
+	updateEnvDetails()
 
 	elapsed := time.Since(pollStartTime)
 	log.Debugf("total polling time took %s; valid environment(s) in cache: %d", elapsed, len(cachedTable))
