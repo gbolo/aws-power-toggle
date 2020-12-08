@@ -688,6 +688,11 @@ func shutdownEnv(envID string) (response []byte, err error) {
 
 // starts up an env
 func startupEnv(envID string) (response []byte, err error) {
+	// use the mock function if enabled
+	if mockEnabled {
+		return mockStartupEnv(envID)
+	}
+
 	// get env details
 	env, found := getEnvironmentByID(envID)
 	if !found {
