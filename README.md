@@ -53,25 +53,41 @@ of all instances associated with that particular ASG.
 The [backend](backend/) server API is written in `go` and the [frontend](frontend/) web UI is written in javascript (vue.js).
 The backend also serves the frontend content, so the frontend must be built prior compiling the backend.
 
-**Requirements:**
-- `go` v1.8+ (with `GOPATH` set)
-- `npm` v3.5+
-- `make`
-- `docker` (optional)
-
-follow these steps:
+### Building the docker image
+By far, the easiest way to build this project is to use docker:
 ```
-# clone source
-mkdir -p ${GOPATH}/src/github.com/gbolo/aws-power-toggle
-git clone https://github.com/gbolo/aws-power-toggle.git ${GOPATH}/src/github.com/gbolo/aws-power-toggle
-cd ${GOPATH}/src/github.com/gbolo/aws-power-toggle
+make docker
+```
+
+this will build the docker image, which builds both the frontend and backend.
+
+### Building the frontend
+The supported version of nodejs is defined in the [.nvmrc](.nvmrc) file located in the root of this repo.
+We use [nvm](https://github.com/nvm-sh/nvm) to easily switch to this version (but nvm is NOT a requirement):
+```
+# switch to supported nodejs version (if using nvm)
+nvm install
+
+# build the frontend
+make frontend
+```
+this should create the static web root directory located in `./frontend/dist/`
+
+### Building the backend
+The backend should be buildable with versions of `go v1.8` or greater.
+````
+make backend
+````
+this should create a binary located in `./bin/aws-power-toggle`
+
+### Running the software
+Once built, you can run it like:
+```
+# edit the config if needed: ./testdata/sampleconfig/power-toggle-config.yaml
 
 # make your changes to source code or config then export your aws api key
 export AWS_ACCESS_KEY_ID=<your_key_id>
 export AWS_SECRET_ACCESS_KEY=<your_secret_key>
-
-# build it (builds both frontend and backend)
-make all
 
 # run it
 ./bin/aws-power-toggle -config testdata/sampleconfig/power-toggle-config.yaml
@@ -79,14 +95,6 @@ make all
 # do a test API call
 curl -v 127.0.0.1:8080/api/v1/env/summary
 ```
-
-**Optional**
-
-If you prefer to use `docker` for building (which I recommend), you can build the docker image with:
-```
-make docker
-```
-
 
 ### Make Targets
 
@@ -104,7 +112,6 @@ lint            Run golint
 test            Run go unit tests
 clean           Cleanup everything
 ```
-
 
 ### API Documentation
 For further details on an API endpoint (including example responses), click on the endpoint's name.
