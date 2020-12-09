@@ -38,6 +38,17 @@ docker run -d --name "aws-power-toggle" \
 
 Then open your browser to: [http://127.0.0.1:8080](http://127.0.0.1:8080)
 
+### Enabling support for Auto Scaling Groups
+Enabling support for ASGs can be done via the config file or setting the environment variable `POWER_TOGGLE_AWS_ENABLE_ASG_SUPPORT=true`.
+In order for them to be discovered they **MUST** have the [required tags](#Required-Tags)) **applied directly on the ASG** (the instance tags are ignored).
+
+The ASG will show up as a single toggleable instance for associated environment, with the cpu/memory being the cumulative total
+of all instances associated with that particular ASG.
+
+**NOTICE:** when the above conditions are met, power-toggle will be able to interact with your ASGs in the following manner:
+- When an ASG is toggled off, BOTH the **minimum and desired capacity will be set to 0**
+- When an ASG is toggled on, BOTH the **minimum and desired capacity will be set to 1**
+
 ## Developer Guide
 The [backend](backend/) server API is written in `go` and the [frontend](frontend/) web UI is written in javascript (vue.js).
 The backend also serves the frontend content, so the frontend must be built prior compiling the backend.
