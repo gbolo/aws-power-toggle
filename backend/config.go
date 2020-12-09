@@ -33,6 +33,7 @@ func ConfigInit(cfgFile string, printConfig bool) {
 	slackWebHooks = viper.GetStringSlice("slack.webhook_urls")
 	mockEnabled = viper.GetBool("mock.enabled")
 	experimentalEnabled = viper.GetBool("experimental.enabled")
+	asgEnabled = viper.GetBool("aws.enable_asg_support")
 
 	return
 }
@@ -90,6 +91,7 @@ func printConfigSummary() {
 		"aws.required_tag_value",
 		"aws.environment_tag_key",
 		"aws.max_instances_to_shutdown",
+		"aws.enable_asg_support",
 		"slack.enabled",
 		"mock.enabled",
 		"mock.delay",

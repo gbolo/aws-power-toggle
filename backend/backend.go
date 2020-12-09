@@ -2,6 +2,7 @@ package backend
 
 import (
 	"github.com/aws/aws-sdk-go-v2/aws/external"
+	"github.com/aws/aws-sdk-go-v2/service/autoscaling"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 )
 
@@ -28,10 +29,12 @@ func StartBackendDeamon(cfgFile string) {
 	}
 
 	awsClients = make(map[string]*ec2.Client, len(awsRegions))
+	awsASGClients = make(map[string]*autoscaling.Client, len(awsRegions))
 	for _, region := range awsRegions {
 		if region != "" {
 			cfg.Region = region
 			awsClients[region] = ec2.New(cfg)
+			awsASGClients[region] = autoscaling.New(cfg)
 		}
 	}
 

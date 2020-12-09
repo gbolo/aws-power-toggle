@@ -9,5 +9,5 @@ require (
 	github.com/liip/sheriff v0.8.0
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7
 	github.com/spf13/viper v1.7.1
-	golang.org/x/tools v0.0.0-20200811015704-48de4c84f0cb // indirect
+	golang.org/x/tools v0.0.0-20201207191902-7bb39e4ca9ac // indirect
 )
