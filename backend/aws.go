@@ -27,7 +27,7 @@ const (
 	EnvStateMixed = "mixed"
 	// EnvStateChanging means that AT LEAST ONE instance for an env is NOT in a "running" state or "stopped" state
 	EnvStateChanging = "changing"
-	// Used to identify an ASG instance
+	// ASGLabel is used to identify an ASG instance
 	ASGLabel = "ASG"
 )
 
@@ -444,18 +444,18 @@ func refreshTable() (err error) {
 
 	// discover ASGs (Auto Scaling Groups) if enabled
 	if asgEnabled {
-		if discoveredASGs, err := pollForASG(); err != nil {
-			return fmt.Errorf("error polling ASG: %v", err)
-		} else {
+		if discoveredASGs, err := pollForASG(); err == nil {
 			discoveredInstances = append(discoveredInstances, discoveredASGs...)
+		} else {
+			return fmt.Errorf("error polling ASG: %v", err)
 		}
 	}
 
 	// discover EC2 Instances
-	if discoveredEC2Instances, err := pollForEC2(); err != nil {
-		return fmt.Errorf("error polling EC2: %v", err)
-	} else {
+	if discoveredEC2Instances, err := pollForEC2(); err == nil {
 		discoveredInstances = append(discoveredInstances, discoveredEC2Instances...)
+	} else {
+		return fmt.Errorf("error polling EC2: %v", err)
 	}
 
 	// polling was successful, now we rebuild the cache
