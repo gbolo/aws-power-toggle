@@ -3,7 +3,7 @@
 PACKAGE     = aws-power-toggle
 METAPKG     = github.com/gbolo/aws-power-toggle/backend
 DATE       ?= $(shell date +%FT%T%z)
-VERSION     = 3.4-SNAPSHOT
+VERSION     = 3.4
 COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
 PKGS        = $(or $(PKG),$(shell $(GO) list ./...))
 TESTPKGS    = $(shell $(GO) list -f '{{ if or .TestGoFiles .XTestGoFiles }}{{ .ImportPath }}{{ end }}' $(PKGS))
