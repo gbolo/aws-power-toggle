@@ -3,14 +3,35 @@
 PACKAGE     = aws-power-toggle
 METAPKG     = github.com/gbolo/aws-power-toggle/backend
 DATE       ?= $(shell date +%FT%T%z)
-VERSION     = 3.3
+VERSION     = 3.4
 COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
-LDFLAGS     = -X $(METAPKG).Version=$(VERSION) -X $(METAPKG).BuildDate=$(DATE) -X $(METAPKG).CommitSHA=$(COMMIT_SHA)
 PKGS        = $(or $(PKG),$(shell $(GO) list ./...))
 TESTPKGS    = $(shell $(GO) list -f '{{ if or .TestGoFiles .XTestGoFiles }}{{ .ImportPath }}{{ end }}' $(PKGS))
 BIN         = $(CURDIR)/bin
 FRONTEND    = $(CURDIR)/frontend
 GO          = go
+GOHOSTOS    := $(shell go env GOHOSTOS)
+
+# linker flags
+LDFLAGS     :=
+# These may not work on non-linux...
+ifeq ($(GOHOSTOS),linux)
+	# linker flags to strip symbol tables and debug information for smaller binary
+	LDFLAGS     += -s -w
+endif
+# flags used to bake version into binary
+LDFLAGS    += -X $(METAPKG).Version=$(VERSION)
+LDFLAGS    += -X $(METAPKG).BuildDate=$(DATE)
+LDFLAGS    += -X $(METAPKG).CommitSHA=$(COMMIT_SHA)
+LDFLAGS    += -X $(METAPKG).Branch=$(shell git rev-parse --abbrev-ref HEAD 2> /dev/null || echo unknown)
+
+# add commit hash to docker tag when version has SNAPSHOT in the name
+ifneq (,$(findstring SNAPSHOT,$(VERSION)))
+	DOCKERTAG = $(VERSION)-$(COMMIT_SHA)
+else
+	DOCKERTAG = $(VERSION)
+endif
+
 
 V ?= 0
 Q  = $(if $(filter 1,$V),,@)
@@ -23,7 +44,7 @@ $(BIN):
 
 $(BIN)/%: | $(BIN) ; $(info $(M) building $(REPOSITORY)...)
 	$Q tmp=$$(mktemp -d); \
-	   env GOPATH=$$tmp GOBIN=$(BIN) $(GO) get $(REPOSITORY) \
+	   env GO111MODULE=off GOPATH=$$tmp GOBIN=$(BIN) $(GO) get $(REPOSITORY) \
 		|| ret=$$?; \
 	   rm -rf $$tmp ; exit $$ret
 
@@ -44,7 +65,7 @@ backend: ; $(info $(M) building backend executable...)        @ ## Build backend
 
 .PHONY: docker
 docker: clean ; $(info $(M) building docker image...)	      @ ## Build docker image
-	$Q docker build -t gbolo/$(PACKAGE):$(VERSION) .
+	$Q docker build -t gbolo/$(PACKAGE):$(DOCKERTAG) .
 
 .PHONY: frontend
 frontend: ; $(info $(M) building web frontend ui...)	      @ ## Build frontend

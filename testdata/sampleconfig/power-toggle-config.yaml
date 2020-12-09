@@ -76,6 +76,9 @@ aws:
   ignore_environments:
     - prod
 
+  # enable support for interacting with ASGs
+  enable_asg_support: false
+
 # mock settings --------------------------------------------------------------------------------------------------------
 mock:
   # when mock is enabled, calls to aws are disabled. Instead, calls that would normally go to aws are mocked
